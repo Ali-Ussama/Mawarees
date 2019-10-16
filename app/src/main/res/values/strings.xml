@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Mawarees</string>
+    <string name="how_much_money">مقدار التركة</string>
+    <string name="dead_gender">جنس المتوفي</string>
+    <string name="hanbaly">حنبلي</string>
+    <string name="hanafy">حنفي</string>
+    <string name="maleky">مالكي</string>
+    <string name="shafeey">شافعي</string>
 </resources>
