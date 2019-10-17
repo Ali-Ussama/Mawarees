@@ -21,7 +21,7 @@ public class HusbandAndWifeUtilis {
 
                 //يوجد زوجة
                 if (oConstants.isHasWife()) {
-                    data = setWifeSharePercent(data, OConstants.one_eighth); // نصيب الزوجة 1/8
+                    OConstants.setPersonSharePercent(data, OConstants.one_eighth, OConstants.PERSON_WIFE); // نصيب الزوجة 1/8
                     Log.i(TAG, "CalculateHusbandAndWife(): setting wife with 1/8");
                 } else {
 
@@ -35,7 +35,8 @@ public class HusbandAndWifeUtilis {
                 // يوجد زوج
                 if (oConstants.isHasHusband()) {
 
-                    data = setHusbandSharePercent(data, OConstants.quarter); // نصيب الزوج 1/4
+                    OConstants.setPersonSharePercent(data, OConstants.quarter, OConstants.PERSON_HUSBAND); // نصيب الزوج 1/4
+
                     Log.i(TAG, "CalculateHusbandAndWife(): setting husband with 1/4");
 
                 } else {
@@ -54,7 +55,7 @@ public class HusbandAndWifeUtilis {
                 if (oConstants.isHasWife()) {
 
                     // نصيب الزوجة 1/4
-                    data = setWifeSharePercent(data, OConstants.quarter);
+                    OConstants.setPersonSharePercent(data, OConstants.quarter, OConstants.PERSON_WIFE);
                     Log.i(TAG, "CalculateHusbandAndWife(): setting wife with 1/4");
 
                 } else {
@@ -69,7 +70,7 @@ public class HusbandAndWifeUtilis {
                 // يوجد زوج
                 if (oConstants.isHasHusband()) {
 
-                    data = setHusbandSharePercent(data, OConstants.half);// نصيب الزوج 1/2
+                    OConstants.setPersonSharePercent(data, OConstants.half, OConstants.PERSON_HUSBAND);// نصيب الزوج 1/2
 
                 } else {
 
@@ -79,28 +80,5 @@ public class HusbandAndWifeUtilis {
                 }
             }
         }
-    }
-
-    private static ArrayList<Person> setWifeSharePercent(ArrayList<Person> data, Fraction fraction) {
-
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).getRelation().matches(OConstants.PERSON_WIFE)) {
-                data.get(i).setSharePercent(fraction);
-            }
-        }
-
-        return data;
-    }
-
-    private static ArrayList<Person> setHusbandSharePercent(ArrayList<Person> data, Fraction fraction) {
-
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).getRelation().matches(OConstants.PERSON_HUSBAND)) {
-                data.get(i).setSharePercent(fraction);
-                break;
-            }
-        }
-
-        return data;
     }
 }

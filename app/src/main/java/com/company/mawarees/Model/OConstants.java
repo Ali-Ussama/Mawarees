@@ -12,12 +12,14 @@ public class OConstants {
     public static final String PERSON_FATHER_GRANDMOTHER = "F_Grandmother";
     public static final String PERSON_FATHER_UNCLE = "F_Uncle";
     public static final String PERSON_FATHER_AUNT = "F_Aunt";
+    public static final String PERSON_FATHER_UNCLES_AND_AUNTS = "Father Uncles And Aunts";
 
     public static final String PERSON_MOTHER = "Mother";
     public static final String PERSON_MOTHER_GRANDFATHER = "M_Grandfather";
     public static final String PERSON_MOTHER_GRANDMOTHER = "M_Grandmother";
     public static final String PERSON_MOTHER_UNCLE = "M_Uncle";
     public static final String PERSON_MOTHER_AUNT = "M_Aunt";
+    public static final String PERSON_MOTHER_UNCLES_AND_AUNTS = "Mother Uncles And Aunts";
 
     public static final String PERSON_SON = "Son";
     public static final String PERSON_SON_BOY = "SonNephew";
@@ -29,6 +31,8 @@ public class OConstants {
 
     public static final String PERSON_BROTHER = "Brother";
     public static final String PERSON_SISTER = "Sister";
+    public static final String PERSON_More_Than_three_SISTERS = "MoreThanThreeSisters";
+    public static final String PERSON_MORE_THAN_BROTHER_AND_SISTER = "MoreThanBrotherAndSister";
 
     public static final String PERSON_HUSBAND = "Husband";
     public static final String PERSON_WIFE = "Wife";
@@ -60,14 +64,16 @@ public class OConstants {
 
     public static final Fraction fourteenth_TwentyFourth = new Fraction(14, 24); // 14/24
 
-    public static final Fraction fourteenth_FourtyEighth = new Fraction(14, 48); // 14/48
+    public static final Fraction fourteenth_FourtyEighth = new Fraction(7, 24); // 7/24
+
+    public static final Fraction one_Twelve = new Fraction(2, 24); // 1/12
 
     /*--------------------------------------------------------------------------------------------*/
     private double totalMoney;
 
     private String gender;
 
-    private int wifesCount;
+    private int wivesCount;
 
     private boolean hasChildren;
 
@@ -89,13 +95,12 @@ public class OConstants {
 
     private boolean hasBrothersAndSisters;
 
-
-    public int getWifesCount() {
-        return wifesCount;
+    public int getWivesCount() {
+        return wivesCount;
     }
 
-    public void setWifesCount(int wifesCount) {
-        this.wifesCount = wifesCount;
+    public void setWivesCount(int wivesCount) {
+        this.wivesCount = wivesCount;
     }
 
     public double getTotalMoney() {
@@ -288,7 +293,23 @@ public class OConstants {
         return daughters;
     }
 
-    public static int getChildrensCount(ArrayList<Person> data) {
+    public static int getPersonCount(ArrayList<Person> data, String relation) {
+        int person = 0;
+        try {
+            for (Person mData : data) {
+                if (mData.getRelation().matches(relation)) {
+                    person++;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return person;
+    }
+
+    public static int getChildrenInDaughters(ArrayList<Person> data) {
         boolean isHasChildren = false;
 
         int sonsCount = 0, daughtersCount = 0;
@@ -309,7 +330,7 @@ public class OConstants {
 
             if (sonsCount > 0) {
 
-                sum += sonsCount;
+                sum += (sonsCount * 2);
 
             }
 
@@ -322,6 +343,14 @@ public class OConstants {
         return sum;
     }
 
+    public static ArrayList<Person> blockPerson(ArrayList<Person> data, String relation) {
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getRelation().matches(relation)) {
+                data.get(i).setBlocked(OConstants.BLOCKED);
+            }
+        }
+        return data;
+    }
     /*----------------------------حالة الابن / البنت المتوفين و ابنائهم ---------------------------*/
 
     public static int getDeadSonsCount(ArrayList<Person> data) {
@@ -422,7 +451,47 @@ public class OConstants {
         return daughters;
     }
 
-    /*--------------------------------------------------------------------------------------------*/
+    /*---------------------------------------  حساب النصيب --------------------------------------*/
 
+    public static ArrayList<Person> setPersonSharePercent(ArrayList<Person> data, Fraction fraction, String relation) {
+
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getRelation().matches(relation)) {
+                data.get(i).setSharePercent(fraction);
+            }
+        }
+        return data;
+    }
+
+    public static ArrayList<Person> calculateShareValue(ArrayList<Person> data, OConstants oConstants) {
+
+        // ص = ن / س
+        Fraction X, Y, N;
+        X = new Fraction(0, 0);
+
+        // حساب (س) و هو مجموع النسب التى يستحقها الورثة
+        for (Person person : data) {
+            //عدم جمع نسب الاشخاص الذين لهم نصيب باقي التركة
+            if ((person.getRelation().matches(OConstants.PERSON_MOTHER) && person.getSharePercent() != null && person.getSharePercent() != OConstants.half) &&
+                    (person.getRelation().matches(OConstants.PERSON_FATHER) && person.getSharePercent() != null && person.getSharePercent() != OConstants.half) &&
+                    (!person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) && !person.getRelation().matches(OConstants.PERSON_FATHER_AUNT) &&
+                            !person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE) && !person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT))) {
+
+                X = Fraction.addFractions(X, person.getSharePercent());
+            }
+        }
+
+
+        //حساب (ص) نسبة نصيب كل شخص
+        // مع مراعاة الاشخاص الشركاء يعاملوا معاملة الشخص الواحد
+        // و عدم حساب الاشخاص الذين لهم نصيب باقي التركة
+        for (Person person : data) {
+            // ص = ن / س
+            Y = Fraction.divideFraction(person.getSharePercent(), X);
+            person.setSharePercent(Y);
+        }
+
+        return data;
+    }
 
 }

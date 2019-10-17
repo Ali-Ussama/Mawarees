@@ -39,4 +39,9 @@ public class Fraction {
 
         return f1;
     }
+
+    public static Fraction addFractions(Fraction f1, Fraction f2) {
+            f1.setNumerator(f1.getNumerator() + f2.getNumerator());
+        return f1;
+    }
 }

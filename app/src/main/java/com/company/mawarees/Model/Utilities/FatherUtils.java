@@ -5,12 +5,12 @@ import com.company.mawarees.Model.OConstants;
 
 import java.util.ArrayList;
 
-public class MotherUtilis {
+class FatherUtils {
 
-    public static ArrayList<Person> calculateMother(ArrayList<Person> data, OConstants oConstants) {
+    static void calculateFather(ArrayList<Person> data, OConstants oConstants) {
 
-        //توجد ام
-        if (oConstants.isHasMother()) {
+        //توجد اب
+        if (oConstants.isHasFather()) {
 
             // يوجد فرع وارث
             if (oConstants.isHasChildren()) {
@@ -22,20 +22,20 @@ public class MotherUtilis {
 
             } else { // لا يوجد فرع وارث
 
-                // يوجد اب
-                if (oConstants.isHasFather()) {
+                // يوجد ام
+                if (oConstants.isHasMother()) {
                     //TODO
                     //الباقي مناصفة بين الاب و الام بعد استيفاء اصحاب الفروض ( زوج / زوجه )
                     OConstants.setPersonSharePercent(data, OConstants.half, OConstants.PERSON_FATHER);
                     OConstants.setPersonSharePercent(data, OConstants.half, OConstants.PERSON_MOTHER);
-                } else { // لا يوجد اب
-                    // يوجد جدود لاب
-                    if (oConstants.isHasFather_GrandFather() || oConstants.isHasFather_GrandMother()) {
+                } else { // لا يوجد ام
+                    // يوجد جدود لام
+                    if (oConstants.isHasMother_GrandFather() || oConstants.isHasMother_GrandMother()) {
                         // TODO
-                        //نصيب الام الباقي بعد استيفاء اصحاب الفروض
+                        //نصيب الاب الباقي بعد استيفاء اصحاب الفروض
 
                     } else {
-                        // لا يوجد جدود لاب
+                        // لا يوجد جدود لام
                         // يوجد جمع اخوة
                         if (oConstants.isHasBrothersAndSisters() && OConstants.hasMoreThreeBrothersAndSisters(data)) {
 
@@ -55,31 +55,31 @@ public class MotherUtilis {
                 }
             }
 
-        } else { // لا توجد ام
+        } else { // لا يوجد اب
 
-            //يوجد جد او جدة لأم
-            if (oConstants.isHasMother_GrandFather() || oConstants.isHasMother_GrandMother()) {
+            //يوجد جد او جدة لأب
+            if (oConstants.isHasFather_GrandFather() || oConstants.isHasFather_GrandMother()) {
+
                 // نصيب الجدين معا = 1/6
-                if (oConstants.isHasMother_GrandFather() && oConstants.isHasMother_GrandMother()) {
-                    OConstants.setPersonSharePercent(data, OConstants.one_Twelve, OConstants.PERSON_MOTHER_GRANDFATHER);
-                    OConstants.setPersonSharePercent(data, OConstants.one_Twelve, OConstants.PERSON_MOTHER_GRANDMOTHER);
+                if (oConstants.isHasFather_GrandFather() && oConstants.isHasFather_GrandMother()) {
+                    OConstants.setPersonSharePercent(data, OConstants.one_Twelve, OConstants.PERSON_FATHER_GRANDFATHER); // نصيب جد لاب = 1/12
+                    OConstants.setPersonSharePercent(data, OConstants.one_Twelve, OConstants.PERSON_FATHER_GRANDMOTHER);// نصيب جدة لاب = 1/12
 
-                } else if (oConstants.isHasMother_GrandFather() && !oConstants.isHasMother_GrandMother()) {
-                    OConstants.setPersonSharePercent(data, OConstants.one_Sixth, OConstants.PERSON_MOTHER_GRANDFATHER); // نصيب جد لاب = 1/6
+                } else if (oConstants.isHasFather_GrandFather() && !oConstants.isHasFather_GrandMother()) {
+                    OConstants.setPersonSharePercent(data, OConstants.one_Sixth, OConstants.PERSON_FATHER_GRANDFATHER); // نصيب جد لاب = 1/6
 
-                } else if (!oConstants.isHasMother_GrandFather() && oConstants.isHasMother_GrandMother()) {
-                    OConstants.setPersonSharePercent(data, OConstants.one_Sixth, OConstants.PERSON_MOTHER_GRANDMOTHER);// نصيب جدة لاب = 1/6
+                } else if (!oConstants.isHasFather_GrandFather() && oConstants.isHasFather_GrandMother()) {
+                    OConstants.setPersonSharePercent(data, OConstants.one_Sixth, OConstants.PERSON_FATHER_GRANDMOTHER);// نصيب جدة لاب = 1/6
+
                 }
 
             } else {
-                // لا يوجد جد او جدة لأم
+                // لا يوجد جد او جدة لأب
 
-                // حساب نصيب الاب
-                FatherUtils.calculateFather(data, oConstants);
             }
         }
 
-        return data;
     }
+
 
 }
