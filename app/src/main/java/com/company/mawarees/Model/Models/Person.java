@@ -16,7 +16,7 @@ public class Person {
 
     private Fraction sharePercent;
 
-    private int shareValue;
+    private double shareValue;
 
     private int numberOfShares;
 
@@ -102,11 +102,12 @@ public class Person {
         this.sharePercent = sharePercent;
     }
 
-    public int getShareValue() {
+
+    public double getShareValue() {
         return shareValue;
     }
 
-    public void setShareValue(int shareValue) {
+    public void setShareValue(double shareValue) {
         this.shareValue = shareValue;
     }
 

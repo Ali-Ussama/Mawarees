@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey">
+
+<!--    <include-->
+<!--        android:id="@+id/toolbar"-->
+<!--        layout="@layout/common_toolbar_layout"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/standards_layout_container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/toolbar">-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:padding="12dp">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/how_much_money_tv_lbl"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="30dp"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:text="@string/how_much_money"-->
+<!--                android:textColor="@color/brown"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/how_much_money_et_value"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginEnd="30dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:background="@drawable/custom_white_rectangle_background"-->
+<!--                android:ems="10"-->
+<!--                android:gravity="center"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/how_much_money_tv_lbl"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/dead_person_gender_tv_lbl"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="10dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/dead_gender"-->
+<!--                android:textColor="@color/brown"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/how_much_money_tv_lbl"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/gender_layout" />-->
+
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/gender_layout"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="35dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/how_much_money_et_value"-->
+<!--                app:layout_constraintStart_toStartOf="@id/how_much_money_et_value"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/how_much_money_et_value">-->
+
+<!--                <Button-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@drawable/custom_white_rect_with_brown_borders"-->
+<!--                    android:text="أنثى"-->
+<!--                    android:textColor="@color/brown"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--                <Button-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@color/browLight"-->
+<!--                    android:text="ذكر"-->
+<!--                    android:textColor="@color/brown"-->
+<!--                    android:textSize="12sp" />-->
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/category_layout"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/how_much_money_tv_lbl"-->
+<!--                app:layout_constraintStart_toStartOf="@id/how_much_money_et_value"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/gender_layout">-->
+
+<!--                <Button-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@drawable/custom_white_rect_with_brown_borders"-->
+<!--                    android:text="@string/hanafy"-->
+<!--                    android:textColor="@color/brown"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--                <Button-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@drawable/custom_white_rect_with_brown_borders"-->
+<!--                    android:text="@string/maleky"-->
+<!--                    android:textColor="@color/brown"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--                <Button-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@drawable/custom_white_rect_with_brown_borders"-->
+<!--                    android:text="@string/shafeey"-->
+<!--                    android:textColor="@color/brown"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--                <Button-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@drawable/custom_white_rect_with_brown_borders"-->
+<!--                    android:text="@string/hanbaly"-->
+<!--                    android:textColor="@color/brown"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--            </LinearLayout>-->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--    </LinearLayout>-->
+
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/standards_layout_container"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/standards_layout_container"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/standards_layout_container">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:orientation="vertical">-->
+
+<!--            &lt;!&ndash;wife&ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:id="@+id/problem_activity_wife_layout_container"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/problem_activity_wife_value"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@color/white"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@string/default_zero"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@color/browLight"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@string/wife"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="12sp" />-->
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash;husband&ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:id="@+id/problem_activity_husband_layout_container"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:visibility="gone">-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/problem_activity_husband_value"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@color/dark_brown"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@string/man_dead"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@color/browLight"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@string/husband"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="12sp" />-->
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash;Alive Children&ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_alive_daughter_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/white"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/default_zero"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/alive_daughter"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_alive_son_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/white"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/default_zero"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/alive_son"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash;dead Children&ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_dead_daughter_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/white"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/default_zero"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/dead_daughter"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_dead_son_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/white"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/default_zero"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/dead_son"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash;Dad And Mom&ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_mother_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/dark_brown"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/woman_dead"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/mother"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_father_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/dark_brown"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/man_dead"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/father"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash;Dad GrandPa And GrandMa &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_father_grandma_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/dark_brown"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/woman_dead"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/father_grandma"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_father_grandpa_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/dark_brown"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/man_dead"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/father_grandpa"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash;Mom GrandPa And GrandMa &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_mother_grandma_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/dark_brown"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/woman_dead"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/mother_grandma"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_mother_grandpa_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/dark_brown"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/man_dead"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/mother_grandpa"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash;Brothers And Sisters &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_sisters_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/white"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/default_zero"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/sister"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_brothers_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/white"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/default_zero"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/brother"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash;Dad Uncles And Aunts &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_father_aunts_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/white"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/default_zero"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/father_aunts"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_father_uncles_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/white"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/default_zero"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/uncles"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash;Mom Uncles And Aunts &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_mother_aunts_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/white"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/default_zero"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/mother_aunts"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/problem_activity_mother_uncles_value"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/white"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/default_zero"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@color/browLight"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/mother_uncles"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="8dp"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/problem_activity_new_button"-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:background="@drawable/custom_brow_rectangle_background"-->
+<!--                    android:drawableStart="@drawable/ic_calculator_24"-->
+<!--                    android:text="@string/new_problem"-->
+<!--                    android:textColor="@color/white" />-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/problem_activity_solve_button"-->
+<!--                    android:layout_width="140dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:background="@drawable/custom_brow_rectangle_background"-->
+<!--                    android:drawableStart="@drawable/ic_hand_with_pen_24"-->
+<!--                    android:text="@string/solve_problem"-->
+<!--                    android:textColor="@color/white" />-->
+
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+<!--    </ScrollView>-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

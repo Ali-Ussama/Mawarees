@@ -1,9 +1,48 @@
 <resources>
-    <string name="app_name">Mawarees</string>
+
+    <string name="app_name">مواريث</string>
     <string name="how_much_money">مقدار التركة</string>
     <string name="dead_gender">جنس المتوفي</string>
     <string name="hanbaly">حنبلي</string>
     <string name="hanafy">حنفي</string>
     <string name="maleky">مالكي</string>
     <string name="shafeey">شافعي</string>
+
+    <string name="man_dead">متوفي</string>
+    <string name="husband">زوج</string>
+    <string name="default_zero">0</string>
+    <string name="wife">زوجة</string>
+    <string name="daughter_son">بنت بنت</string>
+    <string name="daughter_girl">ابن بنت</string>
+    <string name="son_boy">بنت ابن</string>
+    <string name="son_girl">ابن ابن</string>
+    <string name="alive_son">ابن حي</string>
+    <string name="alive_daughter">بنت حية</string>
+    <string name="dead_son">ابن متوفي</string>
+    <string name="dead_daughter">بنت متوفية</string>
+    <string name="father">أب</string>
+    <string name="woman_dead">متوفية</string>
+    <string name="mother">أم</string>
+    <string name="father_grandpa">جد لأب</string>
+    <string name="father_grandma">جدة لأب</string>
+    <string name="mother_grandpa">جد لأم</string>
+    <string name="mother_grandma">جدة لأم</string>
+    <string name="brother">أخ</string>
+    <string name="sister">أخت</string>
+    <string name="uncles">أعمام</string>
+    <string name="father_aunts">عمات</string>
+    <string name="mother_aunts">خالات</string>
+    <string name="mother_uncles">أخوال</string>
+    <string name="solve_problem">حل المسألة</string>
+    <string name="new_problem">مسألة جديدة</string>
+    <string name="female">أنثى</string>
+    <string name="male">ذكر</string>
+    <string name="str_ok_lbl">حسنا</string>
+    <string name="dead_child_number">الابن المتوفي رقم</string>
+    <string name="dead_daughter_number">البنت المتوفية رقم</string>
+    <string name="alive">حي</string>
+    <string name="required">مطلوب</string>
+    <string name="please_enter_people">من فضلك اختر الورثة</string>
+    <string name="solving_the_problem">جاري حل المسألة…</string>
+
 </resources>
