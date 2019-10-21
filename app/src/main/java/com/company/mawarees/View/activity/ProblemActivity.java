@@ -1,9 +1,11 @@
 package com.company.mawarees.View.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,7 +32,6 @@ import com.company.mawarees.View.adpters.DeadDaughterRVAdapter;
 import com.company.mawarees.View.adpters.DeadSonRVAdapter;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -118,6 +119,8 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
     public ArrayList<Person> mPeople;
     public OConstants oConstants;
 
+    private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +143,14 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             mPeople = new ArrayList<>();
             oConstants = new OConstants();
 
+            try {
+
+                mToolbar = AppUtils.setupToolbar(mCurrent, 1);
+                AppUtils.setToolbarTitle(mToolbar, getString(R.string.problem));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             //default values
             oConstants.setGender(OConstants.GENDER_MALE);
             oConstants.setHasWife(false);
@@ -893,25 +904,32 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
     }
 
     private void printOutput(ArrayList<Person> mPeople) {
-        String result = "";
+//        String result = "";
+//
+//        for (Person person : mPeople) {
+//            if (person.getBlocked() == null) {
+//
+//
+//                Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
+//                Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+//                Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
+//
+//                result += "--------------------------\n";
+//                result = person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+//                        "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+//
+//                result += "--------------------------\n";
+//                AppUtils.showAlertDialog(mCurrent, result);
+//            }
+//        }
 
-        for (Person person : mPeople) {
-            if (person.getBlocked() == null) {
-
-
-                Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
-                Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
-                Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
-
-                result += "--------------------------\n";
-                result = person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
-                        "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
-
-                result += "--------------------------\n";
-                AppUtils.showAlertDialog(mCurrent, result);
-            }
+        try {
+            Intent intent = new Intent(mCurrent, ResultActivity.class);
+            intent.putParcelableArrayListExtra("data", mPeople);
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
     }
 
     private void handleHasPersonOrNot() {

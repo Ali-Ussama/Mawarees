@@ -15,7 +15,8 @@
         <activity
             android:name=".View.activity.ResultActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|locale|screenSize|screenLayout|uiMode"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="InnerclassSeparator"/>
 
         <activity
             android:name=".View.activity.ProblemActivity"

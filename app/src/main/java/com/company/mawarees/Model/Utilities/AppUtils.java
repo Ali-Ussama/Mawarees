@@ -1,10 +1,14 @@
 package com.company.mawarees.Model.Utilities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -110,7 +114,36 @@ public class AppUtils {
         if (!materialDialog.isShowing()) materialDialog.show();
     }
 
+    public static Toolbar setupToolbar(AppCompatActivity activity, int homeIcon) {
+        Toolbar toolbar = ((Activity) activity).findViewById(R.id.toolbar);
+        activity.setSupportActionBar(toolbar);
+        if (activity.getSupportActionBar() != null) {
+            activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+            if (homeIcon == -1) {
+                activity.getSupportActionBar().setHomeButtonEnabled(false);
+                activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            } else if (homeIcon >= 0) {
+                activity.getSupportActionBar().setHomeButtonEnabled(true);
+                activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                //if (homeIcon >= 1)
+                //activity.getSupportActionBar().setHomeAsUpIndicator(homeIcon);
+            }
+            toolbar.setContentInsetsAbsolute(0, 0);
+            toolbar.getContentInsetEnd();
+            //toolbar.setPadding(16, 0, 16, 0);
+        }
+        return toolbar;
+    }
 
+    public static void setToolbarTitle(Toolbar toolbar, String title) {
+        TextView toolbarTitleTV = toolbar.findViewById(R.id.tv_toolbar_title);
+        if (toolbarTitleTV != null) toolbarTitleTV.setText(title);
+    }
+
+    public static void setToolbarHomeIcon(AppCompatActivity activity, int homeIcon) {
+        if (activity.getSupportActionBar() != null)
+            activity.getSupportActionBar().setHomeAsUpIndicator(homeIcon);
+    }
 }
 
 

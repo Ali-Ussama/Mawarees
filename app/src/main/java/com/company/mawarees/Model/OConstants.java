@@ -555,7 +555,7 @@ public class OConstants {
                 Log.i(TAG, "calculateShareValue(): X = " + X.getNumerator() + "/" + X.getDenominator());
 
             } else {
-                Log.i(TAG, "calculateShareValue(): person " + person.getRelation() + " Has Special Case");
+                Log.i(TAG, "calculateShareValue() : person " + person.getRelation() + " Has Special Case");
 
                 if (isRemainPerson(data, person))
                     specialCaseRemainPeople.add(person);

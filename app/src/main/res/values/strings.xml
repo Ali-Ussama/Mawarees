@@ -44,5 +44,18 @@
     <string name="required">مطلوب</string>
     <string name="please_enter_people">من فضلك اختر الورثة</string>
     <string name="solving_the_problem">جاري حل المسألة…</string>
+    <string name="problem">مسألة ميراث</string>
+    <string name="problem_origin">أصل المسألة</string>
+    <string name="total_money">قيمة التركة</string>
+    <string name="share_percent">نسبة النصيب</string>
+    <string name="share_percent_per_person">نسبة النصيب للفرد</string>
+    <string name="share_value">قيمة النصيب</string>
+    <string name="share_value_per_person">نصيب الفرد</string>
+    <string name="share">السهم</string>
+    <string name="share_per_person">السهم للفرد</string>
+    <string name="explanation">التحليل</string>
+    <string name="bla_bla">مقاسمة الباقي بعد نصيب اصحاب الفروض تعصيبا مع الابناء للذكر مثل حظ الانثيين</string>
+    <string name="prof">الدليل</string>
+    <string name="problem_result">تقسيم التركة</string>
 
 </resources>

@@ -1,6 +1,11 @@
 package com.company.mawarees.Model.Models;
 
-public class Person {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class Person implements Parcelable {
 
     private int id;
 
@@ -29,6 +34,37 @@ public class Person {
     private int deadSonNumber;
 
     private boolean alive;
+
+    protected Person(Parcel in) {
+        id = in.readInt();
+        count = in.readInt();
+        relation = in.readString();
+        gender = in.readString();
+        blocked = in.readString();
+        problemOrigin = in.readInt();
+        shareValue = in.readDouble();
+        numberOfShares = in.readInt();
+        explanation = in.readString();
+        forensicEvidence = in.readString();
+        videoUrl = in.readString();
+        deadSonNumber = in.readInt();
+        alive = in.readByte() != 0;
+    }
+
+    public Person() {
+    }
+
+    public static final Creator<Person> CREATOR = new Creator<Person>() {
+        @Override
+        public Person createFromParcel(Parcel in) {
+            return new Person(in);
+        }
+
+        @Override
+        public Person[] newArray(int size) {
+            return new Person[size];
+        }
+    };
 
     public int getDeadSonNumber() {
         return deadSonNumber;
@@ -143,4 +179,25 @@ public class Person {
         this.videoUrl = videoUrl;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(count);
+        dest.writeString(relation);
+        dest.writeString(gender);
+        dest.writeString(blocked);
+        dest.writeInt(problemOrigin);
+        dest.writeDouble(shareValue);
+        dest.writeInt(numberOfShares);
+        dest.writeString(explanation);
+        dest.writeString(forensicEvidence);
+        dest.writeString(videoUrl);
+        dest.writeInt(deadSonNumber);
+        dest.writeByte((byte) (alive ? 1 : 0));
+    }
 }
