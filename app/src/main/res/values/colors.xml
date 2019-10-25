@@ -5,13 +5,14 @@
     <color name="colorAccent">#d3b8ae</color>
 
 
+    <color name="orange">#AF8861</color>
     <color name="dark_brown">#8d6e63</color>
     <color name="dark_grey">#a4a4a4</color>
 
     <color name="grey">#efebe9</color>
     <color name="brown">#795548</color>
     <color name="browLight">#d3b8ae</color>
-    <color name="gold">#bfa471</color>
+    <color name="gold">#DBCCAD</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="color_red">#C62828</color>

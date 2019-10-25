@@ -62,15 +62,20 @@ public class BrothersUtils {
                     } else {
                         // يوجد اب او ام
                         // الاخوة محجوبين لوجود اب او ام او كلاهما
-                        OConstants.blockPerson(data, OConstants.PERSON_BROTHER);
-                        OConstants.blockPerson(data, OConstants.PERSON_SISTER);
+                        if (oConstants.isHasFather()) {
+                            OConstants.blockPerson(data, OConstants.PERSON_BROTHER, OConstants.PERSON_FATHER);
+                            OConstants.blockPerson(data, OConstants.PERSON_SISTER,  OConstants.PERSON_FATHER);
+                        }else if (oConstants.isHasMother()){
+                            OConstants.blockPerson(data, OConstants.PERSON_BROTHER,  OConstants.PERSON_MOTHER);
+                            OConstants.blockPerson(data, OConstants.PERSON_SISTER, OConstants.PERSON_MOTHER);
+                        }
                     }
 
                 } else {
                     // يوجد اولاد
                     // الاخوة محجوبين لوجود فرع وارث
-                    OConstants.blockPerson(data, OConstants.PERSON_BROTHER);
-                    OConstants.blockPerson(data, OConstants.PERSON_SISTER);
+                    OConstants.blockPerson(data, OConstants.PERSON_BROTHER, "أبناء");
+                    OConstants.blockPerson(data, OConstants.PERSON_SISTER, "أبناء");
                 }
             } else {
                 //لا يوجد اخوة

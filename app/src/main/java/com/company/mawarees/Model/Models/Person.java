@@ -35,6 +35,8 @@ public class Person implements Parcelable {
 
     private boolean alive;
 
+    private String blockedBy;
+
     protected Person(Parcel in) {
         id = in.readInt();
         count = in.readInt();
@@ -42,6 +44,7 @@ public class Person implements Parcelable {
         gender = in.readString();
         blocked = in.readString();
         problemOrigin = in.readInt();
+        sharePercent = in.readParcelable(getClass().getClassLoader());
         shareValue = in.readDouble();
         numberOfShares = in.readInt();
         explanation = in.readString();
@@ -49,9 +52,18 @@ public class Person implements Parcelable {
         videoUrl = in.readString();
         deadSonNumber = in.readInt();
         alive = in.readByte() != 0;
+        blockedBy = in.readString();
     }
 
     public Person() {
+    }
+
+    public String getBlockedBy() {
+        return blockedBy;
+    }
+
+    public void setBlockedBy(String blockedBy) {
+        this.blockedBy = blockedBy;
     }
 
     public static final Creator<Person> CREATOR = new Creator<Person>() {
@@ -192,6 +204,7 @@ public class Person implements Parcelable {
         dest.writeString(gender);
         dest.writeString(blocked);
         dest.writeInt(problemOrigin);
+        dest.writeParcelable(sharePercent, 1);
         dest.writeDouble(shareValue);
         dest.writeInt(numberOfShares);
         dest.writeString(explanation);
@@ -199,5 +212,6 @@ public class Person implements Parcelable {
         dest.writeString(videoUrl);
         dest.writeInt(deadSonNumber);
         dest.writeByte((byte) (alive ? 1 : 0));
+        dest.writeString(blockedBy);
     }
 }

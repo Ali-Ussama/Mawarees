@@ -788,7 +788,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
                 Log.i(TAG, "handleSolveProblem(): calculations are done");
 
-                printOutput(mPeople);
+                showResult(mPeople);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -797,31 +797,61 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
     private void validateBlockedPeople() {
         try {
-            if (oConstants.isHasChildren() || oConstants.isHasFather() || oConstants.isHasMother()) {
-                OConstants.blockPerson(mPeople, OConstants.PERSON_BROTHER);
-                OConstants.blockPerson(mPeople, OConstants.PERSON_SISTER);
-
-                OConstants.blockPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_AND_SISTER);
-                OConstants.blockPerson(mPeople, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
-
-                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLE);
-                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_AUNT);
-                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS);
-
-                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_UNCLE);
-                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_AUNT);
-                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
-
-            }
 
             if (oConstants.isHasFather()) {
-                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_GRANDFATHER);
-                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_GRANDMOTHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_GRANDFATHER, OConstants.PERSON_FATHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_GRANDMOTHER, OConstants.PERSON_FATHER);
+
+                OConstants.blockPerson(mPeople, OConstants.PERSON_BROTHER, OConstants.PERSON_FATHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_SISTER, OConstants.PERSON_FATHER);
+
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER, OConstants.PERSON_FATHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER, OConstants.PERSON_FATHER);
+
+                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLE, OConstants.PERSON_FATHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_AUNT, OConstants.PERSON_FATHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.PERSON_FATHER);
+
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_UNCLE, OConstants.PERSON_FATHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_AUNT, OConstants.PERSON_FATHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.PERSON_FATHER);
             }
 
             if (oConstants.isHasMother()) {
-                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_GRANDFATHER);
-                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_GRANDMOTHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_GRANDFATHER, OConstants.PERSON_MOTHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_GRANDMOTHER, OConstants.PERSON_MOTHER);
+
+                OConstants.blockPerson(mPeople, OConstants.PERSON_BROTHER, OConstants.PERSON_MOTHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_SISTER, OConstants.PERSON_MOTHER);
+
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER, OConstants.PERSON_MOTHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER, OConstants.PERSON_MOTHER);
+
+                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLE, OConstants.PERSON_MOTHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_AUNT, OConstants.PERSON_MOTHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.PERSON_MOTHER);
+
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_UNCLE, OConstants.PERSON_MOTHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_AUNT, OConstants.PERSON_MOTHER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.PERSON_MOTHER);
+            }
+
+            if (oConstants.isHasChildren()) {
+
+                OConstants.blockPerson(mPeople, OConstants.PERSON_BROTHER, "أبناء");
+                OConstants.blockPerson(mPeople, OConstants.PERSON_SISTER, "أبناء");
+
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER, "أبناء");
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER, "أبناء");
+
+                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLE, "أبناء");
+                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_AUNT, "أبناء");
+                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, "أبناء");
+
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_UNCLE, "أبناء");
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_AUNT, "أبناء");
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, "أبناء");
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -899,33 +929,38 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
         Log.i(TAG, "validatePeople(): isHasWife " + oConstants.isHasWife());
         Log.i(TAG, "validatePeople(): isHasHusband " + oConstants.isHasHusband());
 
-//        Log.i(TAG, "validatePeople(): moreThanThreeDaughters Count = " + OConstants.getPersonCount(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS));
-
     }
 
-    private void printOutput(ArrayList<Person> mPeople) {
-//        String result = "";
-//
-//        for (Person person : mPeople) {
-//            if (person.getBlocked() == null) {
-//
-//
-//                Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
-//                Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
-//                Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
-//
-//                result += "--------------------------\n";
-//                result = person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
-//                        "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
-//
-//                result += "--------------------------\n";
-//                AppUtils.showAlertDialog(mCurrent, result);
-//            }
-//        }
+    private void showResult(ArrayList<Person> mPeople) {
 
         try {
+
+            String result = "";
+
+            for (Person person : mPeople) {
+                try {
+                    if (person.getBlocked() == null) {
+
+
+                        Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
+                        Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+                        Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
+
+                        result = result.concat("--------------------------\n");
+                        result = person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                                "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+
+                        result = result.concat("--------------------------\n");
+
+                        Log.i(TAG, result);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             Intent intent = new Intent(mCurrent, ResultActivity.class);
             intent.putParcelableArrayListExtra("data", mPeople);
+            intent.putExtra(getString(R.string.intent_total_money), oConstants.getTotalMoney());
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
