@@ -564,6 +564,19 @@ public class OConstants {
         }
     }
 
+    public static void setPersonProofAndExplanation(ArrayList<Person> data, String relation, String explanation, String proof) {
+        try{
+            for (Person person : data) {
+                if (person.getRelation().matches(relation)){
+                    person.setExplanation(explanation);
+                    person.setProof(proof);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public static void calculateShareValue(ArrayList<Person> data, OConstants oConstants) {
 
         remain = oConstants.getTotalMoney();

@@ -149,8 +149,17 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
                 mShareValuePerPersonTV.setText(String.valueOf(getString(R.string.default_value)));
                 mSharesTV.setText(String.valueOf(person.getNumberOfShares()));
                 mSharesPerPersonTV.setText(String.valueOf(getString(R.string.default_value)));
-                mExplanationTV.setText(String.valueOf(getString(R.string.bla_bla)));
-                mProofTV.setText(String.valueOf(getString(R.string.bla_bla)));
+                if (person.getExplanation() != null) {
+                    mExplanationTV.setText(person.getExplanation());
+                } else {
+                    mExplanationTV.setText(String.valueOf(getString(R.string.bla_bla)));
+                }
+
+                if (person.getProof() != null) {
+                    mProofTV.setText(person.getProof());
+                } else {
+                    mProofTV.setText(String.valueOf(getString(R.string.bla_bla)));
+                }
             } else {
                 mTotalMoneyTV.setText(String.valueOf(totalMoney));
                 mProblemOriginTV.setText(String.valueOf(person.getProblemOrigin()));

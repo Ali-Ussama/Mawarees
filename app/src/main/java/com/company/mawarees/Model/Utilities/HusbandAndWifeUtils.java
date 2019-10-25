@@ -27,6 +27,7 @@ public class HusbandAndWifeUtils {
                     Log.i(TAG, "CalculateHusbandAndWife(): dead person has wife");
 
                     OConstants.setPersonSharePercent(data, OConstants.one_eighth, OConstants.PERSON_WIFE); // نصيب الزوجة 1/8
+                    OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_WIFE, ProofsAndExplanations.WifeProofs.E1, ProofsAndExplanations.WifeProofs.p1);
                     Log.i(TAG, "CalculateHusbandAndWife(): setting wife with 1/8");
                 } else {
 
@@ -43,6 +44,7 @@ public class HusbandAndWifeUtils {
                     Log.i(TAG, "CalculateHusbandAndWife(): dead person has husband");
 
                     OConstants.setPersonSharePercent(data, OConstants.quarter, OConstants.PERSON_HUSBAND); // نصيب الزوج 1/4
+                    OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_WIFE, ProofsAndExplanations.HusbandProofs.E1, ProofsAndExplanations.HusbandProofs.p1);
 
                     Log.i(TAG, "CalculateHusbandAndWife(): setting husband with 1/4");
 
@@ -67,6 +69,7 @@ public class HusbandAndWifeUtils {
 
                     // نصيب الزوجة 1/4
                     OConstants.setPersonSharePercent(data, OConstants.quarter, OConstants.PERSON_WIFE);
+                    OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_WIFE, ProofsAndExplanations.WifeProofs.E1, ProofsAndExplanations.WifeProofs.p1);
                     Log.i(TAG, "CalculateHusbandAndWife(): setting wife with 1/4");
 
                 } else {
@@ -84,6 +87,7 @@ public class HusbandAndWifeUtils {
                     Log.i(TAG, "CalculateHusbandAndWife(): dead person has husband");
 
                     OConstants.setPersonSharePercent(data, OConstants.half, OConstants.PERSON_HUSBAND);// نصيب الزوج 1/2
+                    OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_WIFE, ProofsAndExplanations.HusbandProofs.E1, ProofsAndExplanations.HusbandProofs.p1);
 
                 } else {
 
