@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.company.mawarees.Model.Callback.ItemSelectedListener;
@@ -83,6 +84,7 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
             mCurrent = ResultActivity.this;
             Toolbar mToolbar = AppUtils.setupToolbar(mCurrent, 1);
             AppUtils.setToolbarTitle(mToolbar, getString(R.string.problem_result));
+
             Log.i(TAG, "init() is Called 2");
 
             mPeople = getIntent().getParcelableArrayListExtra("data");
@@ -97,8 +99,9 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
             mRecyclerView.setNestedScrollingEnabled(true);
             mResultRVAdapter.setSelectedPerson(mPeople.get(0));
             mRecyclerView.setAdapter(mResultRVAdapter);
+            setViewsWithResult(mPeople.get(0));
+
             Log.i(TAG, "init() is Called 4");
-            mResultRVAdapter.setSelectedPerson(mPeople.get(0));
 
             Log.i(TAG, "init() people size = " + mPeople.size());
 
@@ -107,6 +110,16 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+
     }
 
     @Override

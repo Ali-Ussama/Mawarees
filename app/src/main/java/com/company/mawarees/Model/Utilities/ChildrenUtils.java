@@ -29,6 +29,7 @@ public class ChildrenUtils {
 
                 // نصيب البنت 1/2
                 OConstants.setPersonSharePercent(data, OConstants.half, OConstants.PERSON_DAUGHTER); // نصيب البنت
+                OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_DAUGHTER, ProofsAndExplanations.DaughterProofs.E1, ProofsAndExplanations.DaughterProofs.p1);
 
             } else if (daughters == 2) {
 
@@ -41,11 +42,14 @@ public class ChildrenUtils {
                     Log.i(TAG, "calculateChildren(): has 2 daughters");
 
                     OConstants.setPersonSharePercent(data, OConstants.fourteenth_FourtyEighth, OConstants.PERSON_DAUGHTER); // نصيب البنتين = 14/48
+                    OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_DAUGHTER, ProofsAndExplanations.DaughterProofs.E1, ProofsAndExplanations.DaughterProofs.p1);
 
                 } else if (OConstants.getSonsCount(data) == 1) {
                     Log.i(TAG, "calculateChildren(): has 1 son");
 
                     OConstants.setPersonSharePercent(data, OConstants.fourteenth_TwentyFourth, OConstants.PERSON_SON); // نصيب الولد = 14/24
+                    OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_SON, ProofsAndExplanations.SonProofs.E1, ProofsAndExplanations.SonProofs.p1);
+
                 }
             } else if (daughters > 2) {
                 Log.i(TAG, "calculateChildren(): has >= 3 daughters");
@@ -61,6 +65,8 @@ public class ChildrenUtils {
 
 
                 OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_More_Than_three_DAUGHTERS); //نصيب البنات = 2/3
+                OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_DAUGHTER, ProofsAndExplanations.DaughterProofs.E1, ProofsAndExplanations.DaughterProofs.p1);
+                OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_SON, ProofsAndExplanations.SonProofs.E1, ProofsAndExplanations.SonProofs.p1);
             }
         } else {
             Log.i(TAG, "calculateChildren(): has No children");

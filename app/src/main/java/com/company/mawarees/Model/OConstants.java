@@ -565,14 +565,14 @@ public class OConstants {
     }
 
     public static void setPersonProofAndExplanation(ArrayList<Person> data, String relation, String explanation, String proof) {
-        try{
+        try {
             for (Person person : data) {
-                if (person.getRelation().matches(relation)){
+                if (person.getRelation().matches(relation)) {
                     person.setExplanation(explanation);
                     person.setProof(proof);
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1096,6 +1096,8 @@ public class OConstants {
                         //When More than three brother and sister and has 1/3
                         Log.i(TAG, "handlePartnerPeople(): When More than three brother and sister and has 1/3");
                         setMoreThanThreeBrotherAndSister(data, person, one, oConstants.getTotalMoney());
+                    } else if (person.getRelation().matches(OConstants.PERSON_SISTER) && getPersonCount(data, OConstants.PERSON_SISTER) == 2 && getPersonCount(data, OConstants.PERSON_SON) == 0){
+                        //TODO two Sisters partners in two_third
                     }
                 }
             } catch (Exception e) {

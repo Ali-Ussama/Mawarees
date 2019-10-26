@@ -61,4 +61,9 @@
 
     <string name="intent_total_money">total money</string>
     <string name="intent_problem_origin">problem origin</string>
+    <string name="adnan">عدنان</string>
+    <string name="sunnah">السنّة</string>
+    <string name="sheaa">الشيعة</string>
+    <string name="doctrine">المذهب</string>
+    <string name="enter_money">ادخل المبلغ</string>
 </resources>

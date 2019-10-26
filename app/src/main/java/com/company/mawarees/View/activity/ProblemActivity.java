@@ -49,6 +49,21 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
     @BindView(R.id.problem_activity_dead_gender_female_btn)
     Button mDeadGenderFemale;
 
+    @BindView(R.id.doctrine_layout)
+    LinearLayout mDoctrineLayout;
+
+    @BindView(R.id.sunnah_category_layout)
+    LinearLayout mSunnahLayout;
+
+    @BindView(R.id.adnan_btn)
+    Button mAdnanBtn;
+
+    @BindView(R.id.sunnah_btn)
+    Button mSunnahBtn;
+
+    @BindView(R.id.sheaa_btn)
+    Button mSheaaBtn;
+
     @BindView(R.id.problem_activity_wife_layout_container)
     LinearLayout mWifeLayout;
 
@@ -167,6 +182,11 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             mMotherGrandPaValueTV.setOnClickListener(this);
             mMotherGrandMaValueTV.setOnClickListener(this);
             mSolveProblemBtn.setOnClickListener(this);
+            mNewProblemBtn.setOnClickListener(this);
+
+            mAdnanBtn.setOnClickListener(this);
+            mSunnahBtn.setOnClickListener(this);
+            mSheaaBtn.setOnClickListener(this);
 
             mWifeValueET.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -740,6 +760,37 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             handleDeadPersonTV(mMotherGrandMaValueTV, OConstants.PERSON_MOTHER_GRANDMOTHER, getString(R.string.woman_dead));
         } else if (view.equals(mSolveProblemBtn)) {
             handleSolveProblem();
+        } else if (view.equals(mAdnanBtn)) {
+            mSunnahLayout.setVisibility(View.GONE);
+
+            mAdnanBtn.setBackgroundColor(getResources().getColor(R.color.browLight));
+
+            mSunnahBtn.setBackground(getResources().getDrawable(R.drawable.custom_white_rect_with_brown_borders));
+
+            mSheaaBtn.setBackground(getResources().getDrawable(R.drawable.custom_white_rect_with_brown_borders));
+
+        } else if (view.equals(mSunnahBtn)) {
+
+            mSunnahLayout.setVisibility(View.VISIBLE);
+
+            mSunnahBtn.setBackgroundColor(getResources().getColor(R.color.browLight));
+
+            mAdnanBtn.setBackground(getResources().getDrawable(R.drawable.custom_white_rect_with_brown_borders));
+
+            mSheaaBtn.setBackground(getResources().getDrawable(R.drawable.custom_white_rect_with_brown_borders));
+        } else if (view.equals(mNewProblemBtn)) {
+            AppUtils.showConfirmationDialog(mCurrent, "هل تريد انشاء مسألة جديدة ؟", "نعم", "لا", new AppUtils.CallBack() {
+                @Override
+                public void OnPositiveClicked(MaterialDialog dlg) {
+                    resetViews();
+                    dlg.dismiss();
+                }
+
+                @Override
+                public void OnNegativeClicked(MaterialDialog dlg) {
+                    dlg.dismiss();
+                }
+            });
         }
 
     }
@@ -1145,6 +1196,42 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
             setHasOptions(OConstants.PERSON_HUSBAND, false);
             setHasOptions(OConstants.PERSON_WIFE, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void resetViews() {
+        try {
+            mTotalMoneyET.setText("");
+            mWifeValueET.setText("");
+            mAliveSonValueTV.setText("");
+            mAliveDaughterValueTV.setText("");
+            mDeadSonValueET.setText("");
+            mDeadDaughterValueET.setText("");
+            mBrothersValueTV.setText("");
+            mSistersValueTV.setText("");
+            mMotherUnclesValueTV.setText("");
+            mMotherAuntsValueTV.setText("");
+            mFatherUnclesValueTV.setText("");
+            mFatherAuntsValueTV.setText("");
+
+            mFatherValueTV.setText(getString(R.string.man_dead));
+            mFatherGrandPaValueTV.setText(getString(R.string.man_dead));
+            mMotherGrandPaValueTV.setText(getString(R.string.man_dead));
+
+            mMotherValueTV.setText(getString(R.string.woman_dead));
+            mMotherGrandMaValueTV.setText(getString(R.string.woman_dead));
+            mFatherGrandMaValueTV.setText(getString(R.string.woman_dead));
+
+            mHusbandValueTV.setText(getString(R.string.man_dead));
+            mWifeValueET.setText("");
+
+            handleDeadGenderMale();
+
+            mPeople.clear();
+            oConstants = new OConstants();
 
         } catch (Exception e) {
             e.printStackTrace();

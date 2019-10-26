@@ -32,7 +32,7 @@ public class ResultRVAdapter extends RecyclerView.Adapter<ResultRVAdapter.viewHo
         this.data = data;
         this.mContext = mContext;
         this.mListener = mListener;
-        selectedPerson = null;
+        selectedPerson = data.get(0);
     }
 
     @NonNull
