@@ -32,6 +32,9 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
     private ResultActivity mCurrent;
     private ResultRVAdapter mResultRVAdapter;
 
+    ArrayList<String> mRelation;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +59,15 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
             Log.i(TAG, "init() is Called 2");
 
             mPeople = getIntent().getParcelableArrayListExtra("data");
+            mRelation = new ArrayList<>();
+
+            initRelationsInArabic();
 
             LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mCurrent, LinearLayoutManager.HORIZONTAL, false);
             mResultRVAdapter = new ResultRVAdapter(mPeople, mCurrent, this);
 
             Log.i(TAG, "init() is Called 3");
+
 
             mRecyclerView.setLayoutManager(mLinearLayoutManager);
             mRecyclerView.setNestedScrollingEnabled(true);
@@ -77,10 +84,15 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
         }
     }
 
+    private void initRelationsInArabic() {
+
+    }
+
     @Override
     public void onItemSelected(Person person, int position) {
         try {
             mResultRVAdapter.setSelectedPerson(person);
+
             mResultRVAdapter.notifyDataSetChanged();
 
         } catch (Exception e) {

@@ -43,8 +43,7 @@ public class OConstants {
     public static final String PERSON_More_Than_three_DAUGHTERS = "MoreThanThreeDaughters";
     public static final String PERSON_MORE_THAN_BROTHER_OR_SISTER = "MoreThanBrotherOrSister";
     public static final String PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER = "MoreThanThreeBrotherAndSister";
-
-
+    
     public static final String PERSON_HUSBAND = "Husband";
     public static final String PERSON_WIFE = "Wife";
 
@@ -356,13 +355,12 @@ public class OConstants {
         return sum;
     }
 
-    public static ArrayList<Person> blockPerson(ArrayList<Person> data, String relation) {
+    public static void blockPerson(ArrayList<Person> data, String relation) {
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getRelation().matches(relation)) {
                 data.get(i).setBlocked(OConstants.BLOCKED);
             }
         }
-        return data;
     }
 
     /*----------------------------حالة الابن / البنت المتوفين و ابنائهم ---------------------------*/

@@ -26,7 +26,7 @@ public class ResultRVAdapter extends RecyclerView.Adapter<ResultRVAdapter.viewHo
     private Context mContext;
     private ItemSelectedListener mListener;
 
-    Person selectedPerson;
+    private Person selectedPerson;
 
     public ResultRVAdapter(ArrayList<Person> data, Context mContext, ItemSelectedListener mListener) {
         this.data = data;
