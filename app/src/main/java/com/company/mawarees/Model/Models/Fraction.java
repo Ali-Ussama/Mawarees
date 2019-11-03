@@ -105,4 +105,10 @@ public class Fraction implements Parcelable {
         parcel.writeInt(numerator);
         parcel.writeInt(denominator);
     }
+
+    public static boolean isEqual(Fraction f1, Fraction f2) {
+
+        return (f1.getNumerator() == f2.getNumerator() && f1.getDenominator() == f2.getDenominator());
+
+    }
 }

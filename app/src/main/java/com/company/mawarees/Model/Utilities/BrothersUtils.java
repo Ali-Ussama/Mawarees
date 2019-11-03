@@ -17,27 +17,45 @@ public class BrothersUtils {
         try {
             int sistersNumber = OConstants.getSistersCount(data) + (OConstants.getBrothersCount(data) * 2);
 
+            Log.i(TAG, "calculateBrothers() is called");
+            Log.i(TAG, "calculateBrothers() ");
+
             // has brothers or sisters or both
             if (OConstants.getPerson(data, OConstants.PERSON_BROTHER) != null || OConstants.getPerson(data, OConstants.PERSON_SISTER) != null) {
+
+                Log.i(TAG, "calculateBrothers() has brothers or sisters or both");
+
                 if (!oConstants.isHasChildren()) {
+                    Log.i(TAG, "calculateBrothers() No Children");
                     // لا يوجد اب او ام
                     if (!oConstants.isHasMother() && !oConstants.isHasFather()) {
+                        Log.i(TAG, "calculateBrothers() No Father or Mother");
 
                         //  لا يوجد جد او جدة لام و لاب و لا يوجد زوج او زوجة
                         if (!oConstants.isHasFather_GrandMother() && !oConstants.isHasFather_GrandFather() && !oConstants.isHasMother_GrandFather() && !oConstants.isHasMother_GrandMother()
-                                && (oConstants.getGender().matches(OConstants.GENDER_MALE) && !oConstants.isHasWife()) && (oConstants.getGender().matches(OConstants.GENDER_FEMALE) && !oConstants.isHasHusband())) {
+                                && ((oConstants.getGender().matches(OConstants.GENDER_MALE) && !oConstants.isHasWife()) || (oConstants.getGender().matches(OConstants.GENDER_FEMALE) && !oConstants.isHasHusband()))) {
+
+                            Log.i(TAG, "calculateBrothers() No GrandPa or GrandMa or Husband or Wife");
 
                             brothersConditions(data);
                         } else { // يوجد جدود او زوج/زوجة
+                            Log.i(TAG, "calculateBrothers() Has GrandPa or GrandMa or Husband or Wife");
 
                             // اخ/اخت واحد
                             if (OConstants.getBrothersCount(data) + OConstants.getSistersCount(data) == 1) {
+                                Log.i(TAG, "calculateBrothers() Has one sister or one brother");
+
                                 // نصيب الاخ / الاخت = 1/6
                                 if (OConstants.getBrothersCount(data) == 1) {
+
+                                    Log.i(TAG, "calculateBrothers() Has one sister tales 1/6");
+
                                     OConstants.setPersonSharePercent(data, OConstants.one_Sixth, OConstants.PERSON_BROTHER);
                                     OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_BROTHER, ProofsAndExplanations.BotherAndSistersProofs.ONE_BROTHER_OR_SISTER_E, ProofsAndExplanations.BotherAndSistersProofs.p1);
 
                                 } else if (OConstants.getSistersCount(data) == 1) {
+                                    Log.i(TAG, "calculateBrothers() Has one brother takes 1/6");
+
                                     OConstants.setPersonSharePercent(data, OConstants.one_Sixth, OConstants.PERSON_SISTER);
                                     OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_SISTER, ProofsAndExplanations.BotherAndSistersProofs.ONE_BROTHER_OR_SISTER_E, ProofsAndExplanations.BotherAndSistersProofs.p1);
                                 }
@@ -48,10 +66,10 @@ public class BrothersUtils {
 
                                 // شركاء في الثلث
                                 // كل على حسب النصيب ( ولد = 2 * البنت )
-                                Fraction sistersFraction = Fraction.divideFraction(OConstants.one_Third, new Fraction(sistersNumber, 1));
-                                Fraction brothersFraction = Fraction.multiplyFraction(sistersFraction, new Fraction(2, 1));
-                                OConstants.setPersonSharePercent(data, brothersFraction, OConstants.PERSON_BROTHER);
-                                OConstants.setPersonSharePercent(data, sistersFraction, OConstants.PERSON_SISTER);
+//                                Fraction sistersFraction = Fraction.divideFraction(OConstants.one_Third, new Fraction(sistersNumber, 1));
+//                                Fraction brothersFraction = Fraction.multiplyFraction(sistersFraction, new Fraction(2, 1));
+                                OConstants.setPersonSharePercent(data, OConstants.one_Third, OConstants.PERSON_BROTHER);
+                                OConstants.setPersonSharePercent(data, OConstants.one_Third, OConstants.PERSON_SISTER);
 
 
                                 //TODO
@@ -120,13 +138,19 @@ public class BrothersUtils {
 
     private static void brothersConditions(ArrayList<Person> data) {
         try {
+            Log.i(TAG, "brothersConditions(): is called");
+            Log.i(TAG, "brothersConditions(): ");
 
             if (OConstants.getBrothersCount(data) == 1 && OConstants.getSistersCount(data) == 0) { // اخ واحد
+                Log.i(TAG, "brothersConditions(): one brother takes all");
+
                 // نصيب الاخ = كل التركة
                 OConstants.setPersonSharePercent(data, OConstants.one, OConstants.PERSON_BROTHER);
                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_BROTHER, ProofsAndExplanations.BotherAndSistersProofs.TAKES_ALL_ONE_BROTHER_E, ProofsAndExplanations.BotherAndSistersProofs.p2);
 
             } else if (OConstants.getSistersCount(data) == 1 && OConstants.getBrothersCount(data) == 0) { // اخت واحدة
+                Log.i(TAG, "brothersConditions(): one sister takes half");
+
                 // نصيب الاخت = 1/2
                 OConstants.setPersonSharePercent(data, OConstants.half, OConstants.PERSON_SISTER);
                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_SISTER, ProofsAndExplanations.BotherAndSistersProofs.ONE_SISTER_AND_TAKES_HALF_E, ProofsAndExplanations.BotherAndSistersProofs.p2);
@@ -136,9 +160,11 @@ public class BrothersUtils {
                 calculateUnclesAndAunts(data);
 
             } else if (OConstants.getSistersCount(data) == 2 && OConstants.getBrothersCount(data) == 0) { // اختين
+                Log.i(TAG, "brothersConditions(): two sisters take 2/3");
+
                 // نصيب الاختين = 2/3
-                Fraction oneSisterSharePercent = Fraction.divideFraction(OConstants.two_Thirds, new Fraction(2, 1));
-                OConstants.setPersonSharePercent(data, oneSisterSharePercent, OConstants.PERSON_SISTER);
+//                Fraction oneSisterSharePercent = Fraction.divideFraction(OConstants.two_Thirds, new Fraction(2, 1));
+                OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_SISTER);
                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_SISTER, ProofsAndExplanations.BotherAndSistersProofs.TWO_THIRD_TWO_SISTERS_E, ProofsAndExplanations.BotherAndSistersProofs.p2);
 
                 //حساب نصيب الاعمام و الاخوال
@@ -146,14 +172,16 @@ public class BrothersUtils {
                 calculateUnclesAndAunts(data);
 
             } else if (OConstants.getBrothersCount(data) + OConstants.getSistersCount(data) >= 3) { // ثلاثة اخوة فأكثر
+                Log.i(TAG, "brothersConditions(): more than three brother and sister takes all");
+
                 // نصيب الاخوة = كل التركة
                 int brotherAndSistersCount = OConstants.getSistersCount(data) + (OConstants.getBrothersCount(data) * 2);
 
                 Fraction sistersFraction = Fraction.divideFraction(OConstants.one, new Fraction(brotherAndSistersCount, 1));
                 Fraction brothersFraction = Fraction.multiplyFraction(sistersFraction, new Fraction(2, 1));
 
-                OConstants.setPersonSharePercent(data, brothersFraction, OConstants.PERSON_BROTHER);
-                OConstants.setPersonSharePercent(data, sistersFraction, OConstants.PERSON_SISTER);
+                OConstants.setPersonSharePercent(data, OConstants.one, OConstants.PERSON_BROTHER);
+                OConstants.setPersonSharePercent(data, OConstants.one, OConstants.PERSON_SISTER);
 
                 //TODO
                 resetPerson(data, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
@@ -162,6 +190,7 @@ public class BrothersUtils {
 
                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_BROTHER, ProofsAndExplanations.BotherAndSistersProofs.MORE_THAN_THREE_BROTHER_AND_SISTER_E, ProofsAndExplanations.BotherAndSistersProofs.p2);
                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_SISTER, ProofsAndExplanations.BotherAndSistersProofs.MORE_THAN_THREE_BROTHER_AND_SISTER_E, ProofsAndExplanations.BotherAndSistersProofs.p2);
+                OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER, ProofsAndExplanations.BotherAndSistersProofs.MORE_THAN_THREE_BROTHER_AND_SISTER_E, ProofsAndExplanations.BotherAndSistersProofs.p2);
 
                 // نصيب الولد = 2 * نصيب البنت
             } else if (OConstants.getBrothersCount(data) + OConstants.getSistersCount(data) == 0) {
@@ -186,6 +215,7 @@ public class BrothersUtils {
 
             OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_FATHER_AUNT, ProofsAndExplanations.FatherUnclesProofs.E1, ProofsAndExplanations.FatherUnclesProofs.p1);
             OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_FATHER_UNCLE, ProofsAndExplanations.FatherUnclesProofs.E1, ProofsAndExplanations.FatherUnclesProofs.p1);
+            OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, ProofsAndExplanations.FatherUnclesProofs.E1, ProofsAndExplanations.FatherUnclesProofs.p1);
 
             // TODO
             // نصيب الاخوال = 1/2 الباقي
@@ -195,6 +225,7 @@ public class BrothersUtils {
 
             OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_MOTHER_AUNT, ProofsAndExplanations.MotherUnclesProofs.E1, ProofsAndExplanations.MotherUnclesProofs.p1);
             OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_MOTHER_UNCLE, ProofsAndExplanations.MotherUnclesProofs.E1, ProofsAndExplanations.MotherUnclesProofs.p1);
+            OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, ProofsAndExplanations.MotherUnclesProofs.E1, ProofsAndExplanations.MotherUnclesProofs.p1);
 
 
         } catch (Exception e) {

@@ -154,24 +154,53 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
             if (person.getBlocked() == null) {
                 mTotalMoneyTV.setText(String.valueOf(totalMoney));
                 mProblemOriginTV.setText(String.valueOf(person.getProblemOrigin()));
+
                 if (person.getSharePercent() != null) {
                     mSharePercentTV.setText(String.valueOf(person.getSharePercent().getNumerator()).concat("/").concat(String.valueOf(person.getSharePercent().getDenominator())));
+                } else {
+                    mSharePercentTV.setText(String.valueOf(getString(R.string.default_value)));
                 }
-                mSharePercentPerPersonTV.setText(String.valueOf(getString(R.string.default_value)));
-                mShareValueTV.setText(String.valueOf(person.getShareValue()));
-                mShareValuePerPersonTV.setText(String.valueOf(getString(R.string.default_value)));
+
+                if (person.getShareValue() > 0) {
+
+                    mShareValueTV.setText(String.valueOf(person.getShareValue()));
+
+                } else {
+
+                    mShareValueTV.setText(String.valueOf(getString(R.string.default_value)));
+
+                }
+
+                if (person.getEachPersonSharePercent() != null) {
+                    mSharePercentPerPersonTV.setText(String.valueOf(person.getEachPersonSharePercent().getNumerator()).concat("/").concat(String.valueOf(person.getEachPersonSharePercent().getDenominator())));
+                } else {
+                    mSharePercentPerPersonTV.setText(String.valueOf(getString(R.string.default_value)));
+                }
+
+                if (person.getEachPersonShareValue() > 0) {
+                    mShareValuePerPersonTV.setText(String.valueOf(person.getEachPersonShareValue()));
+                } else {
+                    mShareValuePerPersonTV.setText(String.valueOf(getString(R.string.default_value)));
+                }
+
+                if (person.getEachPersonNumberOfShares() > 0) {
+                    mSharesPerPersonTV.setText(String.valueOf(person.getEachPersonNumberOfShares()));
+                } else {
+                    mSharesPerPersonTV.setText(String.valueOf(getString(R.string.default_value)));
+
+                }
                 mSharesTV.setText(String.valueOf(person.getNumberOfShares()));
-                mSharesPerPersonTV.setText(String.valueOf(getString(R.string.default_value)));
+
                 if (person.getExplanation() != null) {
                     mExplanationTV.setText(person.getExplanation());
                 } else {
-                    mExplanationTV.setText(String.valueOf(getString(R.string.bla_bla)));
+                    mExplanationTV.setText(String.valueOf(getString(R.string.default_value)));
                 }
 
                 if (person.getProof() != null) {
                     mProofTV.setText(person.getProof());
                 } else {
-                    mProofTV.setText(String.valueOf(getString(R.string.bla_bla)));
+                    mProofTV.setText(String.valueOf(getString(R.string.default_value)));
                 }
             } else {
                 mTotalMoneyTV.setText(String.valueOf(totalMoney));
