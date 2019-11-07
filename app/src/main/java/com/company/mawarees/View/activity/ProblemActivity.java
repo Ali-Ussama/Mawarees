@@ -25,8 +25,10 @@ import com.company.mawarees.Model.Utilities.AppUtils;
 import com.company.mawarees.Model.Utilities.BrothersUtils;
 import com.company.mawarees.Model.Utilities.ChildrenUtils;
 import com.company.mawarees.Model.Utilities.FatherUtils;
+import com.company.mawarees.Model.Utilities.GrandPaAndGrandMaUtils;
 import com.company.mawarees.Model.Utilities.HusbandAndWifeUtils;
 import com.company.mawarees.Model.Utilities.MotherUtils;
+import com.company.mawarees.Model.Utilities.UnclesAndAuntsUtils;
 import com.company.mawarees.R;
 import com.company.mawarees.View.adpters.DeadDaughterRVAdapter;
 import com.company.mawarees.View.adpters.DeadSonRVAdapter;
@@ -149,6 +151,16 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            resetViews();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void init() {
@@ -829,12 +841,19 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                 FatherUtils.calculateFather(mPeople, oConstants);
 //                Log.i(TAG, "validatePeople(): moreThanThreeDaughters Count = " + OConstants.getPersonCount(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS) + " sharePercent = " + OConstants.getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS).getSharePercent().getNumerator() + "/" + OConstants.getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS).getSharePercent().getDenominator());
 
+                GrandPaAndGrandMaUtils.calculateGrandPaAndGrandMa(mPeople, oConstants);
+
                 BrothersUtils.calculateBrothers(mPeople, oConstants);
 //                Log.i(TAG, "validatePeople(): moreThanThreeDaughters Count = " + OConstants.getPersonCount(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS) + " sharePercent = " + OConstants.getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS).getSharePercent().getNumerator() + "/" + OConstants.getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS).getSharePercent().getDenominator());
+
+                UnclesAndAuntsUtils.calculate(mPeople, oConstants);
+
 
                 validateBlockedPeople();
                 OConstants.calculateShareValue(mPeople, oConstants);
 
+                OConstants.handleMoreThanBrotherAndSisterResult(mPeople, oConstants);
+                OConstants.handleMoreThanSonAndDaughter(mPeople, oConstants);
                 mProgressDlg.dismiss();
 
                 Log.i(TAG, "handleSolveProblem(): calculations are done");
@@ -848,6 +867,17 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
     private void validateBlockedPeople() {
         try {
+
+            if (OConstants.getPerson(mPeople, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER) != null) {
+
+                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLE, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_AUNT, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
+
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_UNCLE, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_AUNT, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
+                OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
+            }
 
             if (oConstants.isHasFather()) {
                 OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_GRANDFATHER, OConstants.PERSON_FATHER);
@@ -998,7 +1028,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                         Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
 
                         result = result.concat("--------------------------\n");
-                        result = person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                        result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
                                 "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
 
                         result = result.concat("--------------------------\n");
@@ -1232,6 +1262,8 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
             mPeople.clear();
             oConstants = new OConstants();
+            oConstants.setGender(OConstants.GENDER_MALE);
+            oConstants.isHandleChildrenGroup = false;
 
         } catch (Exception e) {
             e.printStackTrace();

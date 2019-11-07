@@ -19,9 +19,15 @@ public class Person implements Parcelable {
 
     private Fraction sharePercent;
 
+    private Fraction eachPersonSharePercent;
+
     private double shareValue;
 
+    private double eachPersonShareValue;
+
     private int numberOfShares;
+
+    private int eachPersonNumberOfShares;
 
     private String explanation;
 
@@ -43,8 +49,11 @@ public class Person implements Parcelable {
         blocked = in.readString();
         problemOrigin = in.readInt();
         sharePercent = in.readParcelable(getClass().getClassLoader());
+        eachPersonSharePercent = in.readParcelable(getClass().getClassLoader());
         shareValue = in.readDouble();
+        eachPersonShareValue = in.readDouble();
         numberOfShares = in.readInt();
+        eachPersonNumberOfShares = in.readInt();
         explanation = in.readString();
         proof = in.readString();
         videoUrl = in.readString();
@@ -148,6 +157,29 @@ public class Person implements Parcelable {
         this.sharePercent = sharePercent;
     }
 
+    public Fraction getEachPersonSharePercent() {
+        return eachPersonSharePercent;
+    }
+
+    public void setEachPersonSharePercent(Fraction eachPersonSharePercent) {
+        this.eachPersonSharePercent = eachPersonSharePercent;
+    }
+
+    public double getEachPersonShareValue() {
+        return eachPersonShareValue;
+    }
+
+    public void setEachPersonShareValue(double eachPersonShareValue) {
+        this.eachPersonShareValue = eachPersonShareValue;
+    }
+
+    public int getEachPersonNumberOfShares() {
+        return eachPersonNumberOfShares;
+    }
+
+    public void setEachPersonNumberOfShares(int eachPersonNumberOfShares) {
+        this.eachPersonNumberOfShares = eachPersonNumberOfShares;
+    }
 
     public double getShareValue() {
         return shareValue;
@@ -203,8 +235,11 @@ public class Person implements Parcelable {
         dest.writeString(blocked);
         dest.writeInt(problemOrigin);
         dest.writeParcelable(sharePercent, 1);
+        dest.writeParcelable(eachPersonSharePercent, 2);
         dest.writeDouble(shareValue);
+        dest.writeDouble(eachPersonShareValue);
         dest.writeInt(numberOfShares);
+        dest.writeInt(eachPersonNumberOfShares);
         dest.writeString(explanation);
         dest.writeString(proof);
         dest.writeString(videoUrl);
