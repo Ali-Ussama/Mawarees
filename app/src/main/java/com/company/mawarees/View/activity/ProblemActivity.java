@@ -153,6 +153,16 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            resetViews();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void init() {
         try {
 
@@ -1252,6 +1262,8 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
             mPeople.clear();
             oConstants = new OConstants();
+            oConstants.setGender(OConstants.GENDER_MALE);
+            oConstants.isHandleChildrenGroup = false;
 
         } catch (Exception e) {
             e.printStackTrace();

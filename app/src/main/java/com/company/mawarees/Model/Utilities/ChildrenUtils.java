@@ -58,12 +58,11 @@ public class ChildrenUtils {
                 // نصيب البنات = 2/3
                 // نصيب البنت = نصيب البنت / عدد البنات
                 // نصيب الولد = نصيب البنت * 2
-                Fraction daughterFraction = Fraction.divideFraction(OConstants.two_Thirds, new Fraction(daughters, 1));
-                Fraction sonsFraction = Fraction.multiplyFraction(daughterFraction, new Fraction(2, 1));
-                OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_SON); // نصيب الولد
+               OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_SON); // نصيب الولد
                 OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_DAUGHTER); // نصيب البنت
 
                 OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_More_Than_three_DAUGHTERS); //نصيب البنات = 2/3
+
                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_DAUGHTER, ProofsAndExplanations.DaughterProofs.E1, ProofsAndExplanations.DaughterProofs.p1);
                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_SON, ProofsAndExplanations.SonProofs.E1, ProofsAndExplanations.SonProofs.p1);
             }
