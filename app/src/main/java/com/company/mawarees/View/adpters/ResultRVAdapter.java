@@ -32,6 +32,7 @@ public class ResultRVAdapter extends RecyclerView.Adapter<ResultRVAdapter.viewHo
         this.data = data;
         this.mContext = mContext;
         this.mListener = mListener;
+        selectedPerson = data.get(0);
     }
 
     @NonNull
@@ -58,15 +59,20 @@ public class ResultRVAdapter extends RecyclerView.Adapter<ResultRVAdapter.viewHo
 
             Log.i(TAG, "onBindViewHolder is Called");
 
-            if (data.get(position).getRelation().matches(selectedPerson.getRelation())) {
+            if (selectedPerson != null) {
+                if (!data.get(position).getRelation().matches(selectedPerson.getRelation())) {
+//
+                    holder.mPersonNameTV.setBackgroundColor(mContext.getResources().getColor(R.color.gold));
+                    holder.mPersonNameTV.setText(data.get(position).getRelation());
 
-                holder.mPersonNameTV.setBackgroundColor(mContext.getResources().getColor(R.color.grey));
-                holder.mPersonNameTV.setTextColor(mContext.getResources().getColor(R.color.dark_brown));
-
+                } else {
+                    holder.mPersonNameTV.setBackgroundColor(mContext.getResources().getColor(R.color.grey));
+                    holder.mPersonNameTV.setText(data.get(position).getRelation());
+                }
             } else {
                 holder.mPersonNameTV.setText(data.get(position).getRelation());
             }
-
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,13 +109,18 @@ public class ResultRVAdapter extends RecyclerView.Adapter<ResultRVAdapter.viewHo
                     }
                 });
 
-                mPersonNameTV.setOnClickListener(new View.OnClickListener() {
+                itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         try {
                             Log.i(TAG, "mPersonNameTV onClickListener is called");
+
+
+                            mPersonNameTV.setBackgroundColor(mContext.getResources().getColor(R.color.grey));
+                            selectedPerson = data.get(getAdapterPosition());
                             mListener.onItemSelected(data.get(getAdapterPosition()), getAdapterPosition());
                             notifyDataSetChanged();
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

@@ -3,8 +3,6 @@ package com.company.mawarees.Model.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 public class Person implements Parcelable {
 
     private int id;
@@ -27,13 +25,15 @@ public class Person implements Parcelable {
 
     private String explanation;
 
-    private String forensicEvidence;
+    private String proof;
 
     private String videoUrl;
 
     private int deadSonNumber;
 
     private boolean alive;
+
+    private String blockedBy;
 
     protected Person(Parcel in) {
         id = in.readInt();
@@ -42,16 +42,26 @@ public class Person implements Parcelable {
         gender = in.readString();
         blocked = in.readString();
         problemOrigin = in.readInt();
+        sharePercent = in.readParcelable(getClass().getClassLoader());
         shareValue = in.readDouble();
         numberOfShares = in.readInt();
         explanation = in.readString();
-        forensicEvidence = in.readString();
+        proof = in.readString();
         videoUrl = in.readString();
         deadSonNumber = in.readInt();
         alive = in.readByte() != 0;
+        blockedBy = in.readString();
     }
 
     public Person() {
+    }
+
+    public String getBlockedBy() {
+        return blockedBy;
+    }
+
+    public void setBlockedBy(String blockedBy) {
+        this.blockedBy = blockedBy;
     }
 
     public static final Creator<Person> CREATOR = new Creator<Person>() {
@@ -163,12 +173,12 @@ public class Person implements Parcelable {
         this.explanation = explanation;
     }
 
-    public String getForensicEvidence() {
-        return forensicEvidence;
+    public String getProof() {
+        return proof;
     }
 
-    public void setForensicEvidence(String forensicEvidence) {
-        this.forensicEvidence = forensicEvidence;
+    public void setProof(String proof) {
+        this.proof = proof;
     }
 
     public String getVideoUrl() {
@@ -192,12 +202,14 @@ public class Person implements Parcelable {
         dest.writeString(gender);
         dest.writeString(blocked);
         dest.writeInt(problemOrigin);
+        dest.writeParcelable(sharePercent, 1);
         dest.writeDouble(shareValue);
         dest.writeInt(numberOfShares);
         dest.writeString(explanation);
-        dest.writeString(forensicEvidence);
+        dest.writeString(proof);
         dest.writeString(videoUrl);
         dest.writeInt(deadSonNumber);
         dest.writeByte((byte) (alive ? 1 : 0));
+        dest.writeString(blockedBy);
     }
 }

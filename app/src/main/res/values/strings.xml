@@ -11,6 +11,7 @@
     <string name="man_dead">متوفي</string>
     <string name="husband">زوج</string>
     <string name="default_zero">0</string>
+    <string name="default_value">--</string>
     <string name="wife">زوجة</string>
     <string name="daughter_son">بنت بنت</string>
     <string name="daughter_girl">ابن بنت</string>
@@ -58,6 +59,11 @@
     <string name="prof">الدليل</string>
     <string name="problem_result">تقسيم التركة</string>
 
-
-
+    <string name="intent_total_money">total money</string>
+    <string name="intent_problem_origin">problem origin</string>
+    <string name="adnan">عدنان</string>
+    <string name="sunnah">السنّة</string>
+    <string name="sheaa">الشيعة</string>
+    <string name="doctrine">المذهب</string>
+    <string name="enter_money">ادخل المبلغ</string>
 </resources>

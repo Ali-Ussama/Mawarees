@@ -12,47 +12,82 @@ public class OConstants {
     private static final String TAG = "OConstants";
 
 
-    public static final String PERSON_FATHER = "Father";
-    public static final String PERSON_FATHER_GRANDFATHER = "F_Grandfather";
-    public static final String PERSON_FATHER_GRANDMOTHER = "F_Grandmother";
-    public static final String PERSON_FATHER_UNCLE = "F_Uncle";
-    public static final String PERSON_FATHER_AUNT = "F_Aunt";
-    public static final String PERSON_FATHER_UNCLES_AND_AUNTS = "Father Uncles And Aunts";
-
-    public static final String PERSON_MOTHER = "Mother";
-    public static final String PERSON_MOTHER_GRANDFATHER = "M_Grandfather";
-    public static final String PERSON_MOTHER_GRANDMOTHER = "M_Grandmother";
-    public static final String PERSON_MOTHER_UNCLE = "M_Uncle";
-    public static final String PERSON_MOTHER_AUNT = "M_Aunt";
-    public static final String PERSON_MOTHER_UNCLES_AND_AUNTS = "Mother Uncles And Aunts";
-
-    public static final String PERSON_SON = "Son";
-    public static final String PERSON_SON_BOY = "SonNephew";
-    public static final String PERSON_SON_GIRL = "SonNiece";
-
-    public static final String PERSON_DAUGHTER = "Daughter";
-    public static final String PERSON_DAUGHTER_BOY = "DaughterNephew";
-    public static final String PERSON_DAUGHTER_GIRL = "DaughterNiece";
-
-    public static final String PERSON_BROTHER = "Brother";
-    public static final String PERSON_SISTER = "Sister";
-
-    public static final String PERSON_More_Than_three_SISTERS = "MoreThanThreeSisters";
-    public static final String PERSON_MORE_THAN_BROTHER_AND_SISTER = "MoreThanBrotherAndSister";
-
-    public static final String PERSON_More_Than_three_DAUGHTERS = "MoreThanThreeDaughters";
-    public static final String PERSON_MORE_THAN_BROTHER_OR_SISTER = "MoreThanBrotherOrSister";
-    public static final String PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER = "MoreThanThreeBrotherAndSister";
-    
-    public static final String PERSON_HUSBAND = "Husband";
-    public static final String PERSON_WIFE = "Wife";
-
-    public static final String GENDER_MALE = "Male";
-    public static final String GENDER_FEMALE = "Female";
+//    public static final String PERSON_FATHER = "Father";
+//    public static final String PERSON_FATHER_GRANDFATHER = "F_Grandfather";
+//    public static final String PERSON_FATHER_GRANDMOTHER = "F_Grandmother";
+//    public static final String PERSON_FATHER_UNCLE = "F_Uncle";
+//    public static final String PERSON_FATHER_AUNT = "F_Aunt";
+//    public static final String PERSON_FATHER_UNCLES_AND_AUNTS = "Father Uncles And Aunts";
+//
+//    public static final String PERSON_MOTHER = "Mother";
+//    public static final String PERSON_MOTHER_GRANDFATHER = "M_Grandfather";
+//    public static final String PERSON_MOTHER_GRANDMOTHER = "M_Grandmother";
+//    public static final String PERSON_MOTHER_UNCLE = "M_Uncle";
+//    public static final String PERSON_MOTHER_AUNT = "M_Aunt";
+//    public static final String PERSON_MOTHER_UNCLES_AND_AUNTS = "Mother Uncles And Aunts";
+//
+//    public static final String PERSON_SON = "Son";
+//    public static final String PERSON_SON_BOY = "SonNephew";
+//    public static final String PERSON_SON_GIRL = "SonNiece";
+//
+//    public static final String PERSON_DAUGHTER = "Daughter";
+//    public static final String PERSON_DAUGHTER_BOY = "DaughterNephew";
+//    public static final String PERSON_DAUGHTER_GIRL = "DaughterNiece";
+//
+//    public static final String PERSON_BROTHER = "Brother";
+//    public static final String PERSON_SISTER = "Sister";
+//
+//    public static final String PERSON_More_Than_three_DAUGHTERS = "MoreThanThreeDaughters";
+//    public static final String PERSON_MORE_THAN_BROTHER_OR_SISTER = "MoreThanBrotherOrSister";
+//    public static final String PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER = "MoreThanThreeBrotherAndSister";
+//
+//
+//    public static final String PERSON_HUSBAND = "Husband";
+//    public static final String PERSON_WIFE = "Wife";
+//
+//    public static final String GENDER_MALE = "Male";
+//    public static final String GENDER_FEMALE = "Female";
 
     public static final String BLOCKED = "Blocked";
     public static final String NOT_BLOCKED = "NotBlocked";
 
+
+    public static final String PERSON_FATHER = "أب";
+    public static final String PERSON_FATHER_GRANDFATHER = "جد لأب";
+    public static final String PERSON_FATHER_GRANDMOTHER = "جدة لأب";
+    public static final String PERSON_FATHER_UNCLE = "عم";
+    public static final String PERSON_FATHER_AUNT = "عمة";
+    public static final String PERSON_FATHER_UNCLES_AND_AUNTS = "الأعمام";
+
+    public static final String PERSON_MOTHER = "أم";
+    public static final String PERSON_MOTHER_GRANDFATHER = "جد لأم";
+    public static final String PERSON_MOTHER_GRANDMOTHER = "جدة لأم";
+    public static final String PERSON_MOTHER_UNCLE = "خال";
+    public static final String PERSON_MOTHER_AUNT = "خالة";
+    public static final String PERSON_MOTHER_UNCLES_AND_AUNTS = "الأخوال";
+
+    public static final String PERSON_SON = "ابن";
+    public static final String PERSON_SON_BOY = "ابن الإبن";
+    public static final String PERSON_SON_GIRL = "بنت الإبن";
+
+
+    public static final String PERSON_DAUGHTER = "بنت";
+    public static final String PERSON_DAUGHTER_BOY = "ابن البنت";
+    public static final String PERSON_DAUGHTER_GIRL = "بنت البنت";
+
+    public static final String PERSON_BROTHER = "أخ";
+    public static final String PERSON_SISTER = "أخت";
+
+    public static final String PERSON_More_Than_three_DAUGHTERS = "أكثر من ثلاثة بنات";
+    public static final String PERSON_MORE_THAN_BROTHER_OR_SISTER = "أكثر من أخ";
+    public static final String PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER = "جمع أخوة";
+
+
+    public static final String PERSON_HUSBAND = "الزوج";
+    public static final String PERSON_WIFE = "الزوجة";
+
+    public static final String GENDER_MALE = "ذكر";
+    public static final String GENDER_FEMALE = "أنثى";
     /*------------------------------------------------ النسب -------------------------------------*/
 
     public static final Fraction one = new Fraction(24, 24); // واحد صحيح
@@ -355,10 +390,12 @@ public class OConstants {
         return sum;
     }
 
-    public static void blockPerson(ArrayList<Person> data, String relation) {
+
+    public static void blockPerson(ArrayList<Person> data, String relation, String blockedBy) {
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getRelation().matches(relation)) {
                 data.get(i).setBlocked(OConstants.BLOCKED);
+                data.get(i).setBlockedBy(blockedBy);
             }
         }
     }
@@ -525,6 +562,19 @@ public class OConstants {
                 Fraction mNewFraction = new Fraction(fraction.getNumerator(), fraction.getDenominator());
                 data.get(i).setSharePercent(mNewFraction);
             }
+        }
+    }
+
+    public static void setPersonProofAndExplanation(ArrayList<Person> data, String relation, String explanation, String proof) {
+        try {
+            for (Person person : data) {
+                if (person.getRelation().matches(relation)) {
+                    person.setExplanation(explanation);
+                    person.setProof(proof);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -706,7 +756,7 @@ public class OConstants {
         Log.i(TAG, "setMoreThanBrotherAndSister(): is called");
         ;
         int girlsCount = OConstants.getPersonsInGirlsCount(data, OConstants.PERSON_BROTHER, OConstants.PERSON_SISTER);
-        Person person1 = getPerson(data, OConstants.PERSON_MORE_THAN_BROTHER_AND_SISTER);
+        Person person1 = getPerson(data, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER);
         if (person1 != null && person1.getSharePercent() != null) {
             Fraction newFraction = new Fraction(person1.getSharePercent().getNumerator(), person1.getSharePercent().getDenominator());
 
@@ -1047,6 +1097,8 @@ public class OConstants {
                         //When More than three brother and sister and has 1/3
                         Log.i(TAG, "handlePartnerPeople(): When More than three brother and sister and has 1/3");
                         setMoreThanThreeBrotherAndSister(data, person, one, oConstants.getTotalMoney());
+                    } else if (person.getRelation().matches(OConstants.PERSON_SISTER) && getPersonCount(data, OConstants.PERSON_SISTER) == 2 && getPersonCount(data, OConstants.PERSON_SON) == 0){
+                        //TODO two Sisters partners in two_third
                     }
                 }
             } catch (Exception e) {

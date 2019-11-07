@@ -1,18 +1,40 @@
 package com.company.mawarees.Model.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
-public class Fraction {
+public class Fraction implements Parcelable {
 
     private static final String TAG = "Fraction";
 
     private int numerator; // البسط
     private int denominator; // المقام
 
+    public Fraction() {
+    }
+
     public Fraction(int numerator, int denominator) {
         this.numerator = numerator;
         this.denominator = denominator;
     }
+
+    protected Fraction(Parcel in) {
+        numerator = in.readInt();
+        denominator = in.readInt();
+    }
+
+    public static final Creator<Fraction> CREATOR = new Creator<Fraction>() {
+        @Override
+        public Fraction createFromParcel(Parcel in) {
+            return new Fraction(in);
+        }
+
+        @Override
+        public Fraction[] newArray(int size) {
+            return new Fraction[size];
+        }
+    };
 
     public int getNumerator() {
         return numerator;
@@ -71,5 +93,16 @@ public class Fraction {
 
         f1.setDenominator(f2.getNumerator());
         return f1;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(numerator);
+        parcel.writeInt(denominator);
     }
 }
