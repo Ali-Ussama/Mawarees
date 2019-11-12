@@ -853,7 +853,10 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                 OConstants.calculateShareValue(mPeople, oConstants);
 
                 OConstants.handleMoreThanBrotherAndSisterResult(mPeople, oConstants);
-                OConstants.handleMoreThanSonAndDaughter(mPeople, oConstants);
+                OConstants.handleMoreThanSonAndDaughterResult(mPeople, oConstants);
+                OConstants.handleFatherUncleAndAuntsResult(mPeople);
+                OConstants.handleMotherUncleAndAuntsResult(mPeople);
+                OConstants.handleWivesResult(mPeople);
                 mProgressDlg.dismiss();
 
                 Log.i(TAG, "handleSolveProblem(): calculations are done");

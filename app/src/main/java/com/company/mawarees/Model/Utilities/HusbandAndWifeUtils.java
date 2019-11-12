@@ -28,6 +28,13 @@ public class HusbandAndWifeUtils {
 
                     OConstants.setPersonSharePercent(data, OConstants.one_eighth, OConstants.PERSON_WIFE); // نصيب الزوجة 1/8
                     OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_WIFE, ProofsAndExplanations.WifeProofs.E1, ProofsAndExplanations.WifeProofs.p1);
+
+                    if (OConstants.getPersonCount(data, OConstants.PERSON_WIFE) > 1) {
+                        createAlivePerson(data, OConstants.getPersonCount(data, OConstants.PERSON_WIFE), OConstants.PERSON_MORE_THAN_WIFE, OConstants.GENDER_FEMALE, true);
+                        OConstants.setPersonSharePercent(data, OConstants.one_eighth, OConstants.PERSON_MORE_THAN_WIFE);
+                        OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_MORE_THAN_WIFE, ProofsAndExplanations.WifeProofs.E1, ProofsAndExplanations.WifeProofs.p1);
+                    }
+
                     Log.i(TAG, "CalculateHusbandAndWife(): setting wife with 1/8");
                 } else {
 
@@ -44,7 +51,7 @@ public class HusbandAndWifeUtils {
                     Log.i(TAG, "CalculateHusbandAndWife(): dead person has husband");
 
                     OConstants.setPersonSharePercent(data, OConstants.quarter, OConstants.PERSON_HUSBAND); // نصيب الزوج 1/4
-                    OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_WIFE, ProofsAndExplanations.HusbandProofs.E1, ProofsAndExplanations.HusbandProofs.p1);
+                    OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_HUSBAND, ProofsAndExplanations.HusbandProofs.E1, ProofsAndExplanations.HusbandProofs.p1);
 
                     Log.i(TAG, "CalculateHusbandAndWife(): setting husband with 1/4");
 
@@ -70,6 +77,13 @@ public class HusbandAndWifeUtils {
                     // نصيب الزوجة 1/4
                     OConstants.setPersonSharePercent(data, OConstants.quarter, OConstants.PERSON_WIFE);
                     OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_WIFE, ProofsAndExplanations.WifeProofs.E1, ProofsAndExplanations.WifeProofs.p1);
+
+                    if (OConstants.getPersonCount(data, OConstants.PERSON_WIFE) > 1) {
+                        createAlivePerson(data, OConstants.getPersonCount(data, OConstants.PERSON_WIFE), OConstants.PERSON_MORE_THAN_WIFE, OConstants.GENDER_FEMALE, true);
+                        OConstants.setPersonSharePercent(data, OConstants.quarter, OConstants.PERSON_MORE_THAN_WIFE);
+                        OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_MORE_THAN_WIFE, ProofsAndExplanations.WifeProofs.E1, ProofsAndExplanations.WifeProofs.p1);
+                    }
+
                     Log.i(TAG, "CalculateHusbandAndWife(): setting wife with 1/4");
 
                 } else {
@@ -87,7 +101,7 @@ public class HusbandAndWifeUtils {
                     Log.i(TAG, "CalculateHusbandAndWife(): dead person has husband");
 
                     OConstants.setPersonSharePercent(data, OConstants.half, OConstants.PERSON_HUSBAND);// نصيب الزوج 1/2
-                    OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_WIFE, ProofsAndExplanations.HusbandProofs.E1, ProofsAndExplanations.HusbandProofs.p1);
+                    OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_HUSBAND, ProofsAndExplanations.HusbandProofs.E1, ProofsAndExplanations.HusbandProofs.p1);
 
                 } else {
 
@@ -98,4 +112,25 @@ public class HusbandAndWifeUtils {
             }
         }
     }
+
+    private static void createAlivePerson(ArrayList<Person> data, int size, String relation, String gender, boolean isAlive) {
+        try {
+
+            Person person = new Person();
+            person.setAlive(isAlive);
+            person.setCount(size);
+            person.setRelation(relation);
+            person.setGender(gender);
+            person.setDeadSonNumber(-1);
+
+            data.add(person);
+
+
+            Log.i(TAG, "createAlivePerson() person relation = " + relation + " & Alive = " + isAlive + " & gender = " + gender + " created");
+            Log.i(TAG, "createAlivePerson() people size = " + data.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

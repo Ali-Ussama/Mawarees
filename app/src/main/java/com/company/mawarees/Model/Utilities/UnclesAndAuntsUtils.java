@@ -46,25 +46,34 @@ public class UnclesAndAuntsUtils {
                         // Has No Husband or Wife
                         Log.i(TAG, "calculate(): Has No Husband or Wife");
 
-                        int brotherAndSistersCount = OConstants.getSistersCount(data) + (OConstants.getBrothersCount(data));
+                        if (oConstants.isHasFather() || oConstants.isHasMother()) {
+                            // Has Father os Mother
+                            Log.i(TAG, "calculate(): Has Father os Mother");
 
-                        if (brotherAndSistersCount == 1) {
-                            Log.i(TAG, "calculate(): Has one sister");
+                        } else {
+                            // Has No Father os Mother
+                            Log.i(TAG, "calculate(): Has No Father os Mother");
 
-                            handleFatherUnclesAndAunts(data, OConstants.half, OConstants.quarter);
-                            handleMotherUnclesAndAunts(data, OConstants.half, OConstants.quarter);
+                            int brotherAndSistersCount = OConstants.getSistersCount(data) + (OConstants.getBrothersCount(data));
 
-                        } else if (brotherAndSistersCount == 2) {
-                            Log.i(TAG, "calculate():  Has two sisters");
+                            if (brotherAndSistersCount == 1) {
+                                Log.i(TAG, "calculate(): Has one sister");
 
-                            handleFatherUnclesAndAunts(data, OConstants.half, OConstants.quarter);
-                            handleMotherUnclesAndAunts(data, OConstants.half, OConstants.quarter);
+                                handleFatherUnclesAndAunts(data, OConstants.half, OConstants.quarter);
+                                handleMotherUnclesAndAunts(data, OConstants.half, OConstants.quarter);
 
-                        } else if (brotherAndSistersCount == 0) {
-                            Log.i(TAG, "calculate(): Has No sisters");
+                            } else if (brotherAndSistersCount == 2) {
+                                Log.i(TAG, "calculate():  Has two sisters");
 
-                            handleFatherUnclesAndAunts(data, OConstants.one, OConstants.two_Thirds);
-                            handleMotherUnclesAndAunts(data, OConstants.one, OConstants.one_Third);
+                                handleFatherUnclesAndAunts(data, OConstants.half, OConstants.quarter);
+                                handleMotherUnclesAndAunts(data, OConstants.half, OConstants.quarter);
+
+                            } else if (brotherAndSistersCount == 0) {
+                                Log.i(TAG, "calculate(): Has No sisters");
+
+                                handleFatherUnclesAndAunts(data, OConstants.one, OConstants.two_Thirds);
+                                handleMotherUnclesAndAunts(data, OConstants.one, OConstants.one_Third);
+                            }
                         }
                     }
                 }

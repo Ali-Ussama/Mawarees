@@ -173,8 +173,6 @@ public class GrandPaAndGrandMaUtils {
             OConstants.setPersonSharePercent(data, newFraction, OConstants.PERSON_MOTHER_GRANDMOTHER);// نصيب جدة لأم = 1/6
             OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_MOTHER_GRANDMOTHER, ProofsAndExplanations.MotherGrandPaOrGrandMaProofs.WITH_CHILDREN, ProofsAndExplanations.MotherGrandPaOrGrandMaProofs.p1);
 
-            OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_MOTHER_GRANDMOTHER, ProofsAndExplanations.MotherGrandPaOrGrandMaProofs.WITH_CHILDREN, ProofsAndExplanations.MotherGrandPaOrGrandMaProofs.p1);
-            OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_MOTHER_GRANDFATHER, ProofsAndExplanations.MotherGrandPaOrGrandMaProofs.WITH_CHILDREN, ProofsAndExplanations.MotherGrandPaOrGrandMaProofs.p1);
 
             Log.i(TAG, "handleMotherGrandPaAndGrandMa(): Mother_GrandMa Takes 1/6");
 
@@ -196,7 +194,7 @@ public class GrandPaAndGrandMaUtils {
     private static void handleFatherGrandPaAndGrandMa(ArrayList<Person> data, OConstants oConstants, Fraction allShare, Fraction onePersonShare) {
         try {
             Log.i(TAG, "handleFatherGrandPaAndGrandMa(): has Father_GrandPa Or Father_GrandMa");
-            if (oConstants.isHasMother_GrandFather() && !oConstants.isHasMother_GrandMother()) {
+            if (oConstants.isHasFather_GrandFather() && !oConstants.isHasFather_GrandMother()) {
                 Log.i(TAG, "handleFatherGrandPaAndGrandMa(): has Father_GrandPa And Not Father_GrandMa");
 
                 Fraction newFraction = new Fraction(allShare.getNumerator(), allShare.getDenominator());
@@ -215,9 +213,6 @@ public class GrandPaAndGrandMaUtils {
 
                 OConstants.setPersonSharePercent(data, newFraction, OConstants.PERSON_FATHER_GRANDMOTHER);// نصيب جدة لأم = 1/6
                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_FATHER_GRANDMOTHER, ProofsAndExplanations.FatherGrandPaOrGrandMaProofs.WITH_CHILDREN, ProofsAndExplanations.FatherGrandPaOrGrandMaProofs.p1);
-
-                OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_FATHER_GRANDMOTHER, ProofsAndExplanations.FatherGrandPaOrGrandMaProofs.WITH_CHILDREN, ProofsAndExplanations.FatherGrandPaOrGrandMaProofs.p1);
-                OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_FATHER_GRANDFATHER, ProofsAndExplanations.FatherGrandPaOrGrandMaProofs.WITH_CHILDREN, ProofsAndExplanations.FatherGrandPaOrGrandMaProofs.p1);
 
                 Log.i(TAG, "handleFatherGrandPaAndGrandMa(): Mother_GrandMa Takes 1/6");
 
