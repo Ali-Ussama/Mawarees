@@ -857,6 +857,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                 OConstants.handleFatherUncleAndAuntsResult(mPeople);
                 OConstants.handleMotherUncleAndAuntsResult(mPeople);
                 OConstants.handleWivesResult(mPeople);
+                
                 mProgressDlg.dismiss();
 
                 Log.i(TAG, "handleSolveProblem(): calculations are done");

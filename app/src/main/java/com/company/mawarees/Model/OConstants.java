@@ -1108,9 +1108,9 @@ public class OConstants {
 
         }*/
         if (person.getSharePercent() != null) {
-            Log.i(TAG, "person = " + person.getRelation() + " with sharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() + " is Not a remain person");
+            Log.i(TAG, "isRemainPerson(): person = " + person.getRelation() + " with sharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() + " is Not a remain person");
         } else {
-            Log.i(TAG, "person = " + person.getRelation() + " with sharePercent = null is Not a remain person");
+            Log.i(TAG, "isRemainPerson(): person = " + person.getRelation() + " with sharePercent = null is Not a remain person");
         }
         return false;
     }
@@ -2117,9 +2117,51 @@ public class OConstants {
             Person moreThanWife = getPerson(mPeople, OConstants.PERSON_MORE_THAN_WIFE);
 
 
-            int wivesNumberOfShares = moreThanWife.getNumberOfShares() * heads;
+//            int wivesNumberOfShares = moreThanWife.getNumberOfShares() * heads;
+            int wivesNumberOfShares = moreThanWife.getNumberOfShares();
 
-            if ((getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER) != null && !isBlocked(getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER)))) {
+            if ((getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS) != null && !isBlocked(getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS)))) {
+                Log.i(TAG, "handleWivesGroup(): handling wives with more than three daughter \"Two groups\"");
+                oConstants.isHandleChildrenGroup = true;
+                
+                Person moreThanBrotherAndSister = getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS);
+
+                int savedNumberOfWives = HandleTwoGroupsUtils.getGroupSavedNumber(mPeople, moreThanWife, "", OConstants.PERSON_WIFE);
+                int savedNumberOfBrothers = HandleTwoGroupsUtils.getGroupSavedNumber(mPeople, moreThanBrotherAndSister, OConstants.PERSON_SON, OConstants.PERSON_DAUGHTER);
+
+                Log.i(TAG, "handleWivesGroup(): wives saved number = " + savedNumberOfWives);
+                Log.i(TAG, "handleWivesGroup(): brothers saved number = " + savedNumberOfBrothers);
+
+
+                // Calculating Number of shares summation
+                for (Person mPerson : mPeople) {
+                    if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_SON) && !mPerson.getRelation().matches(OConstants.PERSON_DAUGHTER) &&
+                            !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
+                        Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " Number Of Shares = " + mPerson.getNumberOfShares());
+                        numberOfSharesSum += mPerson.getNumberOfShares();
+                    }
+                }
+//                numberOfSharesSum += wivesNumberOfShares;
+                heads = HandleTwoGroupsUtils.getSimpleCommonMultiplier(savedNumberOfBrothers, savedNumberOfWives);
+                newProblemOrigin = heads * numberOfSharesSum;
+
+                Log.i(TAG, "handleWivesGroup(): number Of shares = " + numberOfSharesSum + " heads = " + heads + " newProblem Origin = " + newProblemOrigin);
+
+                for (Person mPerson : mPeople) {
+                    if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_SON) && !mPerson.getRelation().matches(OConstants.PERSON_DAUGHTER)
+                            && !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
+
+                        mPerson.setProblemOrigin(newProblemOrigin);
+                        mPerson.setNumberOfShares(heads * mPerson.getNumberOfShares());
+
+                        Fraction fraction = new Fraction(mPerson.getNumberOfShares(), newProblemOrigin);
+                        setPersonSharePercent(mPeople, fraction, mPerson.getRelation());
+
+                        Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " problem origin = " + mPerson.getProblemOrigin() + " sharePercent = " + mPerson.getSharePercent().getNumerator() +
+                                "/" + mPerson.getSharePercent().getDenominator());
+                    }
+                }
+            } else if ((getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER) != null && !isBlocked(getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER)))) {
                 Log.i(TAG, "handleWivesGroup(): handling wives with brothers \"Two groups\"");
 
                 Person moreThanBrotherAndSister = getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER);
@@ -2135,7 +2177,7 @@ public class OConstants {
                 for (Person mPerson : mPeople) {
                     if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_BROTHER) && !mPerson.getRelation().matches(OConstants.PERSON_SISTER) &&
                             !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
-                        Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " problem origin = " + mPerson.getProblemOrigin());
+                        Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " problem origin = " + mPerson.getNumberOfShares());
                         numberOfSharesSum += mPerson.getNumberOfShares();
                     }
                 }
@@ -2165,7 +2207,7 @@ public class OConstants {
                 // Calculating Number of shares summation
                 for (Person mPerson : mPeople) {
                     if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
-                        Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " problem origin = " + mPerson.getProblemOrigin());
+                        Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " Number Of Shares = " + mPerson.getNumberOfShares());
                         numberOfSharesSum += mPerson.getNumberOfShares();
 
                     }
@@ -2176,7 +2218,7 @@ public class OConstants {
                     newProblemOrigin = heads * numberOfSharesSum;
                 } else {
 
-                    Log.i(TAG, "handleWivesGroup(): findGCD(heads, groupProblemOrigin) = " + findGCD(heads, wivesNumberOfShares));
+                    Log.i(TAG, "handleWivesGroup(): findGCD(heads, NumberOfShares) = " + findGCD(heads, wivesNumberOfShares));
 
                     newProblemOrigin = numberOfSharesSum * (heads / findGCD(heads, wivesNumberOfShares));
 
