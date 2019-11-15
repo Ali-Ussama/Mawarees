@@ -10,25 +10,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-
-
-        <activity
-            android:name=".View.activity.ResultActivity"
-            android:configChanges="orientation|keyboardHidden|keyboard|locale|screenSize|screenLayout|uiMode"
-            android:theme="@style/AppTheme.NoActionBar"
-            tools:ignore="InnerclassSeparator"/>
-
-        <activity
-            android:name=".View.activity.ProblemActivity"
+        <activity android:name=".View.activity.SplashActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|locale|screenSize|screenLayout|uiMode"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="InnerclassSeparator">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".View.activity.ResultActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|locale|screenSize|screenLayout|uiMode"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="InnerclassSeparator" />
+        <activity
+            android:name=".View.activity.ProblemActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|locale|screenSize|screenLayout|uiMode"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="InnerclassSeparator">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
     </application>
 
