@@ -105,7 +105,7 @@ public class BrothersUtils {
             } else {
                 //لا يوجد اخوة
 
-                noBrothersCondition(data);
+//                noBrothersCondition(data);
 
             }
         } catch (Exception e) {
@@ -157,21 +157,23 @@ public class BrothersUtils {
 
                 //حساب نصيب الاعمام و الاخوال
 
-                calculateUnclesAndAunts(data);
+//                calculateUnclesAndAunts(data);
 
             } else if (OConstants.getSistersCount(data) == 2 && OConstants.getBrothersCount(data) == 0) { // اختين
                 Log.i(TAG, "brothersConditions(): two sisters take 2/3");
 
                 // نصيب الاختين = 2/3
-//                Fraction oneSisterSharePercent = Fraction.divideFraction(OConstants.two_Thirds, new Fraction(2, 1));
-                OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_SISTER);
-                OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_SISTER, ProofsAndExplanations.BotherAndSistersProofs.TWO_THIRD_TWO_SISTERS_E, ProofsAndExplanations.BotherAndSistersProofs.p2);
+                resetPerson(data, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER);
+                createAlivePerson(data, (OConstants.getBrothersCount(data) + OConstants.getSistersCount(data)), OConstants.PERSON_TWO_SISTERS, OConstants.GENDER_MALE, true);
+                OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_TWO_SISTERS); // نصيب الاختين = 2/3
+                OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_TWO_SISTERS, ProofsAndExplanations.BotherAndSistersProofs.TWO_THIRD_TWO_SISTERS_E, ProofsAndExplanations.BotherAndSistersProofs.p2);
+//                OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_SISTER);
 
                 //حساب نصيب الاعمام و الاخوال
 
-                calculateUnclesAndAunts(data);
+//                calculateUnclesAndAunts(data);
 
-            } else if (OConstants.getBrothersCount(data) + OConstants.getSistersCount(data) >= 3) { // ثلاثة اخوة فأكثر
+            } else if (OConstants.getPersonsInGirlsCount(data, OConstants.PERSON_BROTHER, OConstants.PERSON_SISTER) >= 3) { // ثلاثة اخوة فأكثر
                 Log.i(TAG, "brothersConditions(): more than three brother and sister takes all");
 
                 // نصيب الاخوة = كل التركة
@@ -195,7 +197,7 @@ public class BrothersUtils {
                 // نصيب الولد = 2 * نصيب البنت
             } else if (OConstants.getBrothersCount(data) + OConstants.getSistersCount(data) == 0) {
                 //لا يوجد اخوة
-                noBrothersCondition(data);
+//                noBrothersCondition(data);
             }
 
         } catch (Exception e) {

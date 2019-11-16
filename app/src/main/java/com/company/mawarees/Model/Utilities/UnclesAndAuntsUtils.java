@@ -54,25 +54,34 @@ public class UnclesAndAuntsUtils {
                             // Has No Father os Mother
                             Log.i(TAG, "calculate(): Has No Father os Mother");
 
-                            int brotherAndSistersCount = OConstants.getSistersCount(data) + (OConstants.getBrothersCount(data));
+                            int brotherAndSistersCountInGirls = OConstants.getSistersCount(data) + (OConstants.getBrothersCount(data) * 2);
 
-                            if (brotherAndSistersCount == 1) {
+                            if (brotherAndSistersCountInGirls == 1) {
                                 Log.i(TAG, "calculate(): Has one sister");
 
                                 handleFatherUnclesAndAunts(data, OConstants.half, OConstants.quarter);
                                 handleMotherUnclesAndAunts(data, OConstants.half, OConstants.quarter);
 
-                            } else if (brotherAndSistersCount == 2) {
+                            } else if (brotherAndSistersCountInGirls == 2) {
                                 Log.i(TAG, "calculate():  Has two sisters");
 
                                 handleFatherUnclesAndAunts(data, OConstants.half, OConstants.quarter);
                                 handleMotherUnclesAndAunts(data, OConstants.half, OConstants.quarter);
 
-                            } else if (brotherAndSistersCount == 0) {
+                            } else if (brotherAndSistersCountInGirls == 0) {
                                 Log.i(TAG, "calculate(): Has No sisters");
 
                                 handleFatherUnclesAndAunts(data, OConstants.one, OConstants.two_Thirds);
                                 handleMotherUnclesAndAunts(data, OConstants.one, OConstants.one_Third);
+                            }else if (brotherAndSistersCountInGirls >= 3){
+
+                                OConstants.blockPerson(data, OConstants.PERSON_FATHER_UNCLE, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
+                                OConstants.blockPerson(data, OConstants.PERSON_FATHER_AUNT, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
+                                OConstants.blockPerson(data, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
+
+                                OConstants.blockPerson(data, OConstants.PERSON_MOTHER_UNCLE, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
+                                OConstants.blockPerson(data, OConstants.PERSON_MOTHER_AUNT, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
+                                OConstants.blockPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
                             }
                         }
                     }

@@ -118,12 +118,21 @@ public class GrandPaAndGrandMaUtils {
                         OConstants.blockPerson(data, OConstants.PERSON_FATHER_GRANDMOTHER, OConstants.PERSON_FATHER);
                     } else {
                         // Has No Father
-                        // Father grandPa and grandMa both takes 2/3
                         Log.i(TAG, "calculateGrandPaAndGrandMa(): Has No Father");
-                        Log.i(TAG, "calculateGrandPaAndGrandMa(): Father grandPa and grandMa both takes 2/3");
 
-                        handleFatherGrandPaAndGrandMa(data, oConstants, OConstants.two_Thirds, OConstants.one_Sixth);
+                        if(oConstants.isHasMother()) {
+                            // Has Mother
+                            // Father grandPa and grandMa both takes 1/6
+                            Log.i(TAG, "calculateGrandPaAndGrandMa(): Has Mother");
+                            Log.i(TAG, "calculateGrandPaAndGrandMa(): Father grandPa and grandMa both takes 1/6");
+                            handleFatherGrandPaAndGrandMa(data, oConstants, OConstants.one_Sixth, OConstants.one_Twelve);
 
+                        }else{
+                            // Father grandPa and grandMa both takes 2/3
+                            Log.i(TAG, "calculateGrandPaAndGrandMa(): Father grandPa and grandMa both takes 2/3");
+                            handleFatherGrandPaAndGrandMa(data, oConstants, OConstants.two_Thirds, OConstants.one_Sixth);
+
+                        }
                     }
                 }
 
@@ -140,9 +149,20 @@ public class GrandPaAndGrandMaUtils {
                         // Has No Mother
                         // Mother grandPa and grandMa both takes 1/3
                         Log.i(TAG, "calculateGrandPaAndGrandMa(): Has No Mother");
-                        Log.i(TAG, "calculateGrandPaAndGrandMa(): Mother grandPa and grandMa both takes 1/3");
 
-                        handleMotherGrandPaAndGrandMa(data, oConstants, OConstants.one_Third, OConstants.one_Sixth);
+                        if(oConstants.isHasFather()) {
+                            // Has Father
+                            // Father grandPa and grandMa both takes 1/6
+                            Log.i(TAG, "calculateGrandPaAndGrandMa(): Has Father");
+                            Log.i(TAG, "calculateGrandPaAndGrandMa(): Mother grandPa and grandMa both takes 1/6");
+                            handleMotherGrandPaAndGrandMa(data, oConstants, OConstants.one_Sixth, OConstants.one_Twelve);
+
+                        }else{
+                            // Father grandPa and grandMa both takes 2/3
+                            Log.i(TAG, "calculateGrandPaAndGrandMa(): Mother grandPa and grandMa both takes 1/3");
+                            handleMotherGrandPaAndGrandMa(data, oConstants, OConstants.one_Third, OConstants.one_Sixth);
+
+                        }
 
                     }
                 }
