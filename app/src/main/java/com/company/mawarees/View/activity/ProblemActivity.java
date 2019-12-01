@@ -473,9 +473,11 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                         if (value > 0) {
                             createAlivePerson(value, OConstants.PERSON_FATHER_UNCLE, OConstants.GENDER_MALE, true);
 
-                            // if no father aunts created then create
-                            if (OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_AUNT) < 1)
-                                createAlivePerson(1, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true);
+                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_AUNT) > 1) {
+                                // if no father aunts created then create
+                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_AUNT) < 1)
+                                    createAlivePerson(1, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true);
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -487,7 +489,6 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
                 }
             });
-
             mFatherAuntsValueTV.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -511,9 +512,12 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                         if (value > 0) {
                             createAlivePerson(value, OConstants.PERSON_FATHER_AUNT, OConstants.GENDER_FEMALE, true);
 
-                            // if no father uncles created then create
-                            if (OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_UNCLE) < 1)
-                                createAlivePerson(1, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true);
+                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_UNCLE) > 1) {
+
+                                // if no father uncles created then create
+                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_UNCLE) < 1)
+                                    createAlivePerson(1, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true);
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -525,6 +529,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
                 }
             });
+
             mMotherUnclesValueTV.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -547,10 +552,12 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
                         if (value > 0) {
                             createAlivePerson(value, OConstants.PERSON_MOTHER_UNCLE, OConstants.GENDER_MALE, true);
+                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_AUNT) > 1) {
 
-                            // if no mother aunts created then create
-                            if (OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_AUNT) < 1)
-                                createAlivePerson(1, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true);
+                                // if no mother aunts created then create
+                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_AUNT) < 1)
+                                    createAlivePerson(1, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true);
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -584,10 +591,12 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
                         if (value > 0) {
                             createAlivePerson(value, OConstants.PERSON_MOTHER_AUNT, OConstants.GENDER_FEMALE, true);
+                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_UNCLE) > 1) {
 
-                            // if no mother uncles created then create
-                            if (OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_UNCLE) < 1)
-                                createAlivePerson(1, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true);
+                                // if no mother uncles created then create
+                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_UNCLE) < 1)
+                                    createAlivePerson(1, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true);
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -875,7 +884,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
     private void validateBlockedPeople() {
         try {
 
-            if (OConstants.getPersonCount(mPeople,OConstants.PERSON_BROTHER) == 1){
+            if (OConstants.getPersonCount(mPeople, OConstants.PERSON_BROTHER) == 1) {
                 OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLE, OConstants.PERSON_BROTHER);
                 OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_AUNT, OConstants.PERSON_BROTHER);
                 OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.PERSON_BROTHER);
@@ -885,7 +894,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                 OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.PERSON_BROTHER);
             }
 
-            if (oConstants.isHasWife() || oConstants.isHasHusband()){
+            if (oConstants.isHasWife() || oConstants.isHasHusband()) {
                 if (oConstants.isHasWife()) {
                     OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLE, OConstants.PERSON_WIFE);
                     OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_AUNT, OConstants.PERSON_WIFE);
@@ -894,7 +903,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                     OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_UNCLE, OConstants.PERSON_WIFE);
                     OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_AUNT, OConstants.PERSON_WIFE);
                     OConstants.blockPerson(mPeople, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.PERSON_WIFE);
-                }else if (oConstants.isHasHusband()){
+                } else if (oConstants.isHasHusband()) {
                     OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLE, OConstants.PERSON_HUSBAND);
                     OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_AUNT, OConstants.PERSON_HUSBAND);
                     OConstants.blockPerson(mPeople, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.PERSON_HUSBAND);
@@ -1088,7 +1097,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                 }
             }
             Intent intent = new Intent(mCurrent, ResultActivity.class);
-            intent.putParcelableArrayListExtra("data", mPeople);
+            intent.putParcelableArrayListExtra(getString(R.string.intent_data_lbl), mPeople);
             intent.putExtra(getString(R.string.intent_total_money), oConstants.getTotalMoney());
             startActivity(intent);
         } catch (Exception e) {

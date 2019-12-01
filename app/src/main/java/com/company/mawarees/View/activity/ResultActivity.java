@@ -5,9 +5,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.company.mawarees.Model.Callback.ItemSelectedListener;
@@ -15,13 +17,14 @@ import com.company.mawarees.Model.Models.Person;
 import com.company.mawarees.Model.Utilities.AppUtils;
 import com.company.mawarees.R;
 import com.company.mawarees.View.adpters.ResultRVAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ResultActivity extends AppCompatActivity implements ItemSelectedListener {
+public class ResultActivity extends AppCompatActivity implements ItemSelectedListener, View.OnClickListener {
 
     private static final String TAG = "ResultActivity";
     @BindView(R.id.act_result_rv)
@@ -57,6 +60,9 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
     @BindView(R.id.result_act_proof)
     TextView mProofTV;
 
+    @BindView(R.id.explain_problem_fab)
+    FloatingActionButton mExplainPorblemFab;
+
     ArrayList<Person> mPeople;
 
     private ResultActivity mCurrent;
@@ -90,7 +96,7 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
 
             Log.i(TAG, "init() is Called 2");
 
-            mPeople = getIntent().getParcelableArrayListExtra("data");
+            mPeople = getIntent().getParcelableArrayListExtra(getString(R.string.intent_data_lbl));
 
             totalMoney = getIntent().getDoubleExtra(getString(R.string.intent_total_money), 0.0);
 
@@ -112,6 +118,7 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
 
             Log.i(TAG, "init() is Called 5");
 
+            mExplainPorblemFab.setOnClickListener(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -222,6 +229,19 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
                 mSharesPerPersonTV.setText(String.valueOf(getString(R.string.default_value)));
                 mExplanationTV.setText("الحجب بال".concat(person.getBlockedBy()));
                 mProofTV.setText("");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        try {
+            if (view.getId() == R.id.explain_problem_fab) {
+                Intent intent = new Intent(mCurrent, ProblemExplainActivity.class);
+                intent.putParcelableArrayListExtra(getString(R.string.intent_data_lbl), mPeople);
+                startActivity(intent);
             }
         } catch (Exception e) {
             e.printStackTrace();

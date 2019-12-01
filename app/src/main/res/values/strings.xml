@@ -67,4 +67,15 @@
     <string name="doctrine">المذهب</string>
     <string name="enter_money">ادخل المبلغ</string>
     <string name="splash">splash</string>
+
+    <string name="explain_problem_result">شرح حل المسألة</string>
+    <string name="explain_first_step">نسبة كل فرد في القرآن</string>
+    <string name="explain_second_step_lbl">مجموع النسب</string>
+    <string name="explain_third_step_lbl">نصيب كل فرد</string>
+    <string name="percent">نسبة</string>
+    <string name="step_one_rv_ri_lbl_2">في القرآن الكريم</string>
+    <string name="equal"> = </string>
+    <string name="step_two_lbl_1">نصيب</string>
+    <string name="equation">س / ن = ص</string>
+    <string name="intent_data_lbl">data</string>
 </resources>

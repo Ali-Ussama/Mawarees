@@ -21,6 +21,8 @@ public class Person implements Parcelable {
 
     private Fraction eachPersonSharePercent;
 
+    private Fraction originalSharePercent;
+
     private double shareValue;
 
     private double eachPersonShareValue;
@@ -50,6 +52,7 @@ public class Person implements Parcelable {
         problemOrigin = in.readInt();
         sharePercent = in.readParcelable(getClass().getClassLoader());
         eachPersonSharePercent = in.readParcelable(getClass().getClassLoader());
+        originalSharePercent = in.readParcelable(getClass().getClassLoader());
         shareValue = in.readDouble();
         eachPersonShareValue = in.readDouble();
         numberOfShares = in.readInt();
@@ -221,6 +224,14 @@ public class Person implements Parcelable {
         this.videoUrl = videoUrl;
     }
 
+    public Fraction getOriginalSharePercent() {
+        return originalSharePercent;
+    }
+
+    public void setOriginalSharePercent(Fraction originalSharePercent) {
+        this.originalSharePercent = originalSharePercent;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -236,6 +247,7 @@ public class Person implements Parcelable {
         dest.writeInt(problemOrigin);
         dest.writeParcelable(sharePercent, 1);
         dest.writeParcelable(eachPersonSharePercent, 2);
+        dest.writeParcelable(originalSharePercent, 3);
         dest.writeDouble(shareValue);
         dest.writeDouble(eachPersonShareValue);
         dest.writeInt(numberOfShares);

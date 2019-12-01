@@ -590,6 +590,10 @@ public class OConstants {
             if (data.get(i).getRelation().matches(relation)) {
                 Fraction mNewFraction = new Fraction(fraction.getNumerator(), fraction.getDenominator());
                 data.get(i).setSharePercent(mNewFraction);
+
+                if (fraction.getDenominator() == 24) {
+                    data.get(i).setOriginalSharePercent(fraction);
+                }
             }
         }
     }
@@ -1136,13 +1140,13 @@ public class OConstants {
             }
             return true;
 
-        } else if (person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_FATHER_AUNT) &&
+        } else if ((person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_FATHER_AUNT)) &&
                 (fatherUnclesAndAunts != null && fatherUnclesAndAunts.getSharePercent() != null && Fraction.isEqual(fatherUnclesAndAunts.getSharePercent(), half))) {
             //When Father uncles and/or aunts has 1/2
             Log.i(TAG, "isRemainPerson(): When Father uncles and/or aunts has 1/2");
             return true;
 
-        } else if (person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT) &&
+        } else if ((person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) &&
                 (motherUnclesAndAunts != null && motherUnclesAndAunts.getSharePercent() != null && Fraction.isEqual(motherUnclesAndAunts.getSharePercent(), half))) {
             //When Mother uncles and/or aunts has 1/2
             Log.i(TAG, "isRemainPerson(): When Mother uncles and/or aunts has 1/2");
@@ -1312,14 +1316,14 @@ public class OConstants {
                     }
 
 
-                } else if (person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_FATHER_AUNT) &&
+                } else if ((person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_FATHER_AUNT)) &&
                         (fatherUnclesAndAunts != null && fatherUnclesAndAunts.getSharePercent() != null && Fraction.isEqual(fatherUnclesAndAunts.getSharePercent(), half))) {
                     //When Father uncles and/or aunts has 1/2
                     Log.i(TAG, "handleRemainPerson(): When Father uncles and/or aunts has 1/2");
 
                     setFatherUnclesAndAunts(data, person, half, remain, oConstants);
 
-                } else if (person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT) &&
+                } else if ((person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) &&
                         (motherUnclesAndAunts != null && motherUnclesAndAunts.getSharePercent() != null && Fraction.isEqual(motherUnclesAndAunts.getSharePercent(), half))) {
                     //When Mother uncles and/or aunts has 1/2
                     Log.i(TAG, "handleRemainPerson(): When Mother uncles and/or aunts has 1/2");
@@ -1426,7 +1430,7 @@ public class OConstants {
         }
     }
 
-    private static void createAlivePerson(ArrayList<Person> data, int size, String relation, String gender, boolean isAlive, Fraction sharePercent,
+    private static void createAlivePerson(ArrayList<Person> data, int size, String relation, String gender, boolean isAlive, Fraction originalPercent, Fraction sharePercent,
                                           Fraction eachPersonSharePercent, double shareValue, double eachPersonShareValue, int numberOfShares,
                                           int eachPersonNumberOfShares, int problemOrigin, String explanation, String proof, String blocked, String blockedBy) {
         try {
@@ -1438,6 +1442,7 @@ public class OConstants {
             person.setGender(gender);
             person.setDeadSonNumber(-1);
             person.setProblemOrigin(problemOrigin);
+            person.setOriginalSharePercent(originalPercent);
             person.setSharePercent(sharePercent);
             person.setEachPersonSharePercent(eachPersonSharePercent);
             person.setShareValue(shareValue);
@@ -1481,7 +1486,7 @@ public class OConstants {
                         int numberOfShares = sharePercent.getNumerator();
 
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SISTER), OConstants.PERSON_TWO_SONS, OConstants.GENDER_MALE, true,
-                                sharePercent, son.getSharePercent(), round((son.getShareValue() * 2), 2), son.getShareValue(),
+                                son.getOriginalSharePercent(), sharePercent, son.getSharePercent(), round((son.getShareValue() * 2), 2), son.getShareValue(),
                                 numberOfShares, son.getNumberOfShares(), moreThanThreeDaughters.getProblemOrigin(), son.getExplanation(), son.getProof(), son.getBlocked(), son.getBlockedBy());
 
                         Person person = getPerson(mPeople, OConstants.PERSON_TWO_SONS);
@@ -1505,7 +1510,7 @@ public class OConstants {
 
                     if (moreThanThreeDaughters != null) {
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SON), relation, OConstants.GENDER_MALE, true,
-                                sharePercent, son.getSharePercent(), shareValue, son.getShareValue(),
+                                son.getOriginalSharePercent(), sharePercent, son.getSharePercent(), shareValue, son.getShareValue(),
                                 numberOfShares, son.getNumberOfShares(), moreThanThreeDaughters.getProblemOrigin(), son.getExplanation(), son.getProof(), son.getBlocked(), son.getBlockedBy());
 
                         Person person = getPerson(mPeople, relation);
@@ -1535,7 +1540,7 @@ public class OConstants {
                         int numberOfShares = sharePercent.getNumerator();
 
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SON), OConstants.PERSON_TWO_DAUGHTERS, OConstants.GENDER_MALE, true,
-                                sharePercent, daughter.getSharePercent(), shareValue, daughter.getShareValue(),
+                                daughter.getOriginalSharePercent(), sharePercent, daughter.getSharePercent(), shareValue, daughter.getShareValue(),
                                 numberOfShares, daughter.getNumberOfShares(), moreThanThreeDaughters.getProblemOrigin(), daughter.getExplanation(), daughter.getProof(), daughter.getBlocked(), daughter.getBlockedBy());
 
 
@@ -1560,7 +1565,7 @@ public class OConstants {
 
                     if (moreThanThreeDaughters != null) {
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_DAUGHTER), relation, OConstants.GENDER_FEMALE, true,
-                                sharePercent, daughter.getSharePercent(), shareValue, daughter.getShareValue(),
+                                daughter.getOriginalSharePercent(), sharePercent, daughter.getSharePercent(), shareValue, daughter.getShareValue(),
                                 numberOfShares, daughter.getNumberOfShares(), moreThanThreeDaughters.getProblemOrigin(), daughter.getExplanation(), daughter.getProof(), daughter.getBlocked(), daughter.getBlockedBy());
 
                         Person person = getPerson(mPeople, relation);
@@ -1627,18 +1632,18 @@ public class OConstants {
                     if (moreThanBrotherAndSister != null) {
 
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_BROTHER), OConstants.PERSON_TWO_BROTHERS, OConstants.GENDER_MALE, true,
-                                sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
+                                brother.getOriginalSharePercent(), sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
                                 numberOfShares, brother.getNumberOfShares(), moreThanBrotherAndSister.getProblemOrigin(), brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy());
 
                     } else if (moreThanThreeBrotherAndSister != null) {
 
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_BROTHER), OConstants.PERSON_TWO_BROTHERS, OConstants.GENDER_MALE, true,
-                                sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
+                                brother.getOriginalSharePercent(), sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
                                 numberOfShares, brother.getNumberOfShares(), moreThanThreeBrotherAndSister.getProblemOrigin(), brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy());
 
                     } else {
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_BROTHER), OConstants.PERSON_TWO_BROTHERS, OConstants.GENDER_MALE, true,
-                                sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
+                                brother.getOriginalSharePercent(), sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
                                 numberOfShares, brother.getNumberOfShares(), brother.getProblemOrigin(), brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy());
 
                     }
@@ -1648,13 +1653,13 @@ public class OConstants {
                     if (moreThanBrotherAndSister != null) {
 
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_BROTHER), relation, OConstants.GENDER_MALE, true,
-                                sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
+                                brother.getOriginalSharePercent(), sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
                                 numberOfShares, brother.getNumberOfShares(), moreThanBrotherAndSister.getProblemOrigin(), brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy());
 
                     } else if (moreThanThreeBrotherAndSister != null) {
 
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_BROTHER), relation, OConstants.GENDER_MALE, true,
-                                sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
+                                brother.getOriginalSharePercent(), sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
                                 numberOfShares, brother.getNumberOfShares(), moreThanThreeBrotherAndSister.getProblemOrigin(), brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy());
 
                     }
@@ -1695,19 +1700,19 @@ public class OConstants {
 
                     } else if (moreThanBrotherAndSister != null) {
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SISTER), OConstants.PERSON_TWO_SISTERS, OConstants.GENDER_MALE, true,
-                                sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
+                                sister.getOriginalSharePercent(), sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
                                 numberOfShares, sister.getNumberOfShares(), moreThanBrotherAndSister.getProblemOrigin(), sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy());
 
                     } else if (moreThanThreeBrotherAndSister != null) {
 
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SISTER), OConstants.PERSON_TWO_SISTERS, OConstants.GENDER_MALE, true,
-                                sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
+                                sister.getOriginalSharePercent(), sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
                                 numberOfShares, sister.getNumberOfShares(), moreThanThreeBrotherAndSister.getProblemOrigin(), sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy());
 
                     } else {
 
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SISTER), OConstants.PERSON_TWO_SISTERS, OConstants.GENDER_MALE, true,
-                                sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
+                                sister.getOriginalSharePercent(), sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
                                 numberOfShares, sister.getNumberOfShares(), sister.getProblemOrigin(), sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy());
 
                     }
@@ -1716,13 +1721,13 @@ public class OConstants {
 
                     if (moreThanBrotherAndSister != null) {
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SISTER), relation, OConstants.GENDER_MALE, true,
-                                sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
+                                sister.getOriginalSharePercent(), sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
                                 numberOfShares, sister.getNumberOfShares(), moreThanBrotherAndSister.getProblemOrigin(), sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy());
 
                     } else if (moreThanThreeBrotherAndSister != null) {
 
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SISTER), relation, OConstants.GENDER_MALE, true,
-                                sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
+                                sister.getOriginalSharePercent(), sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
                                 numberOfShares, sister.getNumberOfShares(), moreThanThreeBrotherAndSister.getProblemOrigin(), sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy());
 
                     }
@@ -1787,7 +1792,7 @@ public class OConstants {
 
                 if (fatherUnclesAndAunts != null) {
                     createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_FATHER_UNCLE), relation, OConstants.GENDER_MALE, true,
-                            sharePercent, fatherUncle.getSharePercent(), shareValue, fatherUncle.getShareValue(),
+                            fatherUncle.getOriginalSharePercent(), sharePercent, fatherUncle.getSharePercent(), shareValue, fatherUncle.getShareValue(),
                             numberOfShares, fatherUncle.getNumberOfShares(), fatherUnclesAndAunts.getProblemOrigin(), fatherUncle.getExplanation(), fatherUncle.getProof(), fatherUncle.getBlocked(), fatherUncle.getBlockedBy());
 
                     Person person = getPerson(mPeople, relation);
@@ -1831,7 +1836,7 @@ public class OConstants {
 
                 if (fatherUnclesAndAunts != null) {
                     createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_FATHER_AUNT), relation, OConstants.GENDER_FEMALE, true,
-                            sharePercent, fatherAunt.getSharePercent(), shareValue, fatherAunt.getShareValue(),
+                            fatherAunt.getOriginalSharePercent(), sharePercent, fatherAunt.getSharePercent(), shareValue, fatherAunt.getShareValue(),
                             numberOfShares, fatherAunt.getNumberOfShares(), fatherUnclesAndAunts.getProblemOrigin(), fatherAunt.getExplanation(), fatherAunt.getProof(), fatherAunt.getBlocked(), fatherAunt.getBlockedBy());
 
                     Person person = getPerson(mPeople, relation);
@@ -1904,7 +1909,7 @@ public class OConstants {
 
                 if (motherUnclesAndAunts != null) {
                     createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_MOTHER_UNCLE), relation, OConstants.GENDER_MALE, true,
-                            sharePercent, motherUncle.getSharePercent(), shareValue, motherUncle.getShareValue(),
+                            motherUncle.getOriginalSharePercent(), sharePercent, motherUncle.getSharePercent(), shareValue, motherUncle.getShareValue(),
                             numberOfShares, motherUncle.getNumberOfShares(), motherUnclesAndAunts.getProblemOrigin(), motherUncle.getExplanation(), motherUncle.getProof(), motherUncle.getBlocked(), motherUncle.getBlockedBy());
 
                     Person person = getPerson(mPeople, relation);
@@ -1947,7 +1952,7 @@ public class OConstants {
 
                 if (motherUnclesAndAunts != null) {
                     createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_MOTHER_AUNT), relation, OConstants.GENDER_FEMALE, true,
-                            sharePercent, motherAunt.getSharePercent(), shareValue, motherAunt.getShareValue(),
+                            motherAunt.getOriginalSharePercent(), sharePercent, motherAunt.getSharePercent(), shareValue, motherAunt.getShareValue(),
                             numberOfShares, motherAunt.getNumberOfShares(), motherUnclesAndAunts.getProblemOrigin(), motherAunt.getExplanation(), motherAunt.getProof(), motherAunt.getBlocked(), motherAunt.getBlockedBy());
 
                     Person person = getPerson(mPeople, relation);
@@ -2012,8 +2017,9 @@ public class OConstants {
                     double shareValue = round(wife.getShareValue() * wivesCount, 2);
                     int numberOfShares = sharePercent.getNumerator();
 
-                    createAlivePerson(mPeople, wivesCount, relation, OConstants.GENDER_FEMALE, true, sharePercent, wife.getSharePercent(), shareValue, wife.getShareValue(),
-                            numberOfShares, wife.getNumberOfShares(), moreThanWife.getProblemOrigin(), wife.getExplanation(), wife.getProof(), wife.getBlocked(), wife.getBlockedBy());
+                    createAlivePerson(mPeople, wivesCount, relation, OConstants.GENDER_FEMALE, true, wife.getOriginalSharePercent(), sharePercent, wife.getSharePercent(),
+                            shareValue, wife.getShareValue(), numberOfShares, wife.getNumberOfShares(), moreThanWife.getProblemOrigin(), wife.getExplanation(), wife.getProof(),
+                            wife.getBlocked(), wife.getBlockedBy());
 
                     Person person = getPerson(mPeople, relation);
 
