@@ -17,9 +17,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.company.mawarees.Model.Callback.DatabaseListener;
 import com.company.mawarees.Model.Callback.DeadPersonListener;
+import com.company.mawarees.Model.DB.DBProcess;
+import com.company.mawarees.Model.DB.FirebaseUtils;
 import com.company.mawarees.Model.Models.DeadPersonModel;
 import com.company.mawarees.Model.Models.Person;
+import com.company.mawarees.Model.Models.ProofModel;
 import com.company.mawarees.Model.OConstants;
 import com.company.mawarees.Model.Utilities.AppUtils;
 import com.company.mawarees.Model.Utilities.BrothersUtils;
@@ -30,6 +34,7 @@ import com.company.mawarees.Model.Utilities.GrandPaAndGrandMaUtils;
 import com.company.mawarees.Model.Utilities.HusbandAndWifeUtils;
 import com.company.mawarees.Model.Utilities.MotherUtils;
 import com.company.mawarees.Model.Utilities.MotherUtils2;
+import com.company.mawarees.Model.Utilities.ProofsAndExplanations;
 import com.company.mawarees.Model.Utilities.UnclesAndAuntsUtils;
 import com.company.mawarees.R;
 import com.company.mawarees.View.adpters.DeadDaughterRVAdapter;
@@ -40,7 +45,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProblemActivity extends AppCompatActivity implements DeadPersonListener, View.OnClickListener {
+public class ProblemActivity extends AppCompatActivity implements DeadPersonListener, View.OnClickListener, DatabaseListener {
 
     private static final String TAG = "ProblemActivity";
 
@@ -140,6 +145,10 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
     private Toolbar mToolbar;
 
+    private FirebaseUtils firebaseUtils;
+
+    private DBProcess mDBProcess;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,6 +169,9 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
         super.onResume();
         try {
             resetViews();
+
+            retrieveData();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,6 +183,9 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             mCurrent = ProblemActivity.this;
             mPeople = new ArrayList<>();
             oConstants = new OConstants();
+            mDBProcess = new DBProcess(mCurrent);
+
+            firebaseUtils = new FirebaseUtils(mCurrent, this);
 
             try {
 
@@ -180,6 +195,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
             //default values
             oConstants.setGender(OConstants.GENDER_MALE);
             oConstants.setHasWife(false);
@@ -611,6 +627,17 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void retrieveData() {
+        if (AppUtils.isNetworkAvailable(mCurrent)) {
+
+            firebaseUtils.readDataFromFireStore(getString(R.string.adnan));
+
+        } else {
+
+            new Thread(() -> mDBProcess.readProofs(mCurrent)).start();
         }
     }
 
@@ -1327,6 +1354,177 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onReadProofs(ArrayList<ProofModel> proof) {
+
+        if (proof != null && !proof.isEmpty()) {
+            for (ProofModel proofModel : proof) {
+
+                if (proofModel.getRelation().matches(ProofsAndExplanations.Keys.HusbandProofs.relation)) {//TODO HusbandProofs
+
+                    if (proofModel.getKey().matches(ProofsAndExplanations.Keys.HusbandProofs.p1)) {
+                        ProofsAndExplanations.HusbandProofs.p1 = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.HusbandProofs.E1)) {
+                        ProofsAndExplanations.HusbandProofs.E1 = proofModel.getValue();
+                    }
+
+                } else if (proofModel.getRelation().matches(ProofsAndExplanations.Keys.WifeProofs.relation)) {//TODO WifeProofs
+
+                    if (proofModel.getKey().matches(ProofsAndExplanations.Keys.WifeProofs.p1)) {
+                        ProofsAndExplanations.WifeProofs.p1 = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.WifeProofs.E1)) {
+                        ProofsAndExplanations.WifeProofs.E1 = proofModel.getValue();
+                    }
+
+                } else if (proofModel.getRelation().matches(ProofsAndExplanations.Keys.DaughterProofs.relation)) {//TODO DaughterProofs
+
+                    if (proofModel.getKey().matches(ProofsAndExplanations.Keys.DaughterProofs.p1)) {
+                        ProofsAndExplanations.DaughterProofs.p1 = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.DaughterProofs.E1)) {
+                        ProofsAndExplanations.DaughterProofs.E1 = proofModel.getValue();
+                    }
+
+                } else if (proofModel.getRelation().matches(ProofsAndExplanations.Keys.SonProofs.relation)) {//TODO SonProofs
+
+                    if (proofModel.getKey().matches(ProofsAndExplanations.Keys.SonProofs.p1)) {
+                        ProofsAndExplanations.SonProofs.p1 = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.SonProofs.E1)) {
+                        ProofsAndExplanations.SonProofs.E1 = proofModel.getValue();
+                    }
+
+                } else if (proofModel.getRelation().matches(ProofsAndExplanations.Keys.DaughterBoyOrGirlProofs.relation)) {//TODO DaughterBoyOrGirlProofs
+
+                    if (proofModel.getKey().matches(ProofsAndExplanations.Keys.DaughterBoyOrGirlProofs.p1)) {
+                        ProofsAndExplanations.DaughterBoyOrGirlProofs.p1 = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.DaughterBoyOrGirlProofs.E1)) {
+                        ProofsAndExplanations.DaughterBoyOrGirlProofs.E1 = proofModel.getValue();
+                    }
+
+                } else if (proofModel.getRelation().matches(ProofsAndExplanations.Keys.SonBoyOrGirlProofs.relation)) {//TODO SonBoyOrGirlProofs
+
+                    if (proofModel.getKey().matches(ProofsAndExplanations.Keys.SonBoyOrGirlProofs.p1)) {
+                        ProofsAndExplanations.SonBoyOrGirlProofs.p1 = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.SonBoyOrGirlProofs.E1)) {
+                        ProofsAndExplanations.SonBoyOrGirlProofs.E1 = proofModel.getValue();
+                    }
+
+                } else if (proofModel.getRelation().matches(ProofsAndExplanations.Keys.MotherProofs.relation)) {//TODO MotherProofs
+
+                    if (proofModel.getKey().matches(ProofsAndExplanations.Keys.MotherProofs.p1)) {
+                        ProofsAndExplanations.MotherProofs.p1 = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.MotherProofs.FIFTY_FIFTY_WITH_FATHER_E)) {
+                        ProofsAndExplanations.MotherProofs.FIFTY_FIFTY_WITH_FATHER_E = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.MotherProofs.ONE_SIX_WITH_CHILDREN_E)) {
+                        ProofsAndExplanations.MotherProofs.ONE_SIX_WITH_CHILDREN_E = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.MotherProofs.ONE_SIX_WITH_NO_CHILDREN_E)) {
+                        ProofsAndExplanations.MotherProofs.ONE_SIX_WITH_NO_CHILDREN_E = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.MotherProofs.ONE_THIRD_E)) {
+                        ProofsAndExplanations.MotherProofs.ONE_THIRD_E = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.MotherProofs.REST_E)) {
+                        ProofsAndExplanations.MotherProofs.REST_E = proofModel.getValue();
+
+                    }
+                } else if (proofModel.getRelation().matches(ProofsAndExplanations.Keys.FatherProofs.relation)) {//TODO FatherProofs
+
+                    if (proofModel.getKey().matches(ProofsAndExplanations.Keys.FatherProofs.p1)) {
+                        ProofsAndExplanations.FatherProofs.p1 = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.FatherProofs.FIFTY_FIFTY_WITH_FATHER_E)) {
+                        ProofsAndExplanations.FatherProofs.FIFTY_FIFTY_WITH_FATHER_E = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.FatherProofs.ONE_SIX_WITH_CHILDREN_E)) {
+                        ProofsAndExplanations.FatherProofs.ONE_SIX_WITH_CHILDREN_E = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.FatherProofs.ONE_SIX_WITH_NO_CHILDREN_E)) {
+                        ProofsAndExplanations.FatherProofs.FIVE_SIX_WITH_NO_CHILDREN_E = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.FatherProofs.ONE_THIRD_E)) {
+                        ProofsAndExplanations.FatherProofs.TWO_THIRD_E = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.FatherProofs.REST_E)) {
+                        ProofsAndExplanations.FatherProofs.REST_E = proofModel.getValue();
+
+                    }
+                } else if (proofModel.getRelation().matches(ProofsAndExplanations.Keys.BotherAndSistersProofs.relation)) {//TODO BotherAndSistersProofs
+
+                    if (proofModel.getKey().matches(ProofsAndExplanations.Keys.BotherAndSistersProofs.p1)) {
+                        ProofsAndExplanations.BotherAndSistersProofs.p1 = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.BotherAndSistersProofs.p2)) {
+                        ProofsAndExplanations.BotherAndSistersProofs.p2 = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.BotherAndSistersProofs.MORE_THAN_THREE_BROTHER_AND_SISTER_E)) {
+                        ProofsAndExplanations.BotherAndSistersProofs.MORE_THAN_THREE_BROTHER_AND_SISTER_E = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.BotherAndSistersProofs.ONE_BROTHER_OR_SISTER_E)) {
+                        ProofsAndExplanations.BotherAndSistersProofs.ONE_BROTHER_OR_SISTER_E = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.BotherAndSistersProofs.ONE_SISTER_AND_TAKES_HALF_E)) {
+                        ProofsAndExplanations.BotherAndSistersProofs.ONE_SISTER_AND_TAKES_HALF_E = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.BotherAndSistersProofs.ONE_THIRD_MORE_THAN_BROTHER_AND_SISTER_E)) {
+                        ProofsAndExplanations.BotherAndSistersProofs.ONE_THIRD_MORE_THAN_BROTHER_AND_SISTER_E = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.BotherAndSistersProofs.TAKES_ALL_ONE_BROTHER_E)) {
+                        ProofsAndExplanations.BotherAndSistersProofs.TAKES_ALL_ONE_BROTHER_E = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.BotherAndSistersProofs.TWO_THIRD_TWO_SISTERS_E)) {
+                        ProofsAndExplanations.BotherAndSistersProofs.TWO_THIRD_TWO_SISTERS_E = proofModel.getValue();
+
+                    }
+
+                } else if (proofModel.getRelation().matches(ProofsAndExplanations.Keys.MotherGrandPaOrGrandMaProofs.relation)) {//TODO MotherGrandPaOrGrandMaProofs
+
+                    if (proofModel.getKey().matches(ProofsAndExplanations.Keys.MotherGrandPaOrGrandMaProofs.p1)) {
+                        ProofsAndExplanations.MotherGrandPaOrGrandMaProofs.p1 = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.MotherGrandPaOrGrandMaProofs.WITH_CHILDREN)) {
+                        ProofsAndExplanations.MotherGrandPaOrGrandMaProofs.WITH_CHILDREN = proofModel.getValue();
+
+                    }
+
+                } else if (proofModel.getRelation().matches(ProofsAndExplanations.Keys.FatherGrandPaOrGrandMaProofs.relation)) {//TODO FatherGrandPaOrGrandMaProofs
+
+                    if (proofModel.getKey().matches(ProofsAndExplanations.Keys.FatherGrandPaOrGrandMaProofs.p1)) {
+                        ProofsAndExplanations.FatherGrandPaOrGrandMaProofs.p1 = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.FatherGrandPaOrGrandMaProofs.WITH_CHILDREN)) {
+                        ProofsAndExplanations.FatherGrandPaOrGrandMaProofs.WITH_CHILDREN = proofModel.getValue();
+
+                    }
+                } else if (proofModel.getRelation().matches(ProofsAndExplanations.Keys.FatherUnclesProofs.relation)) {//TODO FatherUnclesProofs
+
+                    if (proofModel.getKey().matches(ProofsAndExplanations.Keys.FatherUnclesProofs.p1)) {
+                        ProofsAndExplanations.FatherUnclesProofs.p1 = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.FatherUnclesProofs.E1)) {
+                        ProofsAndExplanations.FatherUnclesProofs.E1 = proofModel.getValue();
+
+                    }
+                } else if (proofModel.getRelation().matches(ProofsAndExplanations.Keys.MotherUnclesProofs.relation)) {//TODO MotherUnclesProofs
+                    if (proofModel.getKey().matches(ProofsAndExplanations.Keys.MotherUnclesProofs.p1)) {
+                        ProofsAndExplanations.MotherUnclesProofs.p1 = proofModel.getValue();
+
+                    } else if (proofModel.getKey().matches(ProofsAndExplanations.Keys.MotherUnclesProofs.E1)) {
+                        ProofsAndExplanations.MotherUnclesProofs.p1 = proofModel.getValue();
+
+                    }
+                }
+            }
         }
     }
 }

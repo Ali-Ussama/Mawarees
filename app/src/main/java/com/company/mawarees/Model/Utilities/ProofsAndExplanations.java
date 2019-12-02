@@ -3,109 +3,187 @@ package com.company.mawarees.Model.Utilities;
 public class ProofsAndExplanations {
 
     public static class HusbandProofs {
-        public static final String p1 = "النساء/12 \" ولكم نصف ما ترك أزواجكم إن لم يكن لهن ولد فإن كان لهن ولد فلكم الربع مما تركن \"";
-        public static final String E1 = "للزوج نصف التركة لعدم وجود أولاد للزوجة وله الربع عند وجود أولاد أو أولاد أولاد للزوجة. والمقصود أولاد الزوجة حتى لو كانوا من زوج آخر. والأولاد تشمل الذكور والإناث.";
+        public static String p1;
+        public static String E1;
     }
 
     public static class WifeProofs {
-        public static final String p1 = "النساء/12 \" ولهن الربع مما تركتم إن لم يكن لكم ولد فإن كان لكم ولد فلهن الثمن مما تركتم\"";
-        public static final String E1 = "للزوجة ربع التركة لعدم وجود أولاد للزوج و لها الثمن عند وجود أولاد أو أولاد أولاد للزوج حتى لوكانوا من زوجة أخرى.";
+        public static String p1;
+        public static String E1;
     }
 
 
     public static class DaughterProofs {
-        public static final String p1 = "النساء/11 \"يوصيكم الله في أولادكم للذكر مثل حظ الأنثيين فإن كن نساء فوق اثنتين فلهن ثلثا ما ترك وإن كانت واحدة فلها النصف\"";
-        public static final String E1 = "للبنت الواحدة نصف التركة وللبنتان نسبة 14/24 وللثلاثة بنات فأكثر الثلثين";
+        public static String p1;
+        public static String E1;
     }
 
     public static class DaughterBoyOrGirlProofs {
-        public static final String p1 = "النساء/11 \"يوصيكم الله في أولادكم للذكر مثل حظ الأنثيين فإن كن نساء فوق اثنتين فلهن ثلثا ما ترك وإن كانت واحدة فلها النصف\"";
-        public static final String E1 = "يرث ابن البنت وبنت البنت نصيب أمهم في ميراث أبيها أ و أمها  (وهى البنت التي توفت في حياة أبيها أو في حياة أمها). ويتم توزيع نصيب البنت على أولادها للذكر مثل حظ الأنثيين.";
+        public static String p1;
+        public static String E1;
     }
 
     public static class SonProofs {
-        public static final String p1 = "النساء/11 \"يوصيكم الله في أولادكم للذكر مثل حظ الأنثيين فإن كن نساء فوق اثنتين فلهن ثلثا ما ترك وإن كانت واحدة فلها النصف\"";
-        public static final String E1 = " نصيب الإبن الواحد الذكر له مثل نصيب الأنثيين وهو نسبة 14/24 ونصيب الأولاد ذكور وإناث هو الثلثان إذا كانوا أكثر من واحد  ويوزع عليهم هذا النصيب للذكر مثل حظ الأنثيين";
+        public static String p1;
+        public static String E1;
     }
 
     public static class SonBoyOrGirlProofs {
-        public static final String p1 = "النساء/11 \"يوصيكم الله في أولادكم للذكر مثل حظ الأنثيين فإن كن نساء فوق اثنتين فلهن ثلثا ما ترك وإن كانت واحدة فلها النصف\"";
-        public static final String E1 = "يرث ابن الإبن وبنت الإبن نصيب أبيهم في ميراث أبيه أ و أمه  (وهو الإبن التي توفى في حياة أبيه أو في حياة أمه).  ويتم توزيع نصيب الإبن على أولاده للذكر مثل حظ الأنثيين.";
+        public static String p1;
+        public static String E1;
     }
 
     public static class MotherProofs {
-        public static final String p1 = "النساء/11 \"ولأبويه لكل واحد منهما السدس مما ترك إن كان له ولد فإن لم يكن له ولد و ورثه أبواه فلإمه الثلث فإن كان له إخوة فلإمه السدس\"";
-        public static final String ONE_SIX_WITH_CHILDREN_E = "للوالدة السدس عند وجود أولاد وكذلك الوالد.";
-        public static final String ONE_SIX_WITH_NO_CHILDREN_E = "وإذا لم يوجد أولاد ولم يوجد أصحاب فروض أخرى ولكن يوجد جمع من الإخوة فللوالدة السدس وللوالد خمسة أسداس.";
-        public static final String ONE_THIRD_E = "فإذا لم يوجد أولاد ولم يوجد أصحاب فروض أخرى ولم يوجد جمع من الإخوة فللوالدة الثلث وللوالد الثلثين.";
-        public static final String FIFTY_FIFTY_WITH_FATHER_E = "أما إذا وجد أصحاب فروض أخرى(وهم الزوج أو الزوجة) فتذهب الوالدة والوالد بالباقي مناصفة حيث تتساوى حصة الوالد والوالدة عند وجود ورثة آخرين معهم ولكن عند إنفرادهم بالتركة دون غيرهم تصير القسمة بينهم للذكر مثل حظ الأنثيين كما في الحالتين السابقتين.";
-        public static final String REST_E = "وتذهب الوالدة بالباقي بعد استيفاء أصحاب الفروض الأخرى (الزوج أو الزوجة أو الجد والجدة من جهة الوالد) في حالة عدم وجود الوالد وعدم وجود الفرع الوارث وفي حالة العكس أي عدم وجود الوالدة و وجود الوالد يذهب الوالد بالباقي. ";
+        public static String p1;
+        public static String ONE_SIX_WITH_CHILDREN_E;
+        public static String ONE_SIX_WITH_NO_CHILDREN_E;
+        public static String ONE_THIRD_E;
+        public static String FIFTY_FIFTY_WITH_FATHER_E;
+        public static String REST_E;
 
     }
 
     public static class FatherProofs {
-        public static final String p1 = "النساء/11 \"ولأبويه لكل واحد منهما السدس مما ترك إن كان له ولد فإن لم يكن له ولد و ورثه أبواه فلإمه الثلث فإن كان له إخوة فلإمه السدس\"";
-        public static final String ONE_SIX_WITH_CHILDREN_E = "للوالد السدس عند وجود أولاد وكذلك الوالدة.";
-        public static final String FIVE_SIX_WITH_NO_CHILDREN_E = "وإذا لم يوجد أولاد ولم يوجد أصحاب فروض أخرى ولكن يوجد جمع من الإخوة فللوالدة السدس وللوالد خمسة أسداس.";
-        public static final String TWO_THIRD_E = "فإذا لم يوجد أولاد ولم يوجد أصحاب فروض أخرى ولم يوجد جمع من الإخوة فللوالدة الثلث وللوالد الثلثين.";
-        public static final String FIFTY_FIFTY_WITH_FATHER_E = "أما إذا وجد أصحاب فروض أخرى                                    (وهم الزوج أو الزوجة) فتذهب الوالدة والوالد بالباقي مناصفة حيث تتساوى حصة الوالد والوالدة عند وجود ورثة آخرين معهم ولكن عند إنفرادهم بالتركة دون غيرهم تصير القسمة بينهم للذكر مثل حظ الأنثيين كما في الحالتين السابقتين.";
-        public static final String REST_E = "ويذهب الوالد بالباقي بعد استيفاء أصحاب الفروض الأخرى (الزوج أو الزوجة أو الجد والجدة من جهة الوالدة) في حالة عدم وجود الوالدة وعدم وجود الفرع الوارث وفي حالة العكس أي عدم وجود الوالد و وجود الوالدة تذهب الوالدة بالباقي. ";
+        public static String p1;
+        public static String ONE_SIX_WITH_CHILDREN_E;
+        public static String TWO_THIRD_E;
+        public static String FIVE_SIX_WITH_NO_CHILDREN_E;
+        public static String FIFTY_FIFTY_WITH_FATHER_E;
+        public static String REST_E;
     }
 
     public static class BotherAndSistersProofs {
-        public static final String p1 = "النساء/12 \"وإن كان رجل يورث كلالة أو امرأة وله أخ أو أخت فلكل واحد منهما السدس فإن كانوا أكثر من ذلك فهم شركاء في الثلث\"";
-        public static final String p2 = " النساء/176  \"إن امرؤ هلك ليس له ولد وله أخت فلها نصف ما ترك وهو يرثها إن لم يكن لها ولد فإن كانتا اثنتين فلهما الثلثان مما ترك وإن كانوا إخوة رجالا ونساء فللذكر مثل حظ الأنثيين\"";
+        public static String p1;
+        public static String p2;
 
-        public static final String ONE_BROTHER_OR_SISTER_E = "هذه حالة كلالة جزئية  (حالتين فقط)\n" +
-                " حيث يرث الإخوة  ومعهم (زوج أو زوجة أوجد أو جدة) \n" +
-                "و يوجد من الإخوة (أخ واحد فقط أو أخت واحدة فقط)\n" +
-                " ويكون نصيبه أو نصيبها السدس.";
+        public static String ONE_BROTHER_OR_SISTER_E;
 
-        public static final String ONE_THIRD_MORE_THAN_BROTHER_AND_SISTER_E = "هذه حالة كلالة جزئية (حالتين فقط)\nحيث يرث الإخوة   ومعهم(زوج أو زوجة أوجد أو جدة)  و يوجد من الإخوة (أكثر من واحد ذكور أو إناث) وهم شركاء في الثلث.";
-        public static final String ONE_SISTER_AND_TAKES_HALF_E = "هذه حالة كلالة كلية (أربع حالات فقط)\nحيث لا يرث إلا الإخوة فقط ولا يوجد من الإخوة إلا أخت واحدة فقط ولها النصف  والباقي يوزع مناصفة بين الأعمام و الأخوال ";
-        public static final String TWO_THIRD_TWO_SISTERS_E = "هذه حالة كلالة كلية (أربع حالات فقط)\nحيث لا يرث إلا الإخوة فقط ولا يوجد من الإخوة إلا أختين فقط ولهما الثلثان والباقي يوزع مناصفة بين الأعمام و الأخوال ";
-        public static final String TAKES_ALL_ONE_BROTHER_E = "هذه حالة كلالة كلية (أربع حالات فقط)\nحيث لا يرث إلا الإخوة فقط ولا يوجد من الإخوة إلا أخ واحد ذكر يذهب بكل التركة ";
-        public static final String MORE_THAN_THREE_BROTHER_AND_SISTER_E = "هذه حالة كلالة كلية (أربع حالات فقط)\nحيث لا يرث إلا الإخوة فقط و يوجد من الإخوة (ثلاثة إخوة فأكثر ذكور وإناث) يذهبوا بكل التركة وتوزع بينهم حسب قاعدة للذكر مثل حظ الأنثيين ";
+        public static String ONE_THIRD_MORE_THAN_BROTHER_AND_SISTER_E;
+        public static String ONE_SISTER_AND_TAKES_HALF_E;
+        public static String TWO_THIRD_TWO_SISTERS_E;
+        public static String TAKES_ALL_ONE_BROTHER_E;
+        public static String MORE_THAN_THREE_BROTHER_AND_SISTER_E;
 
     }
 
     public static class MotherGrandPaOrGrandMaProofs {
-        public static final String p1 = "النساء /11 \"ولأبويه لكل واحد منهما السدس مما ترك إن كان له ولد فإن لم يكن له ولد و بواه فلإمه الثلث فإن كان له إخوة فلإمه السدس\"\nالنساء /11 \"آباؤكم وأبناؤكم لا تدرون أيهم أقرب لكم نفعا\" ";
-        public static final String WITH_CHILDREN = "في حالة وجود أولاد فللوالد السدس وللوالدة السدس أيضا . فإذا توفى الوالد حل محله الجد والجدة من جهة الوالد وحصلوا على السدس وكذلك إذا توفت الوالدة حل محلها الجد والجدة من جهة الوالدة وحصلوا على السدس.";
+        public static String p1;
+        public static String WITH_CHILDREN;
     }
 
     public static class FatherGrandPaOrGrandMaProofs {
-        public static final String p1 = "النساء /11 \"ولأبويه لكل واحد منهما السدس مما ترك إن كان له ولد فإن لم يكن له ولد و بواه فلإمه الثلث فإن كان له إخوة فلإمه السدس\"\nالنساء /11 \"آباؤكم وأبناؤكم لا تدرون أيهم أقرب لكم نفعا\" ";
-        public static final String WITH_CHILDREN = "في حالة وجود أولاد فللوالد السدس وللوالدة السدس أيضا . فإذا توفى الوالد حل محله الجد والجدة من جهة الوالد وحصلوا على السدس وكذلك إذا توفت الوالدة حل محلها الجد والجدة من جهة الوالدة وحصلوا على السدس.";
+        public static String p1;
+        public static String WITH_CHILDREN;
     }
 
     public static class FatherUnclesProofs {
-        public static final String p1 = "النساء 11 \"ولأبويه لكل واحد منهما السدس مما تركإن كان له ولد فإن لم يكن  له ولد و ورثه أبواه فلأمه الثلث فإن له إخوة فلأمه السدس\"\n" +
-                "\n"+
-                "النساء 11 \"آباؤكم و أبناؤكم لا تدرون أيهم أقرب لكم نفعا\"\n" +
-                "\n"+
-                "النور 31 \"وقل للمؤمنات يغضضن من أبصارهن ويحفظن فروجهن ولا يبدين زينتهن إلا ما ظهر منها ......  \n" +
-                "ولا يبدين زينتهن إلا لبعولتهن أو آبائهن .....\"";
-
-        public static final String E1 = "يعتبر القرآن أن الأعمام والأخوال من الأباء لذلك فهم يحلون محل الجد والجدة ولكن بشروط خاصة فلا يرثون إلا في حالات نادرة وهى :\n" +
-                "عدم وجود أي أحد من الورثة مع بعض حالات الإخوة التي لا تزيد عن ثلاث حالات :\n" +
-                "الحالة الأولى : عند وجود أخت واحدة \n" +
-                "الحالة الثانية : عند وجود أختين ففي هاتين الحالتين حيث تأخذ الأخت الواحدة النصف وتأخذ الأختين الثلثين والباقي في الحالتين يقسم بالتساوي بين الأعمام والأخوال \n" +
-                "الحالة الثالثة : عند عدم وجود أي من الإخوة إضافة إلى عدم وجود أي من الورثة  هنا ينفرد الأعمام والأخوال بالتركة فتقسم بينهم للأعمام الثلثين والأخوال الثلث أما إذا حدث هذا الإنفراد بالتركة مع عدم وجود الأخوال يذهب الأعمام بكل التركة لكن إذا حدث الإنفراد بالتركة مع عدم وجود الأعمام يذهب الأخوال بكل التركة.";
+        public static String p1;
+        public static String E1;
     }
 
     public static class MotherUnclesProofs {
-        public static final String p1 = "النساء 11 \"ولأبويه لكل واحد منهما السدس مما تركإن كان له ولد فإن لم يكن  له ولد و ورثه أبواه فلأمه الثلث فإن له إخوة فلأمه السدس\" \n" +
-                "\n"+
-                "النساء 11 \"آباؤكم و أبناؤكم لا تدرون أيهم أقرب لكم نفعا\"\n" +
-                "\n"+
-                "النور 31 \"وقل للمؤمنات يغضضن من أبصارهن ويحفظن فروجهن ولا يبدين زينتهن إلا ما ظهر منها ...... \n" +
-                " ولا يبدين زينتهن إلا لبعولتهن أو آبائهن .....\"";
+        public static String p1;
+        public static String E1;
+    }
 
-        public static final String E1 = "يعتبر القرآن أن الأعمام والأخوال من الأباء لذلك فهم يحلون محل الجد والجدة ولكن بشروط خاصة فلا يرثون إلا في حالات نادرة وهى :\n" +
-                "عدم وجود أي أحد من الورثة مع بعض حالات الإخوة التي لا تزيد عن ثلاث حالات :\n" +
-                "الحالة الأولى : عند وجود أخت واحدة\n" +
-                "الحالة الثانية : عند وجود أختين ففي هاتين الحالتين حيث تأخذ الأخت الواحدة النصف وتأخذ الأختين الثلثين والباقي في الحالتين يقسم بالتساوي بين الأعمام والأخوال \n" +
-                "الحالة الثالثة : عند عدم وجود أي من الإخوة إضافة إلى عدم وجود أي من الورثة  هنا ينفرد الأعمام والأخوال بالتركة فتقسم بينهم للأعمام الثلثين والأخوال الثلث أما إذا حدث هذا الإنفراد بالتركة مع عدم وجود الأخوال يذهب الأعمام بكل التركة لكن إذا حدث الإنفراد بالتركة مع عدم وجود الأعمام يذهب الأخوال بكل التركة.";
+
+    public static class Keys {
+
+        public static class HusbandProofs {
+            public static String relation = "HusbandProofs";
+            public static final String p1 = "p1";
+            public static final String E1 = "E1";
+        }
+
+        public static class WifeProofs {
+            public static String relation = "WifeProofs";
+            public static final String p1 = "p1";
+            public static final String E1 = "E1";
+        }
+
+
+        public static class DaughterProofs {
+            public static String relation = "DaughterProofs";
+            public static final String p1 = "p1";
+            public static final String E1 = "E1";
+        }
+
+        public static class DaughterBoyOrGirlProofs {
+            public static String relation = "DaughterBoyOrGirlProofs";
+            public static final String p1 = "p1";
+            public static final String E1 = "E1";
+        }
+
+        public static class SonProofs {
+            public static String relation = "SonProofs";
+            public static final String p1 = "p1";
+            public static final String E1 = "E1";
+        }
+
+        public static class SonBoyOrGirlProofs {
+            public static String relation = "SonBoyOrGirlProofs";
+            public static final String p1 = "p1";
+            public static final String E1 = "E1";
+        }
+
+        public static class MotherProofs {
+            public static String relation = "MotherProofs";
+            public static final String p1 = "p1";
+            public static final String ONE_SIX_WITH_CHILDREN_E = "ONE_SIX_WITH_CHILDREN_E";
+            public static final String ONE_SIX_WITH_NO_CHILDREN_E = "ONE_SIX_WITH_NO_CHILDREN_E";
+            public static final String ONE_THIRD_E = "ONE_THIRD_E";
+            public static final String FIFTY_FIFTY_WITH_FATHER_E = "FIFTY_FIFTY_WITH_FATHER_E";
+            public static final String REST_E = "REST_E";
+
+        }
+
+        public static class FatherProofs {
+            public static String relation = "FatherProofs";
+            public static final String p1 = "p1";
+            public static final String ONE_SIX_WITH_CHILDREN_E = "ONE_SIX_WITH_CHILDREN_E";
+            public static final String ONE_SIX_WITH_NO_CHILDREN_E = "ONE_SIX_WITH_NO_CHILDREN_E";
+            public static final String ONE_THIRD_E = "ONE_THIRD_E";
+            public static final String FIFTY_FIFTY_WITH_FATHER_E = "FIFTY_FIFTY_WITH_FATHER_E";
+            public static final String REST_E = "REST_E";
+        }
+
+        public static class BotherAndSistersProofs {
+            public static String relation = "BotherAndSistersProofs";
+            public static final String p1 = "p1";
+            public static final String p2 = "p2";
+
+            public static final String ONE_BROTHER_OR_SISTER_E = "ONE_BROTHER_OR_SISTER_E";
+
+            public static final String ONE_THIRD_MORE_THAN_BROTHER_AND_SISTER_E = "ONE_THIRD_MORE_THAN_BROTHER_AND_SISTER_E";
+            public static final String ONE_SISTER_AND_TAKES_HALF_E = "ONE_SISTER_AND_TAKES_HALF_E";
+            public static final String TWO_THIRD_TWO_SISTERS_E = "TWO_THIRD_TWO_SISTERS_E";
+            public static final String TAKES_ALL_ONE_BROTHER_E = "TAKES_ALL_ONE_BROTHER_E";
+            public static final String MORE_THAN_THREE_BROTHER_AND_SISTER_E = "MORE_THAN_THREE_BROTHER_AND_SISTER_E";
+
+        }
+
+        public static class MotherGrandPaOrGrandMaProofs {
+            public static String relation = "MotherGrandPaOrGrandMaProofs";
+            public static final String p1 = "p1";
+            public static final String WITH_CHILDREN = "WITH_CHILDREN";
+        }
+
+        public static class FatherGrandPaOrGrandMaProofs {
+            public static String relation = "FatherGrandPaOrGrandMaProofs";
+            public static final String p1 = "p1";
+            public static final String WITH_CHILDREN = "WITH_CHILDREN";
+        }
+
+        public static class FatherUnclesProofs {
+            public static String relation = "FatherUnclesProofs";
+            public static final String p1 = "p1";
+            public static final String E1 = "E1";
+        }
+
+        public static class MotherUnclesProofs {
+            public static String relation = "MotherUnclesProofs";
+            public static final String p1 = "p1";
+            public static final String E1 = "E1";
+        }
     }
 }
