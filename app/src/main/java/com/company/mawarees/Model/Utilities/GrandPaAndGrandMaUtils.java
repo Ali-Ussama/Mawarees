@@ -61,7 +61,7 @@ public class GrandPaAndGrandMaUtils {
             Log.i(TAG, "calculateGrandPaAndGrandMa(): Has No children");
 
 
-            if (oConstants.isHasHusband() || oConstants.isHasWife()) {
+            if (oConstants.isHasHusband() || oConstants.isHasWife() || OConstants.getSistersCount(data) >= 1 || OConstants.getBrothersCount(data) >= 1) {
                 // Has husband or wife
                 Log.i(TAG, "calculateGrandPaAndGrandMa(): Has husband or wife");
 
@@ -130,7 +130,7 @@ public class GrandPaAndGrandMaUtils {
                         }else{
                             // Father grandPa and grandMa both takes 2/3
                             Log.i(TAG, "calculateGrandPaAndGrandMa(): Father grandPa and grandMa both takes 2/3");
-                            handleFatherGrandPaAndGrandMa(data, oConstants, OConstants.two_Thirds, OConstants.one_Sixth);
+                            handleFatherGrandPaAndGrandMa(data, oConstants, OConstants.two_Thirds, OConstants.one_Third);
 
                         }
                     }
@@ -152,13 +152,13 @@ public class GrandPaAndGrandMaUtils {
 
                         if(oConstants.isHasFather()) {
                             // Has Father
-                            // Father grandPa and grandMa both takes 1/6
+                            // Mother grandPa and grandMa both takes 1/6
                             Log.i(TAG, "calculateGrandPaAndGrandMa(): Has Father");
                             Log.i(TAG, "calculateGrandPaAndGrandMa(): Mother grandPa and grandMa both takes 1/6");
                             handleMotherGrandPaAndGrandMa(data, oConstants, OConstants.one_Sixth, OConstants.one_Twelve);
 
                         }else{
-                            // Father grandPa and grandMa both takes 2/3
+                            // Mother grandPa and grandMa both takes 1/3
                             Log.i(TAG, "calculateGrandPaAndGrandMa(): Mother grandPa and grandMa both takes 1/3");
                             handleMotherGrandPaAndGrandMa(data, oConstants, OConstants.one_Third, OConstants.one_Sixth);
 
