@@ -78,4 +78,8 @@
     <string name="step_two_lbl_1">نصيب</string>
     <string name="equation">س / ن = ص</string>
     <string name="intent_data_lbl">data</string>
+    <string name="explain_lbl_1"> مجموع النسب الوارثة في هذه الحالة : </string>
+    <string name="explain_lbl_2"> ( ماترك ) </string>
+    <string name="explain_lbl_3">= س</string>
+    <string name="twenty_four">24</string>
 </resources>

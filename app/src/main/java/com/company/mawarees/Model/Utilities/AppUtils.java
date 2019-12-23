@@ -3,8 +3,6 @@ package com.company.mawarees.Model.Utilities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.TextView;
@@ -146,14 +144,6 @@ public class AppUtils {
         if (activity.getSupportActionBar() != null)
             activity.getSupportActionBar().setHomeAsUpIndicator(homeIcon);
     }
-
-    public static boolean isNetworkAvailable(Context context) {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
 }
 
 

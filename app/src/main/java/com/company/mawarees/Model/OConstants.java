@@ -1,10 +1,15 @@
 package com.company.mawarees.Model;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.company.mawarees.Model.Models.ExplainPhase2;
+import com.company.mawarees.Model.Models.ExplainPhase3;
+import com.company.mawarees.Model.Models.ExplanationModel;
 import com.company.mawarees.Model.Models.Fraction;
 import com.company.mawarees.Model.Models.Person;
 import com.company.mawarees.Model.Utilities.HandleTwoGroupsUtils;
+import com.company.mawarees.PrefManager;
 
 import java.util.ArrayList;
 
@@ -16,8 +21,17 @@ public class OConstants {
     public boolean isHandleBrothersGroup = false;
     public boolean isHandleWivesGroup = false;
     public boolean isHandleUnclesGroup = false;
+    public String handleGroupParent = "";
+    public ExplanationModel mExplanation;
+    public PrefManager mPrefManager;
+    private Context mContext;
 
-//    public static final String PERSON_FATHER = "Father";
+    public OConstants(Context context) {
+        this.mContext = context;
+        this.mPrefManager = new PrefManager(context);
+    }
+
+    //    public static final String PERSON_FATHER = "Father";
 //    public static final String PERSON_FATHER_GRANDFATHER = "F_Grandfather";
 //    public static final String PERSON_FATHER_GRANDMOTHER = "F_Grandmother";
 //    public static final String PERSON_FATHER_UNCLE = "F_Uncle";
@@ -55,7 +69,7 @@ public class OConstants {
 
     public static final String BLOCKED = "Blocked";
     public static final String NOT_BLOCKED = "NotBlocked";
-
+    public static final String CHILDREN = "الأولاد";
 
     public static final String PERSON_FATHER = "أب";
     public static final String PERSON_FATHER_GRANDFATHER = "جد لأب";
@@ -270,6 +284,14 @@ public class OConstants {
         this.hasFather_GrandMother = hasFather_GrandMother;
     }
 
+    public ExplanationModel getmExplanation() {
+        return mExplanation;
+    }
+
+    public void setmExplanation(ExplanationModel mExplanation) {
+        this.mExplanation = mExplanation;
+    }
+
     /*--------------------------------------------------------------------------------------------*/
 
     public static boolean hasMoreThreeBrothersAndSisters(ArrayList<Person> data) {
@@ -279,7 +301,7 @@ public class OConstants {
             for (Person mData : data) {
                 if (mData.getRelation().matches(OConstants.PERSON_BROTHER)) {
                     brothers = mData.getCount();
-                } else if (mData.getRelation().matches(OConstants.PERSON_BROTHER)) {
+                } else if (mData.getRelation().matches(OConstants.PERSON_SISTER)) {
                     sisters = mData.getCount();
                 }
             }
@@ -289,7 +311,7 @@ public class OConstants {
             e.printStackTrace();
         }
 
-        return (brothers + sisters) > 3;
+        return (brothers + sisters) >= 3;
     }
 
     public static int getBrothersCount(ArrayList<Person> data) {
@@ -702,12 +724,38 @@ public class OConstants {
             }
         }
 
+        setExplanationPhase2(oConstants, X);
+        setExplanationPhase3(data, oConstants);
+
         if (!specialCaseRemainPeople.isEmpty())
             handleRemainPerson(data, X, oConstants);
         if (!partners.isEmpty())
             handlePartnerPeople(data, oConstants, X);
 
         handleDeadSonsAndDaughters(data);
+
+    }
+
+    private static void setExplanationPhase3(ArrayList<Person> data, OConstants oConstants) {
+        try {
+            ExplainPhase3 phase3 = new ExplainPhase3();
+            phase3.setPeople(data);
+            oConstants.getmExplanation().setPhase3(phase3);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void setExplanationPhase2(OConstants oConstants, Fraction X) {
+        try {
+            ExplainPhase2 mPhase2 = new ExplainPhase2();
+            mPhase2.setTotalFractionsSum(X);
+            oConstants.getmExplanation().setPhase2(mPhase2);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static void calculatePersonShareValue(Person person, OConstants oConstants, boolean isHasRemainPeople, Fraction X) {
@@ -983,29 +1031,6 @@ public class OConstants {
             double eachPersonValue = 0;
             eachPersonValue = totalMoney / girlsCount;
 
-//            if (Fraction.isEqual(sharePercents, OConstants.half)) {
-//
-////                double halfOfRemain = (remain / 2);
-//                eachPersonValue = totalMoney / girlsCount;
-//
-//
-//            } else if (Fraction.isEqual(sharePercents, OConstants.two_Thirds)) {
-//
-////                double twoThirdRemain = (remain / 3);
-//                eachPersonValue = totalMoney / girlsCount;
-//
-//            } else if (Fraction.isEqual(sharePercents, OConstants.quarter)) {
-//
-////                double twoThirdRemain = (remain / 4);
-//                eachPersonValue = totalMoney / girlsCount;
-//
-//            } else if (Fraction.isEqual(sharePercents, OConstants.one)) {
-//
-////                double twoThirdRemain = (oConstants.getTotalMoney());
-//                eachPersonValue = totalMoney / girlsCount;
-//
-//            }
-
             if (person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE)) {
                 person.setShareValue(round((eachPersonValue * 2), 2));
                 person.setSharePercent(new Fraction(eachPersonSharePercent.getNumerator() * 2, eachPersonSharePercent.getDenominator()));
@@ -1141,13 +1166,13 @@ public class OConstants {
             return true;
 
         } else if ((person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_FATHER_AUNT)) &&
-                (fatherUnclesAndAunts != null && fatherUnclesAndAunts.getSharePercent() != null && Fraction.isEqual(fatherUnclesAndAunts.getSharePercent(), half))) {
+                (/*fatherUnclesAndAunts != null && */person.getSharePercent() != null && Fraction.isEqual(person.getSharePercent(), quarter))) {
             //When Father uncles and/or aunts has 1/2
             Log.i(TAG, "isRemainPerson(): When Father uncles and/or aunts has 1/2");
             return true;
 
         } else if ((person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) &&
-                (motherUnclesAndAunts != null && motherUnclesAndAunts.getSharePercent() != null && Fraction.isEqual(motherUnclesAndAunts.getSharePercent(), half))) {
+                (/*motherUnclesAndAunts != null &&*/ person.getSharePercent() != null && Fraction.isEqual(person.getSharePercent(), quarter))) {
             //When Mother uncles and/or aunts has 1/2
             Log.i(TAG, "isRemainPerson(): When Mother uncles and/or aunts has 1/2");
             return true;
@@ -1317,14 +1342,14 @@ public class OConstants {
 
 
                 } else if ((person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_FATHER_AUNT)) &&
-                        (fatherUnclesAndAunts != null && fatherUnclesAndAunts.getSharePercent() != null && Fraction.isEqual(fatherUnclesAndAunts.getSharePercent(), half))) {
+                        (/*fatherUnclesAndAunts != null && */person.getSharePercent() != null && Fraction.isEqual(person.getSharePercent(), half))) {
                     //When Father uncles and/or aunts has 1/2
                     Log.i(TAG, "handleRemainPerson(): When Father uncles and/or aunts has 1/2");
 
                     setFatherUnclesAndAunts(data, person, half, remain, oConstants);
 
                 } else if ((person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) &&
-                        (motherUnclesAndAunts != null && motherUnclesAndAunts.getSharePercent() != null && Fraction.isEqual(motherUnclesAndAunts.getSharePercent(), half))) {
+                        (/*motherUnclesAndAunts != null && */person.getSharePercent() != null && Fraction.isEqual(person.getSharePercent(), half))) {
                     //When Mother uncles and/or aunts has 1/2
                     Log.i(TAG, "handleRemainPerson(): When Mother uncles and/or aunts has 1/2");
                     setMotherUnclesAndAunts(data, person, half, oConstants);
@@ -1430,9 +1455,9 @@ public class OConstants {
         }
     }
 
-    private static void createAlivePerson(ArrayList<Person> data, int size, String relation, String gender, boolean isAlive, Fraction originalPercent, Fraction sharePercent,
-                                          Fraction eachPersonSharePercent, double shareValue, double eachPersonShareValue, int numberOfShares,
-                                          int eachPersonNumberOfShares, int problemOrigin, String explanation, String proof, String blocked, String blockedBy) {
+    public static void createAlivePerson(ArrayList<Person> data, int size, String relation, String gender, boolean isAlive, Fraction originalPercent, Fraction sharePercent,
+                                         Fraction eachPersonSharePercent, double shareValue, double eachPersonShareValue, int numberOfShares,
+                                         int eachPersonNumberOfShares, int problemOrigin, String explanation, String proof, String blocked, String blockedBy) {
         try {
 
             Person person = new Person();
@@ -1467,7 +1492,7 @@ public class OConstants {
 
         try {
 
-            Log.i(TAG, "handleMoreThanSonAndDaughter is called");
+            Log.i(TAG, "handleMoreThanSonAndDaughterResult(): is called");
 
             Person moreThanThreeDaughters = getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS);
 
@@ -1500,6 +1525,30 @@ public class OConstants {
 
                         Log.i(TAG, "handleMoreThanSonAndDaughter(): result = " + result);
 
+                        resetPerson(mPeople, OConstants.PERSON_SON);
+                        resetPerson(mPeople, PERSON_More_Than_three_DAUGHTERS);
+
+                    } else {
+
+                        Fraction sharePercent = new Fraction(son.getSharePercent().getNumerator() * 2, son.getSharePercent().getDenominator());
+                        int numberOfShares = sharePercent.getNumerator();
+
+                        createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SISTER), OConstants.PERSON_TWO_SONS, OConstants.GENDER_MALE, true,
+                                son.getOriginalSharePercent(), sharePercent, son.getSharePercent(), round((son.getShareValue() * 2), 2), son.getShareValue(),
+                                numberOfShares, son.getNumberOfShares(), moreThanThreeDaughters.getProblemOrigin(), son.getExplanation(), son.getProof(), son.getBlocked(), son.getBlockedBy());
+
+                        Person person = getPerson(mPeople, OConstants.PERSON_TWO_SONS);
+
+                        result = "";
+                        result = result.concat("--------------------------\n");
+                        result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                                "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+
+                        result = result.concat("--------------------------\n");
+
+                        Log.i(TAG, "handleMoreThanSonAndDaughter(): result = " + result);
+
+                        resetPerson(mPeople, OConstants.PERSON_SON);
                     }
                 } else {
                     String relation = getPersonCount(mPeople, OConstants.PERSON_SON) + " " + OConstants.PERSON_SONS;
@@ -1511,7 +1560,7 @@ public class OConstants {
                     if (moreThanThreeDaughters != null) {
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SON), relation, OConstants.GENDER_MALE, true,
                                 son.getOriginalSharePercent(), sharePercent, son.getSharePercent(), shareValue, son.getShareValue(),
-                                numberOfShares, son.getNumberOfShares(), moreThanThreeDaughters.getProblemOrigin(), son.getExplanation(), son.getProof(), son.getBlocked(), son.getBlockedBy());
+                                numberOfShares, son.getNumberOfShares(), son.getProblemOrigin(), son.getExplanation(), son.getProof(), son.getBlocked(), son.getBlockedBy());
 
                         Person person = getPerson(mPeople, relation);
 
@@ -1523,6 +1572,9 @@ public class OConstants {
                         result = result.concat("--------------------------\n");
 
                         Log.i(TAG, "handleMoreThanSonAndDaughter(): result = " + result);
+
+                        resetPerson(mPeople, OConstants.PERSON_SON);
+                        resetPerson(mPeople, PERSON_More_Than_three_DAUGHTERS);
 
                     }
                 }
@@ -1554,7 +1606,30 @@ public class OConstants {
                         result = result.concat("--------------------------\n");
 
                         Log.i(TAG, "handleMoreThanSonAndDaughter(): result = " + result);
+                        resetPerson(mPeople, OConstants.PERSON_DAUGHTER);
+                        resetPerson(mPeople, PERSON_More_Than_three_DAUGHTERS);
 
+                    } else {
+                        Fraction sharePercent = new Fraction(daughter.getSharePercent().getNumerator() * 2, daughter.getSharePercent().getDenominator());
+                        double shareValue = round((daughter.getShareValue() * 2), 2);
+                        int numberOfShares = sharePercent.getNumerator();
+
+                        createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SON), OConstants.PERSON_TWO_DAUGHTERS, OConstants.GENDER_FEMALE, true,
+                                daughter.getOriginalSharePercent(), sharePercent, daughter.getSharePercent(), shareValue, daughter.getShareValue(),
+                                numberOfShares, daughter.getNumberOfShares(), daughter.getProblemOrigin(), daughter.getExplanation(), daughter.getProof(), daughter.getBlocked(), daughter.getBlockedBy());
+
+
+                        Person person = getPerson(mPeople, PERSON_TWO_DAUGHTERS);
+
+                        result = "";
+                        result = result.concat("--------------------------\n");
+                        result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                                "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+
+                        result = result.concat("--------------------------\n");
+
+                        Log.i(TAG, "handleMoreThanSonAndDaughter(): result = " + result);
+                        resetPerson(mPeople, OConstants.PERSON_DAUGHTER);
                     }
                 } else {
                     String relation = getPersonCount(mPeople, OConstants.PERSON_DAUGHTER) + " " + OConstants.PERSON_DAUGHTERS;
@@ -1578,24 +1653,12 @@ public class OConstants {
                         result = result.concat("--------------------------\n");
 
                         Log.i(TAG, "handleMoreThanSonAndDaughter(): result = " + result);
+                        resetPerson(mPeople, OConstants.PERSON_DAUGHTER);
+                        resetPerson(mPeople, PERSON_More_Than_three_DAUGHTERS);
 
                     }
                 }
             }
-
-            if (getPersonCount(mPeople, OConstants.PERSON_SON) > 1) {
-
-                resetPerson(mPeople, OConstants.PERSON_SON);
-            }
-
-            if (getPersonCount(mPeople, OConstants.PERSON_DAUGHTER) > 1) {
-
-                resetPerson(mPeople, OConstants.PERSON_DAUGHTER);
-
-            }
-
-            resetPerson(mPeople, PERSON_More_Than_three_DAUGHTERS);
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -2049,7 +2112,11 @@ public class OConstants {
     private static void handleChildrenGroup(ArrayList<Person> mPeople, OConstants oConstants) {
 
         oConstants.isHandleChildrenGroup = true;
+        oConstants.handleGroupParent = PERSON_SONS;
 
+        if (oConstants.mPrefManager != null){
+            oConstants.mPrefManager.saveString(PrefManager.KEY_GROUP_RELATION,PERSON_SONS);
+        }
         Log.i(TAG, "handleChildrenGroup(): is called");
         Person moreThanThreeDaughters = getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS);
 
@@ -2077,6 +2144,10 @@ public class OConstants {
             if (findGCD(heads, moreThanThreeDaughtersNumberOfShares) == 1) {
                 Log.i(TAG, "handleChildrenGroup(): findGCD(heads, groupProblemOrigin) = 1");
 
+                if (oConstants.mPrefManager != null){
+                    oConstants.mPrefManager.saveBoolean(PrefManager.KEY_NEW_GCD,true);
+                }
+
                 newProblemOrigin = heads * problemOriginSum;
 
                 Log.i(TAG, "handleChildrenGroup(): problem Origin Sum = " + problemOriginSum + " - heads = " + heads);
@@ -2084,6 +2155,9 @@ public class OConstants {
 
             } else {
 
+                if (oConstants.mPrefManager != null){
+                    oConstants.mPrefManager.saveBoolean(PrefManager.KEY_NEW_GCD,false);
+                }
                 Log.i(TAG, "handleChildrenGroup(): findGCD(heads, groupProblemOrigin) = " + findGCD(heads, moreThanThreeDaughtersNumberOfShares));
 
                 newProblemOrigin = problemOriginSum * (heads / findGCD(heads, moreThanThreeDaughtersNumberOfShares));
@@ -2095,11 +2169,15 @@ public class OConstants {
 
             }
 
+            if (oConstants.mPrefManager != null){
+                oConstants.mPrefManager.saveInt(PrefManager.KEY_HEADS,heads);
+                oConstants.mPrefManager.saveInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN,newProblemOrigin);
+            }
+
             for (Person mPerson : mPeople) {
                 if (!mPerson.getRelation().matches(OConstants.PERSON_SON) && !mPerson.getRelation().matches(OConstants.PERSON_DAUGHTER) &&
                         !isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_SON_BOY) && !mPerson.getRelation().matches(OConstants.PERSON_SON_GIRL) &&
                         !mPerson.getRelation().matches(OConstants.PERSON_DAUGHTER_BOY) && !mPerson.getRelation().matches(OConstants.PERSON_DAUGHTER_GIRL)) {
-
 
                     mPerson.setProblemOrigin(newProblemOrigin);
                     mPerson.setNumberOfShares(heads * mPerson.getNumberOfShares());
@@ -2131,6 +2209,12 @@ public class OConstants {
             } else {
                 Log.i(TAG, "handleBrothersGroup(): is called");
 
+                oConstants.handleGroupParent = PERSON_BROTHERS;
+
+                if (oConstants.mPrefManager != null){
+                    oConstants.mPrefManager.saveString(PrefManager.KEY_GROUP_RELATION,PERSON_BROTHERS);
+                }
+
                 int heads = getPersonsInGirlsCount(mPeople, OConstants.PERSON_BROTHER, OConstants.PERSON_SISTER);
                 int newProblemOrigin = 0;
                 int problemOriginSum = 0;
@@ -2151,8 +2235,14 @@ public class OConstants {
                     Log.i(TAG, "handleBrothersGroup(): problem Origin Sum = " + problemOriginSum);
                     newProblemOrigin = heads * problemOriginSum;
 
+                    if (oConstants.mPrefManager != null){
+                        oConstants.mPrefManager.saveBoolean(PrefManager.KEY_NEW_GCD,true);
+                    }
                 } else {
 
+                    if (oConstants.mPrefManager != null){
+                        oConstants.mPrefManager.saveBoolean(PrefManager.KEY_NEW_GCD,false);
+                    }
                     Log.i(TAG, "handleBrothersGroup(): findGCD(heads, groupProblemOrigin) = " + findGCD(heads, brothersNumberOfShares));
 
                     newProblemOrigin = problemOriginSum * (heads / findGCD(heads, brothersNumberOfShares));
@@ -2162,6 +2252,11 @@ public class OConstants {
 
                     heads = (heads / findGCD(heads, brothersNumberOfShares));
 
+                }
+
+                if (oConstants.mPrefManager != null){
+                    oConstants.mPrefManager.saveInt(PrefManager.KEY_HEADS,heads);
+                    oConstants.mPrefManager.saveInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN,newProblemOrigin);
                 }
 
                 for (Person mPerson : mPeople) {
@@ -2189,6 +2284,11 @@ public class OConstants {
         try {
             oConstants.isHandleWivesGroup = true;
             oConstants.isHandleBrothersGroup = true;
+            oConstants.handleGroupParent = PERSON_WIVES;
+
+            if (oConstants.mPrefManager != null){
+                oConstants.mPrefManager.saveString(PrefManager.KEY_GROUP_RELATION,PERSON_WIVES);
+            }
 
             int newProblemOrigin = 0;
             int numberOfSharesSum = 0;
@@ -2201,6 +2301,11 @@ public class OConstants {
             int wivesNumberOfShares = moreThanWife.getNumberOfShares();
 
             if ((getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS) != null && !isBlocked(getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS)))) {
+
+                if (oConstants.mPrefManager != null){
+                    oConstants.mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP,false);
+                }
+
                 Log.i(TAG, "handleWivesGroup(): handling wives with more than three daughter \"Two groups\"");
                 oConstants.isHandleChildrenGroup = true;
 
@@ -2241,7 +2346,8 @@ public class OConstants {
                                 "/" + mPerson.getSharePercent().getDenominator());
                     }
                 }
-            } else if ((getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER) != null && !isBlocked(getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER)))) {
+            }
+            else if ((getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER) != null && !isBlocked(getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER)))) {
                 Log.i(TAG, "handleWivesGroup(): handling wives with brothers \"Two groups\"");
 
                 Person moreThanBrotherAndSister = getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER);
@@ -2281,7 +2387,8 @@ public class OConstants {
                                 "/" + mPerson.getSharePercent().getDenominator());
                     }
                 }
-            } else {
+            }
+            else {
                 Log.i(TAG, "handleWivesGroup(): handling just wives");
 
                 // Calculating Number of shares summation
@@ -2339,13 +2446,16 @@ public class OConstants {
 
                 if (fatherUncles != null && !isBlocked(fatherUncles) && motherUncles != null && !isBlocked(motherUncles)) {
                     oConstants.isHandleUnclesGroup = true;
+                    oConstants.handleGroupParent = PERSON_FATHER_UNCLES_AND_AUNTS + PERSON_MOTHER_UNCLES_AND_AUNTS;
                     handleFatherAndMotherUncles(mPeople);
                 } else if (fatherUncles != null && !isBlocked(fatherUncles) && motherUncles == null) {
                     oConstants.isHandleUnclesGroup = true;
                     handleFatherUncles(mPeople);
+                    oConstants.handleGroupParent = PERSON_FATHER_UNCLES_AND_AUNTS;
                 } else if (motherUncles != null && !isBlocked(motherUncles) && fatherUncles == null) {
                     oConstants.isHandleUnclesGroup = true;
                     handleMotherUncles(mPeople);
+                    oConstants.handleGroupParent = PERSON_MOTHER_UNCLES_AND_AUNTS;
                 }
 
             }

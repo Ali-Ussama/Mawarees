@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -91,9 +90,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/step_one_container" />
 
-            <TextView
-                android:id="@+id/activity_explain_second_step_value"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/activity_explain_second_step_layout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
@@ -101,15 +100,91 @@
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:gravity="center"
-                android:padding="8dp"
-                android:text="= س 12/24 + 2/24 + 6/24 + 2/24 + 2/24 = 24/24"
-                android:textColor="@color/dark_grey"
-                android:textDirection="rtl"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:orientation="horizontal"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/activity_explain_second_step_lbl" />
+                app:layout_constraintTop_toBottomOf="@id/activity_explain_second_step_lbl">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/custom_white_rect_with_brown_borders"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toStartOf="@+id/step_one_rv_ri_container_1"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/activity_explain_second_step_layout_percent_numerator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:text="12"
+                        android:textColor="@color/color_red"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:background="@color/color_red" />
+
+                    <TextView
+                        android:id="@+id/activity_explain_second_step_layout_percent_denominator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="4dp"
+                        android:text="24"
+                        android:textColor="@color/color_red"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/activity_explain_second_step_lbl3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/explain_lbl_3"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/activity_explain_second_step_lbl2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/explain_lbl_2"
+                    android:textColor="@color/dark_grey"
+                    android:textDirection="rtl"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/activity_explain_second_step_lbl1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/explain_lbl_1"
+                    android:textColor="@color/dark_grey"
+                    android:textDirection="rtl"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/activity_explain_third_step_lbl"
@@ -125,7 +200,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/activity_explain_second_step_value" />
+                app:layout_constraintTop_toBottomOf="@id/activity_explain_second_step_layout" />
 
             <LinearLayout
                 android:id="@+id/step_three_container"
