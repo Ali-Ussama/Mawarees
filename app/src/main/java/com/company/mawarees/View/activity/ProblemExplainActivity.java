@@ -14,6 +14,7 @@ import com.company.mawarees.Model.Models.Fraction;
 import com.company.mawarees.Model.Models.Person;
 import com.company.mawarees.Model.OConstants;
 import com.company.mawarees.Model.Utilities.AppUtils;
+import com.company.mawarees.PrefManager;
 import com.company.mawarees.R;
 import com.company.mawarees.View.adpters.ExplainFirstStepRecAdapter;
 import com.company.mawarees.View.adpters.ExplainSecondStepRecAdapter;
@@ -53,6 +54,8 @@ public class ProblemExplainActivity extends AppCompatActivity {
     private boolean motherUncles = false;
 
     int originalValue = 0;
+
+    PrefManager mPrefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +185,9 @@ public class ProblemExplainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    void handleGroupsExplanation(){
+
+    }
     private void removeDuplicatedPeople() {
         mFirstStepData = new ArrayList<>();
 
