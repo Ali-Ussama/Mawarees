@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.company.mawarees.Model.Models.ExplainPhase2;
 import com.company.mawarees.Model.Models.ExplainPhase3;
+import com.company.mawarees.Model.Models.ExplainPhase4;
 import com.company.mawarees.Model.Models.ExplanationModel;
 import com.company.mawarees.Model.Models.Fraction;
 import com.company.mawarees.Model.Models.Person;
@@ -29,6 +30,7 @@ public class OConstants {
     public OConstants(Context context) {
         this.mContext = context;
         this.mPrefManager = new PrefManager(context);
+        this.mExplanation = new ExplanationModel();
     }
 
     //    public static final String PERSON_FATHER = "Father";
@@ -101,6 +103,8 @@ public class OConstants {
     public static final String PERSON_TWO_DAUGHTERS = "بنتان";
     public static final String PERSON_DAUGHTER_BOY = "ابن البنت";
     public static final String PERSON_DAUGHTER_GIRL = "بنت البنت";
+    public static final String PERSON_CHILDREN = "الاولاد";
+
 
     public static final String PERSON_BROTHER = "أخ";
     public static final String PERSON_BROTHERS = "اخوة";
@@ -459,6 +463,13 @@ public class OConstants {
         return null;
     }
 
+    public static Person getNewPerson(ArrayList<Person> data, String relation) {
+        for (Person person : data) {
+            if (person.getRelation().contains(relation))
+                return person;
+        }
+        return null;
+    }
     /*----------------------------حالة الابن / البنت المتوفين و ابنائهم ---------------------------*/
 
     public static int getPersonsInGirlsCount(ArrayList<Person> data, String boys, String girls) {
@@ -732,8 +743,15 @@ public class OConstants {
         if (!partners.isEmpty())
             handlePartnerPeople(data, oConstants, X);
 
+//        setExplanationPhase4(data, oConstants);
         handleDeadSonsAndDaughters(data);
 
+    }
+
+    private static void setExplanationPhase4(ArrayList<Person> data, OConstants oConstants) {
+        ExplainPhase4 phase4 = new ExplainPhase4();
+        phase4.setPeople(data);
+        oConstants.getmExplanation().setPhase4(phase4);
     }
 
     private static void setExplanationPhase3(ArrayList<Person> data, OConstants oConstants) {
@@ -2114,8 +2132,8 @@ public class OConstants {
         oConstants.isHandleChildrenGroup = true;
         oConstants.handleGroupParent = PERSON_SONS;
 
-        if (oConstants.mPrefManager != null){
-            oConstants.mPrefManager.saveString(PrefManager.KEY_GROUP_RELATION,PERSON_SONS);
+        if (oConstants.mPrefManager != null) {
+            oConstants.mPrefManager.saveString(PrefManager.KEY_GROUP_RELATION, PERSON_SONS);
         }
         Log.i(TAG, "handleChildrenGroup(): is called");
         Person moreThanThreeDaughters = getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS);
@@ -2144,8 +2162,8 @@ public class OConstants {
             if (findGCD(heads, moreThanThreeDaughtersNumberOfShares) == 1) {
                 Log.i(TAG, "handleChildrenGroup(): findGCD(heads, groupProblemOrigin) = 1");
 
-                if (oConstants.mPrefManager != null){
-                    oConstants.mPrefManager.saveBoolean(PrefManager.KEY_NEW_GCD,true);
+                if (oConstants.mPrefManager != null) {
+                    oConstants.mPrefManager.saveBoolean(PrefManager.KEY_NEW_GCD, true);
                 }
 
                 newProblemOrigin = heads * problemOriginSum;
@@ -2155,8 +2173,8 @@ public class OConstants {
 
             } else {
 
-                if (oConstants.mPrefManager != null){
-                    oConstants.mPrefManager.saveBoolean(PrefManager.KEY_NEW_GCD,false);
+                if (oConstants.mPrefManager != null) {
+                    oConstants.mPrefManager.saveBoolean(PrefManager.KEY_NEW_GCD, false);
                 }
                 Log.i(TAG, "handleChildrenGroup(): findGCD(heads, groupProblemOrigin) = " + findGCD(heads, moreThanThreeDaughtersNumberOfShares));
 
@@ -2169,9 +2187,9 @@ public class OConstants {
 
             }
 
-            if (oConstants.mPrefManager != null){
-                oConstants.mPrefManager.saveInt(PrefManager.KEY_HEADS,heads);
-                oConstants.mPrefManager.saveInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN,newProblemOrigin);
+            if (oConstants.mPrefManager != null) {
+                oConstants.mPrefManager.saveInt(PrefManager.KEY_HEADS, heads);
+                oConstants.mPrefManager.saveInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN, newProblemOrigin);
             }
 
             for (Person mPerson : mPeople) {
@@ -2211,13 +2229,13 @@ public class OConstants {
 
                 oConstants.handleGroupParent = PERSON_BROTHERS;
 
-                if (oConstants.mPrefManager != null){
-                    oConstants.mPrefManager.saveString(PrefManager.KEY_GROUP_RELATION,PERSON_BROTHERS);
+                if (oConstants.mPrefManager != null) {
+                    oConstants.mPrefManager.saveString(PrefManager.KEY_GROUP_RELATION, PERSON_BROTHERS);
                 }
 
                 int heads = getPersonsInGirlsCount(mPeople, OConstants.PERSON_BROTHER, OConstants.PERSON_SISTER);
                 int newProblemOrigin = 0;
-                int problemOriginSum = 0;
+                int numberOfSharesSum = 0;
 
                 int brothersNumberOfShares = brothersGroupObject.getNumberOfShares();
 
@@ -2226,37 +2244,37 @@ public class OConstants {
                             !isBlocked(mPerson)) {
 
                         Log.i(TAG, "handleBrothersGroup(): person = " + mPerson.getRelation() + " problem origin = " + mPerson.getProblemOrigin());
-                        problemOriginSum += mPerson.getNumberOfShares();
+                        numberOfSharesSum += mPerson.getNumberOfShares();
 
                     }
                 }
                 if (findGCD(heads, brothersNumberOfShares) == 1) {
 
-                    Log.i(TAG, "handleBrothersGroup(): problem Origin Sum = " + problemOriginSum);
-                    newProblemOrigin = heads * problemOriginSum;
+                    Log.i(TAG, "handleBrothersGroup(): problem Origin Sum = " + numberOfSharesSum);
+                    newProblemOrigin = heads * numberOfSharesSum;
 
-                    if (oConstants.mPrefManager != null){
-                        oConstants.mPrefManager.saveBoolean(PrefManager.KEY_NEW_GCD,true);
+                    if (oConstants.mPrefManager != null) {
+                        oConstants.mPrefManager.saveBoolean(PrefManager.KEY_NEW_GCD, true);
                     }
                 } else {
 
-                    if (oConstants.mPrefManager != null){
-                        oConstants.mPrefManager.saveBoolean(PrefManager.KEY_NEW_GCD,false);
+                    if (oConstants.mPrefManager != null) {
+                        oConstants.mPrefManager.saveBoolean(PrefManager.KEY_NEW_GCD, false);
                     }
                     Log.i(TAG, "handleBrothersGroup(): findGCD(heads, groupProblemOrigin) = " + findGCD(heads, brothersNumberOfShares));
 
-                    newProblemOrigin = problemOriginSum * (heads / findGCD(heads, brothersNumberOfShares));
+                    newProblemOrigin = numberOfSharesSum * (heads / findGCD(heads, brothersNumberOfShares));
 
-                    Log.i(TAG, "handleBrothersGroup(): problem Origin Sum = " + problemOriginSum + " - heads = " + heads);
+                    Log.i(TAG, "handleBrothersGroup(): problem Origin Sum = " + numberOfSharesSum + " - heads = " + heads);
                     Log.i(TAG, "handleBrothersGroup(): new problem Origin Sum = " + newProblemOrigin);
 
                     heads = (heads / findGCD(heads, brothersNumberOfShares));
 
                 }
 
-                if (oConstants.mPrefManager != null){
-                    oConstants.mPrefManager.saveInt(PrefManager.KEY_HEADS,heads);
-                    oConstants.mPrefManager.saveInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN,newProblemOrigin);
+                if (oConstants.mPrefManager != null) {
+                    oConstants.mPrefManager.saveInt(PrefManager.KEY_HEADS, heads);
+                    oConstants.mPrefManager.saveInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN, newProblemOrigin);
                 }
 
                 for (Person mPerson : mPeople) {
@@ -2286,8 +2304,8 @@ public class OConstants {
             oConstants.isHandleBrothersGroup = true;
             oConstants.handleGroupParent = PERSON_WIVES;
 
-            if (oConstants.mPrefManager != null){
-                oConstants.mPrefManager.saveString(PrefManager.KEY_GROUP_RELATION,PERSON_WIVES);
+            if (oConstants.mPrefManager != null) {
+                oConstants.mPrefManager.saveString(PrefManager.KEY_GROUP_RELATION, PERSON_WIVES);
             }
 
             int newProblemOrigin = 0;
@@ -2302,8 +2320,8 @@ public class OConstants {
 
             if ((getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS) != null && !isBlocked(getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS)))) {
 
-                if (oConstants.mPrefManager != null){
-                    oConstants.mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP,false);
+                if (oConstants.mPrefManager != null) {
+                    oConstants.mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP, false);
                 }
 
                 Log.i(TAG, "handleWivesGroup(): handling wives with more than three daughter \"Two groups\"");

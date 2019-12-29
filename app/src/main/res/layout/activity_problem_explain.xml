@@ -220,6 +220,42 @@
                     android:layout_height="match_parent" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/activity_explain_fourth_step_lbl"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/custom_bg_with_borders"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/explain_fourth_step_lbl"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/step_three_container" />
+
+            <LinearLayout
+                android:id="@+id/step_four_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/custom_bg_with_white_borders"
+                android:orientation="vertical"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_explain_fourth_step_lbl">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/activity_explain_fourth_step_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

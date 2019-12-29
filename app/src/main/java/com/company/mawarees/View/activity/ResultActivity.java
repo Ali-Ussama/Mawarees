@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.company.mawarees.Model.Callback.ItemSelectedListener;
+import com.company.mawarees.Model.Models.ExplanationModel;
 import com.company.mawarees.Model.Models.Person;
 import com.company.mawarees.Model.Utilities.AppUtils;
 import com.company.mawarees.R;
@@ -61,7 +62,7 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
     TextView mProofTV;
 
     @BindView(R.id.explain_problem_fab)
-    FloatingActionButton mExplainPorblemFab;
+    FloatingActionButton mExplainProblemFab;
 
     ArrayList<Person> mPeople;
 
@@ -71,7 +72,7 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
 
     ArrayList<String> mRelation;
 
-
+    private ExplanationModel explanation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +101,8 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
 
             totalMoney = getIntent().getDoubleExtra(getString(R.string.intent_total_money), 0.0);
 
+            explanation = getIntent().getParcelableExtra(getString(R.string.explain_problem_result));
+
             LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mCurrent, LinearLayoutManager.HORIZONTAL, false);
             mResultRVAdapter = new ResultRVAdapter(mPeople, mCurrent, this);
 
@@ -118,7 +121,7 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
 
             Log.i(TAG, "init() is Called 5");
 
-            mExplainPorblemFab.setOnClickListener(this);
+            mExplainProblemFab.setOnClickListener(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -241,6 +244,7 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
             if (view.getId() == R.id.explain_problem_fab) {
                 Intent intent = new Intent(mCurrent, ProblemExplainActivity.class);
                 intent.putParcelableArrayListExtra(getString(R.string.intent_data_lbl), mPeople);
+                intent.putExtra(getString(R.string.explain_problem_result),explanation);
                 startActivity(intent);
             }
         } catch (Exception e) {

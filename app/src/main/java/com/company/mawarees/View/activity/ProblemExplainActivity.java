@@ -10,7 +10,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.company.mawarees.Model.Models.ExplanationModel;
 import com.company.mawarees.Model.Models.Fraction;
+import com.company.mawarees.Model.Models.Group;
 import com.company.mawarees.Model.Models.Person;
 import com.company.mawarees.Model.OConstants;
 import com.company.mawarees.Model.Utilities.AppUtils;
@@ -18,6 +20,7 @@ import com.company.mawarees.PrefManager;
 import com.company.mawarees.R;
 import com.company.mawarees.View.adpters.ExplainFirstStepRecAdapter;
 import com.company.mawarees.View.adpters.ExplainSecondStepRecAdapter;
+import com.company.mawarees.View.adpters.ExplanationFourthStepAdapter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,6 +38,9 @@ public class ProblemExplainActivity extends AppCompatActivity {
     @BindView(R.id.activity_explain_third_step_rv)
     RecyclerView mThirdStepRV;
 
+    @BindView(R.id.activity_explain_fourth_step_rv)
+    RecyclerView mFourthStepRV;
+
     @BindView(R.id.activity_explain_second_step_layout_percent_numerator)
     TextView summationOfFractionsNumerator;
 
@@ -44,10 +50,13 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
     private ExplainFirstStepRecAdapter mFirstAdapter;
     private ExplainSecondStepRecAdapter mSecondAdapter;
+    private ExplanationFourthStepAdapter mFourthAdapter;
+
     private ArrayList<Person> mFirstStepData;
     private ArrayList<Person> mSecondStepData;
     private ArrayList<Person> people;
     private ProblemExplainActivity mCurrent;
+    ArrayList<Group> groups;
     private boolean brothers = false;
     private boolean children = false;
     private boolean fatherUncles = false;
@@ -55,7 +64,8 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
     int originalValue = 0;
 
-    PrefManager mPrefManager;
+    private PrefManager mPrefManager;
+    private ExplanationModel explanation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,12 +90,15 @@ public class ProblemExplainActivity extends AppCompatActivity {
             AppUtils.setToolbarTitle(mToolbar, getString(R.string.explain_problem_result));
 
             people = getIntent().getParcelableArrayListExtra(getString(R.string.intent_data_lbl));
+            explanation = getIntent().getParcelableExtra(getString(R.string.explain_problem_result));
 
             removeBlockedPeople();
 
             sumPeopleFractions();
             initFirstRV();
             initThirdStepRV();
+            initFourthStepRV();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -150,22 +163,11 @@ public class ProblemExplainActivity extends AppCompatActivity {
         }
     }
 
-    private void initThirdStepRV() {
-        try {
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            mSecondAdapter = new ExplainSecondStepRecAdapter(originalValue, people, mCurrent);
-            mThirdStepRV.setLayoutManager(layoutManager);
-            mThirdStepRV.setAdapter(mSecondAdapter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void initFirstRV() {
         try {
-//            removeDuplicatedPeople();
+            removeDuplicatedPeople();
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            mFirstAdapter = new ExplainFirstStepRecAdapter(people, mCurrent);
+            mFirstAdapter = new ExplainFirstStepRecAdapter(mFirstStepData, mCurrent);
             mFirstStepRV.setLayoutManager(layoutManager);
             mFirstStepRV.setAdapter(mFirstAdapter);
 
@@ -173,6 +175,87 @@ public class ProblemExplainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    private void initThirdStepRV() {
+        try {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            mSecondAdapter = new ExplainSecondStepRecAdapter(originalValue, mFirstStepData, mCurrent);
+            mThirdStepRV.setLayoutManager(layoutManager);
+            mThirdStepRV.setAdapter(mSecondAdapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initFourthStepRV() {
+        try {
+            groups = new ArrayList<>();
+            createGroups(groups);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            mFourthAdapter = new ExplanationFourthStepAdapter(groups, mCurrent);
+            mFourthStepRV.setLayoutManager(layoutManager);
+            mFourthStepRV.setAdapter(mFourthAdapter);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createGroups(ArrayList<Group> groups) {
+        try {
+            ArrayList<Person> phase1 = explanation.getPhase1().getPeople();
+            ArrayList<Person> phase4 = explanation.getPhase4().getPeople();
+
+            for (Person person : phase1) {
+                Log.i(TAG, "phase1: person relation = " + person.getRelation());
+            }
+            for (Person person : phase4) {
+                Log.i(TAG, "phase4: person relation = " + person.getRelation());
+            }
+
+            int sonsCount = OConstants.getPersonCount(phase1, OConstants.PERSON_SON);
+            int daughtersCount = OConstants.getPersonCount(phase1, OConstants.PERSON_DAUGHTER);
+
+            Person oldSon = OConstants.getPerson(phase1, OConstants.PERSON_SON);
+            Person newSon = null;
+
+            if (sonsCount > 2) {
+                newSon = OConstants.getNewPerson(phase4, OConstants.PERSON_SONS);
+            } else if (daughtersCount == 2) {
+                newSon = OConstants.getNewPerson(phase4, OConstants.PERSON_TWO_SONS);
+            } else if (daughtersCount == 1) {
+                newSon = OConstants.getPerson(phase4, OConstants.PERSON_SON);
+            }
+
+            Person newDaughter = null;
+            if (daughtersCount > 2) {
+                newDaughter = OConstants.getNewPerson(phase4, OConstants.PERSON_DAUGHTERS);
+            } else if (daughtersCount == 2) {
+                newDaughter = OConstants.getNewPerson(phase4, OConstants.PERSON_TWO_DAUGHTERS);
+            } else if (daughtersCount == 1) {
+                newDaughter = OConstants.getPerson(phase4, OConstants.PERSON_DAUGHTER);
+            }
+
+            if (sonsCount != 0 && daughtersCount != 0) {
+                Group group = new Group();
+                group.setGroupName(OConstants.CHILDREN);
+                group.setBoys_count(sonsCount);
+                group.setGirls_count(daughtersCount);
+                group.setBoys_relation(newSon.getRelation());
+                group.setGirls_relation(newDaughter.getRelation());
+                group.setSingle_boy_relation(OConstants.PERSON_SON);
+                group.setSingle_boy_relation(OConstants.PERSON_DAUGHTER);
+                group.setGroupSharePercent(oldSon.getSharePercent());
+                group.setBoysLatestSharePercent(newSon.getSharePercent());
+                group.setGirlsLatestSharePercent(newDaughter.getSharePercent());
+
+                groups.add(group);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -185,37 +268,70 @@ public class ProblemExplainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void handleGroupsExplanation(){
+    void handleGroupsExplanation() {
 
     }
+
     private void removeDuplicatedPeople() {
         mFirstStepData = new ArrayList<>();
-
-        ArrayList<Integer> index = new ArrayList<>();
-        Set<Person> da = new HashSet<>();
+        boolean children = false, brothers = false, motherUncles = false, fatherUncles = false;
+        Set<Person> data = new HashSet<>();
 
         for (int i = 0; i < people.size(); i++) {
             if (people.get(i).getRelation().contains(OConstants.PERSON_DAUGHTERS) || people.get(i).getRelation().contains(OConstants.PERSON_SONS) ||
                     people.get(i).getRelation().contains(OConstants.PERSON_TWO_DAUGHTERS) || people.get(i).getRelation().contains(OConstants.PERSON_TWO_SONS) ||
                     people.get(i).getRelation().contains(OConstants.PERSON_DAUGHTER) || people.get(i).getRelation().contains(OConstants.PERSON_SON)) {
-                index.add(i);
+                if (!children) {
+                    children = true;
+                    Person person = people.get(i);
+
+                    createAlivePerson(mFirstStepData, person.getCount(), OConstants.PERSON_CHILDREN, OConstants.GENDER_MALE, true,
+                            person.getOriginalSharePercent(), person.getShareValue(), person.getNumberOfShares(), person.getProblemOrigin(),
+                            person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy());
+                }
             } else if (people.get(i).getRelation().contains(OConstants.PERSON_BROTHERS) || people.get(i).getRelation().contains(OConstants.PERSON_BROTHER) ||
                     people.get(i).getRelation().contains(OConstants.PERSON_TWO_BROTHERS) || people.get(i).getRelation().contains(OConstants.PERSON_SISTER) ||
                     people.get(i).getRelation().contains(OConstants.PERSON_SISTERS) || people.get(i).getRelation().contains(OConstants.PERSON_TWO_SISTERS)) {
-                index.add(i);
+                if (!brothers) {
+                    brothers = true;
+                    Person person = people.get(i);
+
+                    createAlivePerson(mFirstStepData, person.getCount(), OConstants.PERSON_BROTHERS, OConstants.GENDER_MALE, true,
+                            person.getOriginalSharePercent(), person.getShareValue(), person.getNumberOfShares(), person.getProblemOrigin(),
+                            person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy());
+                }
             } else if (people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_UNCLE) || people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_UNCLES) ||
                     people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_AUNT) || people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_AUNTS)) {
-                Person person = people.get(i);
 
-//                createAlivePerson(mFirstStepData, person.getCount(), OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, );
+                if (!motherUncles) {
+                    motherUncles = true;
+                    Person person = people.get(i);
+
+                    createAlivePerson(mFirstStepData, person.getCount(), OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true,
+                            person.getOriginalSharePercent(), person.getShareValue(), person.getNumberOfShares(), person.getProblemOrigin(),
+                            person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy());
+                }
+            } else if (people.get(i).getRelation().contains(OConstants.PERSON_FATHER_UNCLE) || people.get(i).getRelation().contains(OConstants.PERSON_FATHER_UNCLES) ||
+                    people.get(i).getRelation().contains(OConstants.PERSON_FATHER_AUNT) || people.get(i).getRelation().contains(OConstants.PERSON_FATHER_AUNTS)) {
+
+                if (!fatherUncles) {
+                    fatherUncles = true;
+                    Person person = people.get(i);
+
+                    createAlivePerson(mFirstStepData, person.getCount(), OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true,
+                            person.getOriginalSharePercent(), person.getShareValue(), person.getNumberOfShares(), person.getProblemOrigin(),
+                            person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy());
+                }
+            } else {
+                mFirstStepData.add(people.get(i));
             }
         }
-
     }
 
-    public static void createAlivePerson(ArrayList<Person> data, int size, String relation, String gender, boolean isAlive, Fraction originalPercent, Fraction sharePercent,
-                                         Fraction eachPersonSharePercent, double shareValue, double eachPersonShareValue, int numberOfShares,
-                                         int eachPersonNumberOfShares, int problemOrigin, String explanation, String proof, String blocked, String blockedBy) {
+    public static void createAlivePerson(ArrayList<Person> data, int size, String relation, String gender,
+                                         boolean isAlive, Fraction originalPercent, double shareValue,
+                                         int numberOfShares, int problemOrigin, String explanation,
+                                         String proof, String blocked, String blockedBy) {
         try {
 
             Person person = new Person();
@@ -226,12 +342,8 @@ public class ProblemExplainActivity extends AppCompatActivity {
             person.setDeadSonNumber(-1);
             person.setProblemOrigin(problemOrigin);
             person.setOriginalSharePercent(originalPercent);
-            person.setSharePercent(sharePercent);
-            person.setEachPersonSharePercent(eachPersonSharePercent);
             person.setShareValue(shareValue);
-            person.setEachPersonShareValue(eachPersonShareValue);
             person.setNumberOfShares(numberOfShares);
-            person.setEachPersonNumberOfShares(eachPersonNumberOfShares);
             person.setExplanation(explanation);
             person.setProof(proof);
             person.setBlocked(blocked);

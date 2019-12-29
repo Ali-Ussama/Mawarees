@@ -20,7 +20,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.company.mawarees.Model.Callback.DeadPersonListener;
 import com.company.mawarees.Model.Models.DeadPersonModel;
 import com.company.mawarees.Model.Models.ExplainPhase1;
-import com.company.mawarees.Model.Models.ExplanationModel;
+import com.company.mawarees.Model.Models.ExplainPhase4;
 import com.company.mawarees.Model.Models.Person;
 import com.company.mawarees.Model.OConstants;
 import com.company.mawarees.Model.Utilities.AppUtils;
@@ -171,7 +171,6 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             mCurrent = ProblemActivity.this;
             mPeople = new ArrayList<>();
             oConstants = new OConstants(mCurrent);
-            oConstants.mExplanation = new ExplanationModel();
 
             try {
 
@@ -887,10 +886,12 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
         }
     }
 
-    private void setExplanationPhase4(ArrayList<Person> mPeople, OConstants oConstants) {
+    private void setExplanationPhase4(ArrayList<Person> data, OConstants oConstants) {
         try {
 
-
+            ExplainPhase4 phase4 = new ExplainPhase4();
+            phase4.setPeople(data);
+            oConstants.getmExplanation().setPhase4(phase4);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -900,8 +901,9 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
         try {
 
             ExplainPhase1 mExplainPhase1 = new ExplainPhase1();
-            mExplainPhase1.setPeople(mPeople);
-            oConstants.mExplanation.setPhase1(mExplainPhase1);
+            ArrayList<Person> data = new ArrayList<>(mPeople);
+            mExplainPhase1.setPeople(data);
+            oConstants.getmExplanation().setPhase1(mExplainPhase1);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1126,6 +1128,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             Intent intent = new Intent(mCurrent, ResultActivity.class);
             intent.putParcelableArrayListExtra(getString(R.string.intent_data_lbl), mPeople);
             intent.putExtra(getString(R.string.intent_total_money), oConstants.getTotalMoney());
+            intent.putExtra(getString(R.string.explain_problem_result), oConstants.getmExplanation());
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
