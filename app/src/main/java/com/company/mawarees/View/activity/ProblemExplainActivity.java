@@ -107,18 +107,12 @@ public class ProblemExplainActivity extends AppCompatActivity {
     private void sumPeopleFractions() {
         try {
             StringBuilder summation = new StringBuilder("= س");
-
+            removeDuplicatedPeople();
             originalValue = 0;
-            for (int i = 0; i < people.size(); i++) {
-//                if (i < people.size() - 1) {
-//                    summation.append(" ").append(people.get(i).getOriginalSharePercent().getDenominator()).append("/").append(people.get(i).getOriginalSharePercent().getNumerator()).append(" +");
-//                } else {
-//                    summation.append(" ").append(people.get(i).getOriginalSharePercent().getDenominator()).append("/").append(people.get(i).getOriginalSharePercent().getNumerator());
-//                }
-                originalValue += people.get(i).getOriginalSharePercent().getNumerator();
-            }
 
-//            summation.append(" ").append(" = ").append(originalValue).append("/").append("24");
+            for (int i = 0; i < mFirstStepData.size(); i++) {
+                originalValue += mFirstStepData.get(i).getOriginalSharePercent().getNumerator();
+            }
 
             summationOfFractionsNumerator.setText(String.valueOf(originalValue));
             summationOfFractionsDenominator.setText(R.string.twenty_four);
@@ -151,9 +145,10 @@ public class ProblemExplainActivity extends AppCompatActivity {
                 }
             }
 
-            for (Integer integer : index) {
+            for (int i = index.size() - 1; i >= 0; i--) {
+
                 try {
-                    people.remove((int) integer);
+                    people.remove((int) index.get(i));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -165,7 +160,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
     private void initFirstRV() {
         try {
-            removeDuplicatedPeople();
+//            removeDuplicatedPeople();
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             mFirstAdapter = new ExplainFirstStepRecAdapter(mFirstStepData, mCurrent);
             mFirstStepRV.setLayoutManager(layoutManager);
@@ -212,7 +207,27 @@ public class ProblemExplainActivity extends AppCompatActivity {
             for (Person person : phase4) {
                 Log.i(TAG, "phase4: person relation = " + person.getRelation());
             }
+            int sonsCount = OConstants.getPersonCount(phase1, OConstants.PERSON_SON);
+            int daughtersCount = OConstants.getPersonCount(phase1, OConstants.PERSON_DAUGHTER);
 
+            int wivesCount = OConstants.getPersonCount(phase1, OConstants.PERSON_WIFE);
+
+            if (wivesCount > 0){
+
+            }
+
+            if (sonsCount > 0 && daughtersCount > 0) {
+                createSonsGroup(phase1, phase4, groups);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createSonsGroup(ArrayList<Person> phase1, ArrayList<Person> phase4, ArrayList<Group> groups) {
+        try {
             int sonsCount = OConstants.getPersonCount(phase1, OConstants.PERSON_SON);
             int daughtersCount = OConstants.getPersonCount(phase1, OConstants.PERSON_DAUGHTER);
 
@@ -221,9 +236,9 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
             if (sonsCount > 2) {
                 newSon = OConstants.getNewPerson(phase4, OConstants.PERSON_SONS);
-            } else if (daughtersCount == 2) {
+            } else if (sonsCount == 2) {
                 newSon = OConstants.getNewPerson(phase4, OConstants.PERSON_TWO_SONS);
-            } else if (daughtersCount == 1) {
+            } else if (sonsCount == 1) {
                 newSon = OConstants.getPerson(phase4, OConstants.PERSON_SON);
             }
 
@@ -244,11 +259,21 @@ public class ProblemExplainActivity extends AppCompatActivity {
                 group.setBoys_relation(newSon.getRelation());
                 group.setGirls_relation(newDaughter.getRelation());
                 group.setSingle_boy_relation(OConstants.PERSON_SON);
-                group.setSingle_boy_relation(OConstants.PERSON_DAUGHTER);
-                group.setGroupSharePercent(oldSon.getSharePercent());
-                group.setBoysLatestSharePercent(newSon.getSharePercent());
-                group.setGirlsLatestSharePercent(newDaughter.getSharePercent());
+                group.setSingle_girl_relation(OConstants.PERSON_DAUGHTER);
+                group.setGroupSharePercent(oldSon.getOriginalSharePercent());
 
+                if (newSon.getEachPersonSharePercent() != null) {
+                    group.setBoysLatestSharePercent(newSon.getEachPersonSharePercent());
+                } else {
+                    group.setBoysLatestSharePercent(newSon.getSharePercent());
+                }
+
+                if (newDaughter.getEachPersonSharePercent() != null) {
+                    group.setGirlsLatestSharePercent(newDaughter.getEachPersonSharePercent());
+                } else {
+                    group.setGirlsLatestSharePercent(newDaughter.getSharePercent());
+                }
+                group.setOriginalDenominator(originalValue);
                 groups.add(group);
             }
         } catch (Exception e) {

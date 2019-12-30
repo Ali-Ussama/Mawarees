@@ -153,6 +153,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         android:text="8"
+        android:gravity="center"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/AEFSRI_equal_2"
@@ -209,6 +210,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:orientation="vertical"
+        android:gravity="center"
         android:padding="4dp"
         app:layout_constraintEnd_toStartOf="@+id/AEFSRI_equal_3"
         app:layout_constraintTop_toBottomOf="@+id/AEFSRI_boys_title">
@@ -217,7 +219,7 @@
             android:id="@+id/AEFSRI_boy_percent_numerator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
+            android:gravity="center"
             android:text="12"
             android:textSize="14sp" />
 
@@ -232,7 +234,7 @@
             android:id="@+id/AEFSRI_boy_percent_denominator"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="4dp"
+            android:gravity="center"
             android:text="24"
             android:textSize="14sp" />
     </LinearLayout>
@@ -254,6 +256,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:orientation="vertical"
+        android:gravity="center"
         android:padding="4dp"
         app:layout_constraintEnd_toStartOf="@+id/AEFSRI_multiply"
         app:layout_constraintTop_toTopOf="@+id/boys_original_share_percent_layout">
@@ -262,7 +265,7 @@
             android:id="@+id/AEFSRI_boys_multiply_percent_numerator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
+            android:gravity="center"
             android:text="12"
             android:textSize="14sp" />
 
@@ -277,7 +280,7 @@
             android:id="@+id/AEFSRI_boys_multiply_percent_denominator"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="4dp"
+            android:gravity="center"
             android:text="24"
             android:textSize="14sp" />
     </LinearLayout>
@@ -300,6 +303,7 @@
         android:background="@drawable/custom_white_rect_with_brown_borders"
         android:orientation="vertical"
         android:padding="4dp"
+        android:gravity="center"
         app:layout_constraintEnd_toStartOf="@+id/AEFSRI_equal_4"
         app:layout_constraintTop_toTopOf="@+id/boys_original_share_percent_layout">
 
@@ -307,7 +311,6 @@
             android:id="@+id/AEFSRI_boys_multiply_percent_result_numerator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
             android:text="12"
             android:textColor="@color/color_red"
             android:textSize="14sp" />
@@ -323,7 +326,6 @@
             android:id="@+id/AEFSRI_boys_multiply_percent_result_denominator"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="4dp"
             android:text="24"
             android:textColor="@color/color_red"
             android:textSize="14sp" />
@@ -368,6 +370,7 @@
         android:layout_marginTop="12dp"
         android:orientation="vertical"
         android:padding="4dp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="@+id/boys_original_share_percent_layout"
         app:layout_constraintTop_toBottomOf="@+id/boys_original_share_percent_layout">
 
@@ -375,7 +378,6 @@
             android:id="@+id/AEFSRI_girl_percent_numerator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
             android:text="12"
             android:textSize="14sp" />
 
@@ -390,7 +392,6 @@
             android:id="@+id/AEFSRI_girl_percent_denominator"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="4dp"
             android:text="24"
             android:textSize="14sp" />
     </LinearLayout>
@@ -413,6 +414,7 @@
         android:layout_marginEnd="8dp"
         android:orientation="vertical"
         android:padding="4dp"
+        android:gravity="center"
         app:layout_constraintEnd_toStartOf="@+id/AEFSRI_multiply_2"
         app:layout_constraintTop_toTopOf="@+id/girls_original_share_percent_layout">
 
@@ -420,7 +422,6 @@
             android:id="@+id/AEFSRI_girls_multiply_percent_numerator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
             android:text="12"
             android:textSize="14sp" />
 
@@ -435,7 +436,6 @@
             android:id="@+id/AEFSRI_girls_multiply_percent_denominator"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="4dp"
             android:text="24"
             android:textSize="14sp" />
     </LinearLayout>
@@ -458,6 +458,7 @@
         android:background="@drawable/custom_white_rect_with_brown_borders"
         android:orientation="vertical"
         android:padding="4dp"
+        android:gravity="center"
         app:layout_constraintEnd_toStartOf="@+id/AEFSRI_equal_6"
         app:layout_constraintTop_toTopOf="@+id/girls_original_share_percent_layout">
 
@@ -465,7 +466,6 @@
             android:id="@+id/AEFSRI_girls_multiply_percent_result_numerator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
             android:text="12"
             android:textColor="@color/color_red"
             android:textSize="14sp" />
@@ -481,7 +481,6 @@
             android:id="@+id/AEFSRI_girls_multiply_percent_result_denominator"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="4dp"
             android:text="24"
             android:textColor="@color/color_red"
             android:textSize="14sp" />

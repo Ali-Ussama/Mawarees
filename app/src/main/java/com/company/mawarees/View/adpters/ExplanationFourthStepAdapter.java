@@ -61,7 +61,7 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
 
             //Boy
             holder.mBoysPercentNumerator.setText(String.valueOf(group.getGroupSharePercent().getNumerator()));
-            holder.mBoysPercentDenominator.setText(String.valueOf(group.getGroupSharePercent().getDenominator()));
+            holder.mBoysPercentDenominator.setText(String.valueOf(group.getOriginalDenominator()));
 
             holder.mBoysMultiplyPercentNumerator.setText("2");
             holder.mBoysMultiplyPercentDenominator.setText(headsCount);
@@ -73,13 +73,10 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
             holder.mGirlsRelation.setText(group.getSingle_girl_relation());
 
             holder.mGirlsPercentNumerator.setText(String.valueOf(group.getGroupSharePercent().getNumerator()));
-            holder.mBoysPercentDenominator.setText(String.valueOf(group.getGroupSharePercent().getDenominator()));
+            holder.mGirlsPercentDenominator.setText(String.valueOf(group.getOriginalDenominator()));
 
             holder.mGirlsMultiplyPercentNumerator.setText("1");
             holder.mGirlsMultiplyPercentDenominator.setText(headsCount);
-
-            holder.mGirlsPercentNumerator.setText(String.valueOf(group.getGroupSharePercent().getNumerator()));
-            holder.mGirlsPercentDenominator.setText(String.valueOf(group.getGroupSharePercent().getDenominator()));
 
             holder.mGirlsMultiplyPercentResultNumerator.setText(String.valueOf(group.getGirlsLatestSharePercent().getNumerator()));
             holder.mGirlsMultiplyPercentResultDenominator.setText(String.valueOf(group.getGirlsLatestSharePercent().getDenominator()));

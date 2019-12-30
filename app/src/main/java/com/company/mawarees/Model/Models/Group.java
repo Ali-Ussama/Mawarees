@@ -22,6 +22,8 @@ public class Group {
 
     private Fraction girlsLatestSharePercent;
 
+    private int originalDenominator;
+
     public String getGroupName() {
         return groupName;
     }
@@ -100,5 +102,13 @@ public class Group {
 
     public void setGirlsLatestSharePercent(Fraction girlsLatestSharePercent) {
         this.girlsLatestSharePercent = girlsLatestSharePercent;
+    }
+
+    public int getOriginalDenominator() {
+        return originalDenominator;
+    }
+
+    public void setOriginalDenominator(int originalDenominator) {
+        this.originalDenominator = originalDenominator;
     }
 }

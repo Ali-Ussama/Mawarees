@@ -2145,7 +2145,7 @@ public class OConstants {
             Log.i(TAG, "handleChildrenGroup(): head % children problem origin != 0");
 
 
-            int problemOriginSum = 0;
+            int numberOfSharesSum = 0;
             int newProblemOrigin = 0;
 
             for (Person mPerson : mPeople) {
@@ -2155,7 +2155,7 @@ public class OConstants {
                         !mPerson.getRelation().matches(OConstants.PERSON_DAUGHTER_BOY) && !mPerson.getRelation().matches(OConstants.PERSON_DAUGHTER_GIRL)) {
 
                     Log.i(TAG, "handleChildrenGroup(): person = " + mPerson.getRelation() + " problem origin = " + mPerson.getProblemOrigin());
-                    problemOriginSum += mPerson.getNumberOfShares();
+                    numberOfSharesSum += mPerson.getNumberOfShares();
 
                 }
             }
@@ -2166,9 +2166,9 @@ public class OConstants {
                     oConstants.mPrefManager.saveBoolean(PrefManager.KEY_NEW_GCD, true);
                 }
 
-                newProblemOrigin = heads * problemOriginSum;
+                newProblemOrigin = heads * numberOfSharesSum;
 
-                Log.i(TAG, "handleChildrenGroup(): problem Origin Sum = " + problemOriginSum + " - heads = " + heads);
+                Log.i(TAG, "handleChildrenGroup(): problem Origin Sum = " + numberOfSharesSum + " - heads = " + heads);
                 Log.i(TAG, "handleChildrenGroup(): new problem Origin Sum = " + newProblemOrigin);
 
             } else {
@@ -2178,9 +2178,9 @@ public class OConstants {
                 }
                 Log.i(TAG, "handleChildrenGroup(): findGCD(heads, groupProblemOrigin) = " + findGCD(heads, moreThanThreeDaughtersNumberOfShares));
 
-                newProblemOrigin = problemOriginSum * (heads / findGCD(heads, moreThanThreeDaughtersNumberOfShares));
+                newProblemOrigin = numberOfSharesSum * (heads / findGCD(heads, moreThanThreeDaughtersNumberOfShares));
 
-                Log.i(TAG, "handleChildrenGroup(): problem Origin Sum = " + problemOriginSum + " - heads = " + heads);
+                Log.i(TAG, "handleChildrenGroup(): problem Origin Sum = " + numberOfSharesSum + " - heads = " + heads);
                 Log.i(TAG, "handleChildrenGroup(): new problem Origin Sum = " + newProblemOrigin);
 
                 heads = (heads / findGCD(heads, moreThanThreeDaughtersNumberOfShares));
@@ -2300,6 +2300,9 @@ public class OConstants {
     private static void handleWivesGroup(ArrayList<Person> mPeople, OConstants oConstants) {
 
         try {
+
+            Log.i(TAG, "handleWivesGroup(): is called");
+
             oConstants.isHandleWivesGroup = true;
             oConstants.isHandleBrothersGroup = true;
             oConstants.handleGroupParent = PERSON_WIVES;
@@ -2446,7 +2449,6 @@ public class OConstants {
                     }
                 }
             }
-            Log.i(TAG, "handleWivesGroup(): is called");
 
 
         } catch (Exception e) {
