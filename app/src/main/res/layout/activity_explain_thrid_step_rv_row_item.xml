@@ -33,13 +33,23 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/step_two_rv_ri_lbl_4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="4dp"
+            android:text="@string/with_each_other"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_person_relation"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
             android:id="@+id/step_two_rv_ri_lbl_2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginEnd="4dp"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_person_relation"
+            app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_lbl_4"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -54,6 +64,109 @@
             app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_lbl_2"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/step_two_rv_ri_equal_1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:text="@string/equal"
+            android:textColor="@color/dark_grey"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_lbl_3"
+            app:layout_constraintTop_toTopOf="@+id/step_two_rv_ri_lbl_3"
+            app:layout_constraintBottom_toBottomOf="@+id/step_two_rv_ri_lbl_3"/>
+
+        <LinearLayout
+            android:id="@+id/step_two_rv_ri_old_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            android:padding="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_equal_1"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/step_two_rv_ri_old_percent_numerator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="12"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:background="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/step_two_rv_ri_old_percent_denominator"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="4dp"
+                android:text="24"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/step_two_rv_ri_divided_by"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:text="@string/divide"
+            android:textColor="@color/dark_grey"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_old_percent"
+            app:layout_constraintTop_toTopOf="@+id/step_two_rv_ri_old_percent"
+            app:layout_constraintBottom_toBottomOf="@+id/step_two_rv_ri_old_percent"/>
+
+        <LinearLayout
+            android:id="@+id/step_two_rv_ri_sum_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            android:padding="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_divided_by"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/step_two_rv_ri_old_sum_percent_numerator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="12"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:background="@color/dark_grey" />
+
+            <TextView
+                android:id="@+id/step_two_rv_ri_old_sum_percent_denominator"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="4dp"
+                android:text="24"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/step_two_rv_ri_equal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:text="@string/equal"
+            android:textColor="@color/dark_grey"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_sum_percent"
+            app:layout_constraintTop_toTopOf="@+id/step_two_rv_ri_sum_percent"
+            app:layout_constraintBottom_toBottomOf="@+id/step_two_rv_ri_sum_percent"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -61,7 +174,7 @@
             android:background="@drawable/custom_white_rect_with_brown_borders"
             android:orientation="vertical"
             android:padding="4dp"
-            app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_lbl_3"
+            app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_equal"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView

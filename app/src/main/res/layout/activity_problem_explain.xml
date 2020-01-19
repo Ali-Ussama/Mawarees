@@ -172,10 +172,10 @@
                     android:id="@+id/activity_explain_second_step_lbl1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
                     android:gravity="center"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:layout_marginStart="4dp"
                     android:text="@string/explain_lbl_1"
                     android:textColor="@color/dark_grey"
                     android:textDirection="rtl"
@@ -185,22 +185,56 @@
 
             </LinearLayout>
 
-
-            <TextView
+            <LinearLayout
                 android:id="@+id/activity_explain_third_step_lbl"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/custom_bg_with_borders"
-                android:gravity="center"
+                android:orientation="vertical"
                 android:padding="8dp"
-                android:text="@string/explain_third_step_lbl"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/activity_explain_second_step_layout" />
+                app:layout_constraintTop_toBottomOf="@+id/activity_explain_second_step_layout">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/equation"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:text="@string/explain_third_step_lbl"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/explain_third_step_lbl2"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/step_three_container"
@@ -231,7 +265,7 @@
                 android:padding="8dp"
                 android:text="@string/explain_fourth_step_lbl"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -245,10 +279,57 @@
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:orientation="vertical"
                 android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_explain_fourth_step_lbl">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:id="@+id/activity_explain_fourth_step_lbl_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/correction_number"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/activity_explain_fourth_step_equal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center"
+                        android:text="@string/equal"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/activity_explain_fourth_step_lbl_2"
+                        app:layout_constraintEnd_toStartOf="@+id/activity_explain_fourth_step_lbl_2"
+                        app:layout_constraintTop_toTopOf="@+id/activity_explain_fourth_step_lbl_2" />
+
+                    <TextView
+                        android:id="@+id/activity_explain_fourth_step_correction_number_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:ems="1"
+                        android:gravity="center"
+                        android:text="5"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/activity_explain_fourth_step_equal"
+                        app:layout_constraintEnd_toStartOf="@+id/activity_explain_fourth_step_equal"
+                        app:layout_constraintTop_toTopOf="@+id/activity_explain_fourth_step_equal" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/activity_explain_fourth_step_rv"

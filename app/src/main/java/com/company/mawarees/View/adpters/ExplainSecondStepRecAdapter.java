@@ -48,8 +48,13 @@ public class ExplainSecondStepRecAdapter extends RecyclerView.Adapter<ExplainSec
             } else {
                 holder.relationTV.setText("ال".concat(people.get(position).getRelation()));
             }
-            holder.numeratorTV.setText(String.valueOf(people.get(position).getOriginalSharePercent().getNumerator()));
-            holder.denominatorTV.setText(String.valueOf(originalValue));
+
+            holder.oldNumeratorTV.setText(String.valueOf(people.get(position).getOriginalSharePercent().getNumerator()));
+
+            holder.sumNumeratorTV.setText(String.valueOf(originalValue));
+
+            holder.resultNumeratorTV.setText(String.valueOf(people.get(position).getOriginalSharePercent().getNumerator()));
+            holder.resultDenominatorTV.setText(String.valueOf(originalValue));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,11 +70,24 @@ public class ExplainSecondStepRecAdapter extends RecyclerView.Adapter<ExplainSec
         @BindView(R.id.step_two_rv_ri_person_relation)
         TextView relationTV;
 
+        @BindView(R.id.step_two_rv_ri_old_percent_numerator)
+        TextView oldNumeratorTV;
+
+        @BindView(R.id.step_two_rv_ri_old_percent_denominator)
+        TextView oldDenominatorTV;
+
+
+        @BindView(R.id.step_two_rv_ri_old_sum_percent_numerator)
+        TextView sumNumeratorTV;
+
+        @BindView(R.id.step_two_rv_ri_old_sum_percent_denominator)
+        TextView sumDenominatorTV;
+
         @BindView(R.id.step_two_rv_ri_percent_numerator)
-        TextView numeratorTV;
+        TextView resultNumeratorTV;
 
         @BindView(R.id.step_two_rv_ri_percent_denominator)
-        TextView denominatorTV;
+        TextView resultDenominatorTV;
 
         viewHolder(@NonNull View itemView) {
             super(itemView);

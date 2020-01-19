@@ -53,6 +53,7 @@
     <string name="share_value">قيمة النصيب</string>
     <string name="share_value_per_person">نصيب الفرد</string>
     <string name="share">السهم</string>
+    <string name="share_2">سهم</string>
     <string name="share_per_person">السهم للفرد</string>
     <string name="explanation">التحليل</string>
     <string name="bla_bla">مقاسمة الباقي بعد نصيب اصحاب الفروض تعصيبا مع الابناء للذكر مثل حظ الانثيين</string>
@@ -69,9 +70,10 @@
     <string name="splash">splash</string>
 
     <string name="explain_problem_result">شرح حل المسألة</string>
-    <string name="explain_first_step">نسبة كل فرد في القرآن</string>
-    <string name="explain_second_step_lbl">مجموع النسب</string>
-    <string name="explain_third_step_lbl">نصيب كل فرد</string>
+    <string name="explain_first_step">تحديد نسب الورثه في القرآن في هذه الحالة (ن)</string>
+    <string name="explain_second_step_lbl">حساب مجموع النسب الوارثه في هذه الحالة (س)</string>
+    <string name="explain_third_step_lbl">تطبيق معادلة القرآن في الميراث</string>
+    <string name="explain_third_step_lbl2">لحساب الأنصبة التى حصل عليها مجموعات الوارثين في هذه الحالة (ص)</string>
     <string name="percent">نسبة</string>
     <string name="step_one_rv_ri_lbl_2">في القرآن الكريم</string>
     <string name="equal"> = </string>
@@ -91,5 +93,8 @@
     <string name="son">الابن</string>
     <string name="multiply">x</string>
     <string name="daughter">الابنة</string>
-    <string name="explain_fourth_step_lbl">المجموعات</string>
+    <string name="explain_fourth_step_lbl">حساب أنصبة الافراد الوارثة بمضاعفة الأسهم بمعامل تصحيح الأسهم</string>
+    <string name="with_each_other">مجتمعين</string>
+    <string name="divide">/</string>
+    <string name="correction_number">معامل تصحيح الأسهم</string>
 </resources>

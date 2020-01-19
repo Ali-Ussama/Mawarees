@@ -74,6 +74,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_problem_explain);
 
             init();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -204,9 +205,11 @@ public class ProblemExplainActivity extends AppCompatActivity {
             for (Person person : phase1) {
                 Log.i(TAG, "phase1: person relation = " + person.getRelation());
             }
+
             for (Person person : phase4) {
                 Log.i(TAG, "phase4: person relation = " + person.getRelation());
             }
+
             int sonsCount = OConstants.getPersonCount(phase1, OConstants.PERSON_SON);
             int daughtersCount = OConstants.getPersonCount(phase1, OConstants.PERSON_DAUGHTER);
 
