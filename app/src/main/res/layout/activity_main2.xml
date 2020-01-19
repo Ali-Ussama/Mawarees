@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar_layout" />
+
+    <LinearLayout
+        android:id="@+id/standards_layout_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/how_much_money_tv_lbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/how_much_money"
+                android:textColor="@color/brown"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/dead_person_gender_tv_lbl"
+                app:layout_constraintStart_toStartOf="@+id/dead_person_gender_tv_lbl"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/problem_activity_how_much_money_et_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="10dp"
+                android:padding="8dp"
+                android:background="@drawable/custom_white_rectangle_background"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/enter_money"
+                android:inputType="number"
+                android:textColorHint="@color/browLight"
+                app:layout_constraintEnd_toStartOf="@+id/how_much_money_tv_lbl"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/dead_person_gender_tv_lbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="@string/dead_gender"
+                android:textColor="@color/brown"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/gender_layout" />
+
+
+            <LinearLayout
+                android:id="@+id/gender_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/problem_activity_how_much_money_et_value"
+                app:layout_constraintStart_toStartOf="@id/problem_activity_how_much_money_et_value"
+                app:layout_constraintTop_toBottomOf="@id/problem_activity_how_much_money_et_value">
+
+                <Button
+                    android:id="@+id/problem_activity_dead_gender_female_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="@drawable/custom_white_rect_with_brown_borders"
+                    android:gravity="center"
+                    android:text="@string/female"
+                    android:textColor="@color/brown"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/problem_activity_dead_gender_male_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="@color/browLight"
+                    android:gravity="center"
+                    android:text="@string/male"
+                    android:textColor="@color/brown"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/doctrine_tv_lbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="@string/doctrine"
+                android:textColor="@color/brown"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/how_much_money_tv_lbl"
+                app:layout_constraintStart_toStartOf="@+id/dead_person_gender_tv_lbl"
+                app:layout_constraintTop_toTopOf="@+id/doctrine_layout" />
+
+            <LinearLayout
+                android:id="@+id/doctrine_layout"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/gender_layout"
+                app:layout_constraintStart_toStartOf="@id/gender_layout"
+                app:layout_constraintTop_toBottomOf="@id/gender_layout">
+
+                <Button
+                    android:id="@+id/adnan_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    android:background="@color/browLight"
+                    android:gravity="center"
+                    android:text="@string/adnan"
+                    android:textColor="@color/brown"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/sunnah_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_white_rect_with_brown_borders"
+                    android:gravity="center"
+                    android:text="@string/sunnah"
+                    android:textColor="@color/brown"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/sheaa_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_white_rect_with_brown_borders"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="@string/sheaa"
+                    android:textColor="@color/brown"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sunnah_category_layout"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/gender_layout"
+                app:layout_constraintStart_toStartOf="@id/problem_activity_how_much_money_et_value"
+                app:layout_constraintTop_toBottomOf="@id/doctrine_layout">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_white_rect_with_brown_borders"
+                    android:gravity="center"
+                    android:text="@string/hanafy"
+                    android:textColor="@color/brown"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_white_rect_with_brown_borders"
+                    android:text="@string/maleky"
+                    android:textColor="@color/brown"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_white_rect_with_brown_borders"
+                    android:gravity="center"
+                    android:text="@string/shafeey"
+                    android:textColor="@color/brown"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_white_rect_with_brown_borders"
+                    android:gravity="center"
+                    android:text="@string/hanbaly"
+                    android:textColor="@color/brown"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- wife -->
+            <LinearLayout
+                android:id="@+id/problem_activity_wife_layout_container"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/problem_activity_wife_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:autofillHints="@string/default_zero"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:hint="@string/default_zero"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/orange"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="@string/wife"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- husband -->
+            <LinearLayout
+                android:id="@+id/problem_activity_husband_layout_container"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/problem_activity_husband_value"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/dark_brown"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="@string/man_dead"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/browLight"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="@string/husband"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!--Alive Children-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/problem_activity_wife_layout_container">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/problem_activity_alive_daughter_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:autofillHints="@string/default_zero"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:hint="@string/default_zero"
+                        android:inputType="number"
+                        android:padding="8dp"
+                        android:ems="5"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/orange"
+                        android:gravity="center"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:text="@string/alive_daughter"
+                         />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/problem_activity_alive_son_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:autofillHints="@string/default_zero"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:hint="@string/default_zero"
+                        android:inputType="number"
+                        android:padding="8dp"
+                        android:ems="5"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/orange"
+                        android:gravity="center"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:text="@string/alive_son"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</LinearLayout>

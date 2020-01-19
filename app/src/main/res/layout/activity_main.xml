@@ -86,6 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/custom_white_rect_with_brown_borders"
+                    android:gravity="center"
                     android:text="@string/female"
                     android:textColor="@color/brown"
                     android:textSize="12sp" />
@@ -95,6 +96,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:background="@color/browLight"
                     android:text="@string/male"
                     android:textColor="@color/brown"
@@ -132,6 +134,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:background="@color/browLight"
                     android:text="@string/adnan"
                     android:textColor="@color/brown"
@@ -142,6 +145,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:background="@drawable/custom_white_rect_with_brown_borders"
                     android:text="@string/sunnah"
                     android:textColor="@color/brown"
@@ -152,6 +156,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:background="@drawable/custom_white_rect_with_brown_borders"
                     android:text="@string/sheaa"
                     android:textColor="@color/brown"
@@ -173,6 +178,7 @@
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/custom_white_rect_with_brown_borders"
                     android:text="@string/hanafy"
@@ -193,6 +199,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/custom_white_rect_with_brown_borders"
+                    android:gravity="center"
                     android:text="@string/shafeey"
                     android:textColor="@color/brown"
                     android:textSize="12sp" />
@@ -202,6 +209,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/custom_white_rect_with_brown_borders"
+                    android:gravity="center"
                     android:text="@string/hanbaly"
                     android:textColor="@color/brown"
                     android:textSize="12sp" />

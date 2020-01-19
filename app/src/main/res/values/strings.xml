@@ -17,17 +17,17 @@
     <string name="daughter_girl">ابن بنت</string>
     <string name="son_boy">بنت ابن</string>
     <string name="son_girl">ابن ابن</string>
-    <string name="alive_son">ابن حي</string>
-    <string name="alive_daughter">بنت حية</string>
+    <string name="alive_son">ولد ذكر حي</string>
+    <string name="alive_daughter">ولد أنثى حية</string>
     <string name="dead_son">ابن متوفي</string>
     <string name="dead_daughter">بنت متوفية</string>
-    <string name="father">أب</string>
+    <string name="father">والد</string>
     <string name="woman_dead">متوفية</string>
-    <string name="mother">أم</string>
-    <string name="father_grandpa">جد لأب</string>
-    <string name="father_grandma">جدة لأب</string>
-    <string name="mother_grandpa">جد لأم</string>
-    <string name="mother_grandma">جدة لأم</string>
+    <string name="mother">والدة</string>
+    <string name="father_grandpa">جد لوالد</string>
+    <string name="father_grandma">جدة لوالد</string>
+    <string name="mother_grandpa">جد لوالدة</string>
+    <string name="mother_grandma">جدة لوالدة</string>
     <string name="brother">أخ</string>
     <string name="sister">أخت</string>
     <string name="uncles">أعمام</string>
@@ -76,6 +76,20 @@
     <string name="step_one_rv_ri_lbl_2">في القرآن الكريم</string>
     <string name="equal"> = </string>
     <string name="step_two_lbl_1">نصيب</string>
-    <string name="equation">س / ن = ص</string>
+    <string name="equation">ص = ن / س</string>
     <string name="intent_data_lbl">data</string>
+    <string name="explain_lbl_1"> مجموع النسب الوارثة في هذه الحالة : </string>
+    <string name="explain_lbl_2"> ( ماترك ) </string>
+    <string name="explain_lbl_3">س =</string>
+    <string name="twenty_four">24</string>
+    <string name="group">مجموعة</string>
+    <string name="colom">:</string>
+    <string name="plus">+</string>
+    <string name="right_brackets">)</string>
+    <string name="left_brackets">(</string>
+    <string name="heads_count">عدد الرؤوس</string>
+    <string name="son">الابن</string>
+    <string name="multiply">x</string>
+    <string name="daughter">الابنة</string>
+    <string name="explain_fourth_step_lbl">المجموعات</string>
 </resources>

@@ -1,10 +1,5 @@
 package com.company.mawarees.View.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,19 +11,24 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.company.mawarees.Model.Callback.DeadPersonListener;
 import com.company.mawarees.Model.Models.DeadPersonModel;
+import com.company.mawarees.Model.Models.ExplainPhase1;
+import com.company.mawarees.Model.Models.ExplainPhase4;
 import com.company.mawarees.Model.Models.Person;
 import com.company.mawarees.Model.OConstants;
 import com.company.mawarees.Model.Utilities.AppUtils;
 import com.company.mawarees.Model.Utilities.BrothersUtils;
 import com.company.mawarees.Model.Utilities.ChildrenUtils;
-import com.company.mawarees.Model.Utilities.FatherUtils;
 import com.company.mawarees.Model.Utilities.FatherUtils2;
 import com.company.mawarees.Model.Utilities.GrandPaAndGrandMaUtils;
 import com.company.mawarees.Model.Utilities.HusbandAndWifeUtils;
-import com.company.mawarees.Model.Utilities.MotherUtils;
 import com.company.mawarees.Model.Utilities.MotherUtils2;
 import com.company.mawarees.Model.Utilities.UnclesAndAuntsUtils;
 import com.company.mawarees.R;
@@ -170,7 +170,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
             mCurrent = ProblemActivity.this;
             mPeople = new ArrayList<>();
-            oConstants = new OConstants();
+            oConstants = new OConstants(mCurrent);
 
             try {
 
@@ -862,6 +862,9 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
 
                 validateBlockedPeople();
+
+                setExplanationPhase1();
+
                 OConstants.calculateShareValue(mPeople, oConstants);
 
                 OConstants.handleMoreThanBrotherAndSisterResult(mPeople, oConstants);
@@ -870,12 +873,38 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                 OConstants.handleMotherUncleAndAuntsResult(mPeople);
                 OConstants.handleWivesResult(mPeople);
 
+                setExplanationPhase4(mPeople, oConstants);
+
                 mProgressDlg.dismiss();
 
                 Log.i(TAG, "handleSolveProblem(): calculations are done");
 
                 showResult(mPeople);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setExplanationPhase4(ArrayList<Person> data, OConstants oConstants) {
+        try {
+
+            ExplainPhase4 phase4 = new ExplainPhase4();
+            phase4.setPeople(data);
+            oConstants.getmExplanation().setPhase4(phase4);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setExplanationPhase1() {
+        try {
+
+            ExplainPhase1 mExplainPhase1 = new ExplainPhase1();
+            ArrayList<Person> data = new ArrayList<>(mPeople);
+            mExplainPhase1.setPeople(data);
+            oConstants.getmExplanation().setPhase1(mExplainPhase1);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1099,6 +1128,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             Intent intent = new Intent(mCurrent, ResultActivity.class);
             intent.putParcelableArrayListExtra(getString(R.string.intent_data_lbl), mPeople);
             intent.putExtra(getString(R.string.intent_total_money), oConstants.getTotalMoney());
+            intent.putExtra(getString(R.string.explain_problem_result), oConstants.getmExplanation());
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1318,7 +1348,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             handleDeadGenderMale();
 
             mPeople.clear();
-            oConstants = new OConstants();
+            oConstants = new OConstants(mCurrent);
             oConstants.setGender(OConstants.GENDER_MALE);
             oConstants.isHandleChildrenGroup = false;
             oConstants.isHandleWivesGroup = false;
