@@ -1129,6 +1129,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             intent.putParcelableArrayListExtra(getString(R.string.intent_data_lbl), mPeople);
             intent.putExtra(getString(R.string.intent_total_money), oConstants.getTotalMoney());
             intent.putExtra(getString(R.string.explain_problem_result), oConstants.getmExplanation());
+            intent.putExtra(getString(R.string.constants),oConstants);
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();

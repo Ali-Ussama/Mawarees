@@ -3,15 +3,19 @@ package com.company.mawarees.Model.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class ExplainPhase2 implements Parcelable {
 
     private Fraction totalFractionsSum;
+    private ArrayList<Person> people;
 
     public ExplainPhase2() {
     }
 
     public ExplainPhase2(Parcel in) {
         totalFractionsSum = in.readParcelable(Fraction.class.getClassLoader());
+        people = in.readArrayList(Person.class.getClassLoader());
     }
 
     public static final Creator<ExplainPhase2> CREATOR = new Creator<ExplainPhase2>() {
@@ -32,6 +36,14 @@ public class ExplainPhase2 implements Parcelable {
 
     public void setTotalFractionsSum(Fraction totalFractionsSum) {
         this.totalFractionsSum = totalFractionsSum;
+    }
+
+    public ArrayList<Person> getPeople() {
+        return people;
+    }
+
+    public void setPeople(ArrayList<Person> people) {
+        this.people = people;
     }
 
     /**
@@ -59,5 +71,6 @@ public class ExplainPhase2 implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(totalFractionsSum, flags);
+        dest.writeTypedList(people);
     }
 }

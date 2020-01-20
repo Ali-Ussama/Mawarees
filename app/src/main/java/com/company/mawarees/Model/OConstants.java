@@ -1,6 +1,8 @@
 package com.company.mawarees.Model;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.company.mawarees.Model.Models.ExplainPhase2;
@@ -14,7 +16,7 @@ import com.company.mawarees.PrefManager;
 
 import java.util.ArrayList;
 
-public class OConstants {
+public class OConstants implements Parcelable {
 
     private static final String TAG = "OConstants";
 
@@ -183,6 +185,40 @@ public class OConstants {
 
     private boolean hasBrothersAndSisters;
 
+
+    protected OConstants(Parcel in) {
+        isHandleChildrenGroup = in.readByte() != 0;
+        isHandleBrothersGroup = in.readByte() != 0;
+        isHandleWivesGroup = in.readByte() != 0;
+        isHandleUnclesGroup = in.readByte() != 0;
+        handleGroupParent = in.readString();
+        mExplanation = in.readParcelable(ExplanationModel.class.getClassLoader());
+        totalMoney = in.readDouble();
+        gender = in.readString();
+        wivesCount = in.readInt();
+        hasChildren = in.readByte() != 0;
+        hasWife = in.readByte() != 0;
+        hasHusband = in.readByte() != 0;
+        hasFather = in.readByte() != 0;
+        hasMother = in.readByte() != 0;
+        hasMother_GrandMother = in.readByte() != 0;
+        hasMother_GrandFather = in.readByte() != 0;
+        hasFather_GrandFather = in.readByte() != 0;
+        hasFather_GrandMother = in.readByte() != 0;
+        hasBrothersAndSisters = in.readByte() != 0;
+    }
+
+    public static final Creator<OConstants> CREATOR = new Creator<OConstants>() {
+        @Override
+        public OConstants createFromParcel(Parcel in) {
+            return new OConstants(in);
+        }
+
+        @Override
+        public OConstants[] newArray(int size) {
+            return new OConstants[size];
+        }
+    };
 
     public int getWivesCount() {
         return wivesCount;
@@ -735,7 +771,7 @@ public class OConstants {
             }
         }
 
-        setExplanationPhase2(oConstants, X);
+        setExplanationPhase2(oConstants, X,data);
         setExplanationPhase3(data, oConstants);
 
         if (!specialCaseRemainPeople.isEmpty())
@@ -765,10 +801,11 @@ public class OConstants {
         }
     }
 
-    private static void setExplanationPhase2(OConstants oConstants, Fraction X) {
+    private static void setExplanationPhase2(OConstants oConstants, Fraction X,ArrayList<Person> data) {
         try {
             ExplainPhase2 mPhase2 = new ExplainPhase2();
             mPhase2.setTotalFractionsSum(X);
+            mPhase2.setPeople(data);
             oConstants.getmExplanation().setPhase2(mPhase2);
 
         } catch (Exception e) {
@@ -2187,10 +2224,7 @@ public class OConstants {
 
             }
 
-            if (oConstants.mPrefManager != null) {
-                oConstants.mPrefManager.saveInt(PrefManager.KEY_HEADS, heads);
-                oConstants.mPrefManager.saveInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN, newProblemOrigin);
-            }
+            cacheHeads(heads, newProblemOrigin, oConstants);
 
             for (Person mPerson : mPeople) {
                 if (!mPerson.getRelation().matches(OConstants.PERSON_SON) && !mPerson.getRelation().matches(OConstants.PERSON_DAUGHTER) &&
@@ -2271,11 +2305,8 @@ public class OConstants {
                     heads = (heads / findGCD(heads, brothersNumberOfShares));
 
                 }
+                cacheHeads(heads, newProblemOrigin, oConstants);
 
-                if (oConstants.mPrefManager != null) {
-                    oConstants.mPrefManager.saveInt(PrefManager.KEY_HEADS, heads);
-                    oConstants.mPrefManager.saveInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN, newProblemOrigin);
-                }
 
                 for (Person mPerson : mPeople) {
                     if (!mPerson.getRelation().matches(OConstants.PERSON_BROTHER) && !mPerson.getRelation().matches(OConstants.PERSON_SISTER) &&
@@ -2349,7 +2380,11 @@ public class OConstants {
                 }
 //                numberOfSharesSum += wivesNumberOfShares;
                 heads = HandleTwoGroupsUtils.getSimpleCommonMultiplier(savedNumberOfBrothers, savedNumberOfWives);
+
+
                 newProblemOrigin = heads * numberOfSharesSum;
+
+                cacheHeads(heads, newProblemOrigin, oConstants);
 
                 Log.i(TAG, "handleWivesGroup(): number Of shares = " + numberOfSharesSum + " heads = " + heads + " newProblem Origin = " + newProblemOrigin);
 
@@ -2367,7 +2402,8 @@ public class OConstants {
                                 "/" + mPerson.getSharePercent().getDenominator());
                     }
                 }
-            } else if ((getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER) != null && !isBlocked(getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER)))) {
+            }
+            else if ((getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER) != null && !isBlocked(getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER)))) {
                 Log.i(TAG, "handleWivesGroup(): handling wives with brothers \"Two groups\"");
                 oConstants.mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP, false);
 
@@ -2394,6 +2430,7 @@ public class OConstants {
                 heads = HandleTwoGroupsUtils.getSimpleCommonMultiplier(savedNumberOfBrothers, savedNumberOfWives);
                 newProblemOrigin = heads * numberOfSharesSum;
 
+                cacheHeads(heads,newProblemOrigin,oConstants);
                 Log.i(TAG, "handleWivesGroup(): number Of shares = " + numberOfSharesSum + " heads = " + heads + " newProblem Origin = " + newProblemOrigin);
 
                 for (Person mPerson : mPeople) {
@@ -2437,6 +2474,9 @@ public class OConstants {
                     Log.i(TAG, "handleWivesGroup(): number of shares Sum = " + numberOfSharesSum + " & heads = " + heads + " & new problem Origin Sum = " + newProblemOrigin);
 
                 }
+
+                cacheHeads(heads,newProblemOrigin,oConstants);
+
                 for (Person mPerson : mPeople) {
                     if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
 
@@ -2456,6 +2496,14 @@ public class OConstants {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void cacheHeads(int heads, int newProblemOrigin, OConstants oConstants) {
+        if (oConstants.mPrefManager != null) {
+            oConstants.mPrefManager.saveInt(PrefManager.KEY_HEADS, heads);
+            oConstants.mPrefManager.saveInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN, newProblemOrigin);
+        }
+
     }
 
     private static void cacheSavedNumbers(OConstants oConstants, int savedNumberOfWives, int savedNumberOfBrothers) {
@@ -2708,4 +2756,48 @@ public class OConstants {
         return person.getRelation().matches(OConstants.PERSON_WIFE) && (getPersonCount(data, OConstants.PERSON_WIFE) > 1);
     }
 
+    /**
+     * Describe the kinds of special objects contained in this Parcelable
+     * instance's marshaled representation. For example, if the object will
+     * include a file descriptor in the output of {@link #writeToParcel(Parcel, int)},
+     * the return value of this method must include the
+     * {@link #CONTENTS_FILE_DESCRIPTOR} bit.
+     *
+     * @return a bitmask indicating the set of special object types marshaled
+     * by this Parcelable object instance.
+     */
+    @Override
+    public int describeContents() {
+        return 5;
+    }
+
+    /**
+     * Flatten this object in to a Parcel.
+     *
+     * @param dest  The Parcel in which the object should be written.
+     * @param flags Additional flags about how the object should be written.
+     *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
+     */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (isHandleChildrenGroup ? 1 : 0));
+        dest.writeByte((byte) (isHandleBrothersGroup ? 1 : 0));
+        dest.writeByte((byte) (isHandleWivesGroup ? 1 : 0));
+        dest.writeByte((byte) (isHandleUnclesGroup ? 1 : 0));
+        dest.writeString(handleGroupParent);
+        dest.writeParcelable(mExplanation, flags);
+        dest.writeDouble(totalMoney);
+        dest.writeString(gender);
+        dest.writeInt(wivesCount);
+        dest.writeByte((byte) (hasChildren ? 1 : 0));
+        dest.writeByte((byte) (hasWife ? 1 : 0));
+        dest.writeByte((byte) (hasHusband ? 1 : 0));
+        dest.writeByte((byte) (hasFather ? 1 : 0));
+        dest.writeByte((byte) (hasMother ? 1 : 0));
+        dest.writeByte((byte) (hasMother_GrandMother ? 1 : 0));
+        dest.writeByte((byte) (hasMother_GrandFather ? 1 : 0));
+        dest.writeByte((byte) (hasFather_GrandFather ? 1 : 0));
+        dest.writeByte((byte) (hasFather_GrandMother ? 1 : 0));
+        dest.writeByte((byte) (hasBrothersAndSisters ? 1 : 0));
+    }
 }

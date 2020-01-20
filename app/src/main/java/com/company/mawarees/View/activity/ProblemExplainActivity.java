@@ -215,7 +215,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
             int wivesCount = OConstants.getPersonCount(phase1, OConstants.PERSON_WIFE);
 
-            if (wivesCount > 0){
+            if (wivesCount > 0) {
 
             }
 
@@ -383,6 +383,31 @@ public class ProblemExplainActivity extends AppCompatActivity {
             Log.i(TAG, "createAlivePerson() people size = " + data.size());
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    void displayResut(ArrayList<Person> mPeople) {
+        String result = "";
+        for (Person person : mPeople) {
+            try {
+                if (person.getBlocked() == null) {
+
+
+                    Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
+                    Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+                    Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
+
+                    result = result.concat("--------------------------\n");
+                    result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                            "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+
+                    result = result.concat("--------------------------\n");
+
+                    Log.i(TAG, result);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
