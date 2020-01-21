@@ -279,62 +279,136 @@
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:orientation="vertical"
                 android:padding="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_explain_fourth_step_lbl">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <ViewAnimator
+                    android:id="@+id/step_fourth_view_animator"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/activity_explain_fourth_step_lbl_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="لا حاجة الى تصحح الأسهم" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/activity_explain_fourth_step_correction_number_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp">
+
+                            <TextView
+                                android:id="@+id/activity_explain_fourth_step_lbl_2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/correction_number"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/activity_explain_fourth_step_equal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_marginEnd="8dp"
+                                android:gravity="center"
+                                android:text="@string/equal"
+                                android:textColor="@color/dark_grey"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="@id/activity_explain_fourth_step_lbl_2"
+                                app:layout_constraintEnd_toStartOf="@+id/activity_explain_fourth_step_lbl_2"
+                                app:layout_constraintTop_toTopOf="@+id/activity_explain_fourth_step_lbl_2" />
+
+                            <TextView
+                                android:id="@+id/activity_explain_fourth_step_correction_number_value"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:ems="1"
+                                android:gravity="center"
+                                android:text="5"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="@id/activity_explain_fourth_step_equal"
+                                app:layout_constraintEnd_toStartOf="@+id/activity_explain_fourth_step_equal"
+                                app:layout_constraintTop_toTopOf="@+id/activity_explain_fourth_step_equal" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/activity_explain_fourth_step_rv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                </ViewAnimator>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/activity_explain_fifth_step_lbl"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/custom_bg_with_borders"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/explain_fourth_step_lbl"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/step_four_container" />
+
+            <LinearLayout
+                android:id="@+id/activity_explain_fifth_step_container_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/custom_bg_with_white_borders"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_explain_fifth_step_lbl">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/activity_explain_fifth_step_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/activity_explain_fifth_step_value_lbl_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/correction_number"
+                        android:text="أصل المسألة (30) سهم و معامل تصحيح الاسهم (5) \n و أصبح أصل المسالة الجديدة = 30 x 5 = 150 سهم "
                         android:textSize="14sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/activity_explain_fourth_step_equal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="center"
-                        android:text="@string/equal"
-                        android:textColor="@color/dark_grey"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@id/activity_explain_fourth_step_lbl_2"
-                        app:layout_constraintEnd_toStartOf="@+id/activity_explain_fourth_step_lbl_2"
-                        app:layout_constraintTop_toTopOf="@+id/activity_explain_fourth_step_lbl_2" />
 
-                    <TextView
-                        android:id="@+id/activity_explain_fourth_step_correction_number_value"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:ems="1"
-                        android:gravity="center"
-                        android:text="5"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@id/activity_explain_fourth_step_equal"
-                        app:layout_constraintEnd_toStartOf="@+id/activity_explain_fourth_step_equal"
-                        app:layout_constraintTop_toTopOf="@+id/activity_explain_fourth_step_equal" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/activity_explain_fourth_step_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,6 +21,7 @@ import com.company.mawarees.Model.Callback.DeadPersonListener;
 import com.company.mawarees.Model.Models.DeadPersonModel;
 import com.company.mawarees.Model.Models.ExplainPhase1;
 import com.company.mawarees.Model.Models.ExplainPhase4;
+import com.company.mawarees.Model.Models.Fraction;
 import com.company.mawarees.Model.Models.Person;
 import com.company.mawarees.Model.OConstants;
 import com.company.mawarees.Model.Utilities.AppUtils;
@@ -31,6 +32,7 @@ import com.company.mawarees.Model.Utilities.GrandPaAndGrandMaUtils;
 import com.company.mawarees.Model.Utilities.HusbandAndWifeUtils;
 import com.company.mawarees.Model.Utilities.MotherUtils2;
 import com.company.mawarees.Model.Utilities.UnclesAndAuntsUtils;
+import com.company.mawarees.PrefManager;
 import com.company.mawarees.R;
 import com.company.mawarees.View.adpters.DeadDaughterRVAdapter;
 import com.company.mawarees.View.adpters.DeadSonRVAdapter;
@@ -160,6 +162,17 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
         super.onResume();
         try {
             resetViews();
+
+            if (oConstants != null) {
+                if (oConstants.mPrefManager != null) {
+                    oConstants.mPrefManager.saveInt(PrefManager.KEY_HEADS, 0);
+                    oConstants.mPrefManager.saveInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN, 0);
+                    oConstants.mPrefManager.saveInt(PrefManager.KEY_SAVED_NUMBER_1, 0);
+                    oConstants.mPrefManager.saveInt(PrefManager.KEY_SAVED_NUMBER_2, 0);
+                    oConstants.mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP, false);
+                }
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -180,6 +193,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
             //default values
             oConstants.setGender(OConstants.GENDER_MALE);
             oConstants.setHasWife(false);
@@ -371,6 +385,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     int value = 0;
+
                     if (!charSequence.toString().trim().isEmpty()) {
                         value = Integer.parseInt(charSequence.toString().trim());
                     }
@@ -386,7 +401,6 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
                         if (OConstants.getChildrenInDaughters(mPeople) > 2) {
                             createAlivePerson(1, OConstants.PERSON_More_Than_three_DAUGHTERS, OConstants.GENDER_MALE, true);
-
                         }
                     }
                 }
@@ -886,10 +900,75 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
         }
     }
 
-    private void setExplanationPhase4(ArrayList<Person> data, OConstants oConstants) {
+    private void setExplanationPhase4(ArrayList<Person> mPeople, OConstants oConstants) {
         try {
 
             ExplainPhase4 phase4 = new ExplainPhase4();
+
+            ArrayList<Person> data = new ArrayList<>(mPeople);
+            for (Person mPerson : mPeople) {
+                Person person = new Person();
+                int id = mPerson.getId();
+
+                int count = mPerson.getCount();
+
+                String relation = mPerson.getRelation();
+
+                String gender = mPerson.getGender();
+
+                String blocked = mPerson.getBlocked();
+
+                int problemOrigin = mPerson.getProblemOrigin();
+
+                Fraction sharePercent = mPerson.getSharePercent();
+
+                Fraction eachPersonSharePercent = mPerson.getEachPersonSharePercent();
+
+                Fraction originalSharePercent = mPerson.getOriginalSharePercent();
+
+                double shareValue = mPerson.getShareValue();
+
+                double eachPersonShareValue = mPerson.getEachPersonShareValue();
+
+                int numberOfShares = mPerson.getNumberOfShares();
+
+                int eachPersonNumberOfShares = mPerson.getEachPersonNumberOfShares();
+
+                String explanation = mPerson.getExplanation();
+
+                String proof = mPerson.getProof();
+
+                String videoUrl = mPerson.getVideoUrl();
+
+                int deadSonNumber = mPerson.getDeadSonNumber();
+
+                boolean alive = mPerson.isAlive();
+
+                String blockedBy = mPerson.getBlockedBy();
+
+
+                person.setSharePercent(sharePercent);
+                person.setShareValue(shareValue);
+                person.setNumberOfShares(numberOfShares);
+                person.setProblemOrigin(problemOrigin);
+                person.setAlive(alive);
+                person.setBlocked(blocked);
+                person.setBlockedBy(blockedBy);
+                person.setCount(count);
+                person.setDeadSonNumber(deadSonNumber);
+                person.setEachPersonNumberOfShares(eachPersonNumberOfShares);
+                person.setEachPersonSharePercent(eachPersonSharePercent);
+                person.setEachPersonShareValue(eachPersonShareValue);
+                person.setExplanation(explanation);
+                person.setProof(proof);
+                person.setGender(gender);
+                person.setRelation(relation);
+                person.setOriginalSharePercent(originalSharePercent);
+                person.setId(id);
+                person.setVideoUrl(videoUrl);
+                data.add(person);
+            }
+
             phase4.setPeople(data);
             oConstants.getmExplanation().setPhase4(phase4);
         } catch (Exception e) {
@@ -902,6 +981,69 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
             ExplainPhase1 mExplainPhase1 = new ExplainPhase1();
             ArrayList<Person> data = new ArrayList<>(mPeople);
+            for (Person mPerson : mPeople) {
+                Person person = new Person();
+                int id = mPerson.getId();
+
+                int count = mPerson.getCount();
+
+                String relation = mPerson.getRelation();
+
+                String gender = mPerson.getGender();
+
+                String blocked = mPerson.getBlocked();
+
+                int problemOrigin = mPerson.getProblemOrigin();
+
+                Fraction sharePercent = mPerson.getSharePercent();
+
+                Fraction eachPersonSharePercent = mPerson.getEachPersonSharePercent();
+
+                Fraction originalSharePercent = mPerson.getOriginalSharePercent();
+
+                double shareValue = mPerson.getShareValue();
+
+                double eachPersonShareValue = mPerson.getEachPersonShareValue();
+
+                int numberOfShares = mPerson.getNumberOfShares();
+
+                int eachPersonNumberOfShares = mPerson.getEachPersonNumberOfShares();
+
+                String explanation = mPerson.getExplanation();
+
+                String proof = mPerson.getProof();
+
+                String videoUrl = mPerson.getVideoUrl();
+
+                int deadSonNumber = mPerson.getDeadSonNumber();
+
+                boolean alive = mPerson.isAlive();
+
+                String blockedBy = mPerson.getBlockedBy();
+
+
+                person.setSharePercent(sharePercent);
+                person.setShareValue(shareValue);
+                person.setNumberOfShares(numberOfShares);
+                person.setProblemOrigin(problemOrigin);
+                person.setAlive(alive);
+                person.setBlocked(blocked);
+                person.setBlockedBy(blockedBy);
+                person.setCount(count);
+                person.setDeadSonNumber(deadSonNumber);
+                person.setEachPersonNumberOfShares(eachPersonNumberOfShares);
+                person.setEachPersonSharePercent(eachPersonSharePercent);
+                person.setEachPersonShareValue(eachPersonShareValue);
+                person.setExplanation(explanation);
+                person.setProof(proof);
+                person.setGender(gender);
+                person.setRelation(relation);
+                person.setOriginalSharePercent(originalSharePercent);
+                person.setId(id);
+                person.setVideoUrl(videoUrl);
+                data.add(person);
+            }
+
             mExplainPhase1.setPeople(data);
             oConstants.getmExplanation().setPhase1(mExplainPhase1);
 
@@ -1113,7 +1255,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                         Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
                         Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
 
-                        result = result.concat("--------------------------\n");
+                        result = "--------------------------\n";
                         result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
                                 "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
 
@@ -1129,7 +1271,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             intent.putParcelableArrayListExtra(getString(R.string.intent_data_lbl), mPeople);
             intent.putExtra(getString(R.string.intent_total_money), oConstants.getTotalMoney());
             intent.putExtra(getString(R.string.explain_problem_result), oConstants.getmExplanation());
-            intent.putExtra(getString(R.string.constants),oConstants);
+            intent.putExtra(getString(R.string.constants), oConstants);
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();

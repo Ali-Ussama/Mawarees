@@ -3,10 +3,14 @@ package com.company.mawarees.View.activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ViewAnimator;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,6 +51,27 @@ public class ProblemExplainActivity extends AppCompatActivity {
     @BindView(R.id.activity_explain_second_step_layout_percent_denominator)
     TextView summationOfFractionsDenominator;
 
+    @BindView(R.id.activity_explain_fourth_step_correction_number_value)
+    TextView mCorrectionNumberValueTV;
+
+    @BindView(R.id.activity_explain_fourth_step_correction_number_layout)
+    ConstraintLayout mCorrectionNumberLayout;
+
+    @BindView(R.id.step_fourth_view_animator)
+    ViewAnimator viewAnimator;
+
+    @BindView(R.id.activity_explain_fifth_step_value_lbl_1)
+    TextView mConclusionTV;
+
+    @BindView(R.id.activity_explain_fifth_step_layout)
+    ConstraintLayout mFifthStepLayout;
+
+    @BindView(R.id.activity_explain_fifth_step_container_layout)
+    LinearLayout mFifthStepContainerLayout;
+
+    @BindView(R.id.activity_explain_fifth_step_lbl)
+    TextView mFifthStepLbl;
+
 
     private ExplainFirstStepRecAdapter mFirstAdapter;
     private ExplainSecondStepRecAdapter mSecondAdapter;
@@ -66,6 +91,10 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
     private PrefManager mPrefManager;
     private ExplanationModel explanation;
+    private OConstants oConstants;
+    private int correctionValue;
+    private int problemOrigin;
+    private int oldProblemOrigin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +115,18 @@ public class ProblemExplainActivity extends AppCompatActivity {
         try {
             ButterKnife.bind(this);
             mCurrent = ProblemExplainActivity.this;
+            mPrefManager = new PrefManager(mCurrent);
 
             Toolbar mToolbar = AppUtils.setupToolbar(mCurrent, 1);
             AppUtils.setToolbarTitle(mToolbar, getString(R.string.explain_problem_result));
 
             people = getIntent().getParcelableArrayListExtra(getString(R.string.intent_data_lbl));
+
+            if (people.get(0) != null) {
+                problemOrigin = people.get(0).getProblemOrigin();
+            }
             explanation = getIntent().getParcelableExtra(getString(R.string.explain_problem_result));
+            oConstants = getIntent().getParcelableExtra(getString(R.string.constants));
 
             removeBlockedPeople();
 
@@ -100,6 +135,32 @@ public class ProblemExplainActivity extends AppCompatActivity {
             initThirdStepRV();
             initFourthStepRV();
 
+            handleFifthStep(correctionValue);
+//            displayResult(oConstants);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleFifthStep(int correctionValue) {
+        try {
+            if (correctionValue != 0) {
+                String result = "أصل المسألة ( ".concat(String.valueOf(problemOrigin)).concat(")") + "ومعامل تصحيح الأسهم ".concat("(").concat(String.valueOf(correctionValue)).concat(")").concat("\n")
+                        .concat("و أصبح أصل المسالة الجديد = ").concat(String.valueOf(problemOrigin)).concat(" x ").concat(String.valueOf(correctionValue)).concat(" = ").concat(String.valueOf(problemOrigin * correctionValue))
+                        .concat(" سهم").concat("\n").concat("تم توزيعها بدون زيادة او نقصان");
+
+                mConclusionTV.setText(result);
+
+                mFifthStepContainerLayout.setVisibility(View.VISIBLE);
+                mFifthStepLayout.setVisibility(View.VISIBLE);
+                mFifthStepLbl.setVisibility(View.VISIBLE);
+                mConclusionTV.setVisibility(View.VISIBLE);
+            } else {
+                mFifthStepContainerLayout.setVisibility(View.GONE);
+                mFifthStepLayout.setVisibility(View.GONE);
+                mFifthStepLbl.setVisibility(View.GONE);
+                mConclusionTV.setVisibility(View.GONE);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -185,13 +246,56 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
     private void initFourthStepRV() {
         try {
+            setCorrectionNumber();
             groups = new ArrayList<>();
-            createGroups(groups);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            mFourthAdapter = new ExplanationFourthStepAdapter(groups, mCurrent);
-            mFourthStepRV.setLayoutManager(layoutManager);
-            mFourthStepRV.setAdapter(mFourthAdapter);
+//            createGroups(groups);
 
+            if (correctionValue != 0) {
+                viewAnimator.setDisplayedChild(1);
+                ArrayList<Person> data = createFourthStepData(oConstants.getmExplanation().getPhase1().getPeople());
+                LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+                mFourthAdapter = new ExplanationFourthStepAdapter(groups, data, correctionValue, mCurrent);
+                mFourthStepRV.setLayoutManager(layoutManager);
+                mFourthStepRV.setAdapter(mFourthAdapter);
+            } else {
+                viewAnimator.setDisplayedChild(0);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private ArrayList<Person> createFourthStepData(ArrayList<Person> people) {
+        ArrayList<Person> result = new ArrayList<>();
+        for (Person person : people) {
+            if (person.getProblemOrigin() != problemOrigin) {
+                result.add(person);
+            }
+        }
+
+        return result;
+    }
+
+    private void setCorrectionNumber() {
+        try {
+            Log.i(TAG, "setCorrectionNumber(): is called");
+            if (mPrefManager != null) {
+                int heads = mPrefManager.readInt(PrefManager.KEY_HEADS);
+                int newProblemOrigin = mPrefManager.readInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN);
+
+                Log.i(TAG, "setCorrectionNumber(): heads = " + heads);
+                Log.i(TAG, "setCorrectionNumber(): newProblemOrigin = " + newProblemOrigin);
+
+                correctionValue = heads;
+
+                if (heads != 0 && newProblemOrigin != 0) {
+                    mCorrectionNumberLayout.setVisibility(View.VISIBLE);
+                    mCorrectionNumberValueTV.setText(String.valueOf(heads));
+                } else {
+                    mCorrectionNumberLayout.setVisibility(View.GONE);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -386,27 +490,121 @@ public class ProblemExplainActivity extends AppCompatActivity {
         }
     }
 
-    void displayResut(ArrayList<Person> mPeople) {
-        String result = "";
-        for (Person person : mPeople) {
-            try {
-                if (person.getBlocked() == null) {
+    void displayResult(OConstants oConstants) {
+        ExplanationModel explainModel = oConstants.getmExplanation();
+        ArrayList<Person> mPeople;
+        Log.i(TAG, "displayResult(): is called");
+        if (explainModel.getPhase1() != null && explainModel.getPhase1().getPeople() != null && !explainModel.getPhase1().getPeople().isEmpty()) {
+            mPeople = explainModel.getPhase1().getPeople();
+            Log.i(TAG, "displayResult(): phase 1 != null");
+            Log.i(TAG, "displayResult(): mPeople size = " + mPeople.size());
+
+            String result = "";
+            for (Person person : mPeople) {
+                try {
+                    if (person.getBlocked() == null) {
 
 
-                    Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
-                    Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
-                    Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
+                        Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
+                        Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+                        Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
 
-                    result = result.concat("--------------------------\n");
-                    result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
-                            "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+                        result = "--------------------------\n";
+                        result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                                "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
 
-                    result = result.concat("--------------------------\n");
+                        result = result.concat("--------------------------\n");
 
-                    Log.i(TAG, result);
+                        Log.i(TAG, result);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            }
+        }
+        if (explainModel.getPhase2() != null && explainModel.getPhase2().getPeople() != null && !explainModel.getPhase2().getPeople().isEmpty()) {
+            mPeople = explainModel.getPhase2().getPeople();
+            Log.i(TAG, "displayResult(): phase 2 != null");
+            Log.i(TAG, "displayResult(): mPeople size = " + mPeople.size());
+
+            String result = "";
+            for (Person person : mPeople) {
+                try {
+                    if (person.getBlocked() == null) {
+
+
+                        Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
+                        Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+                        Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
+
+                        result = "--------------------------\n";
+                        result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                                "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+
+                        result = result.concat("--------------------------\n");
+
+                        Log.i(TAG, result);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        if (explainModel.getPhase3() != null && explainModel.getPhase3().getPeople() != null && !explainModel.getPhase3().getPeople().isEmpty()) {
+            mPeople = explainModel.getPhase3().getPeople();
+            Log.i(TAG, "displayResult(): phase 3 != null");
+            Log.i(TAG, "displayResult(): mPeople size = " + mPeople.size());
+
+            String result = "";
+            for (Person person : mPeople) {
+                try {
+                    if (person.getBlocked() == null) {
+
+
+                        Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
+                        Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+                        Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
+
+                        result = "--------------------------\n";
+                        result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                                "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+
+                        result = result.concat("--------------------------\n");
+
+                        Log.i(TAG, result);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if (explainModel.getPhase4() != null && explainModel.getPhase4().getPeople() != null && !explainModel.getPhase4().getPeople().isEmpty()) {
+            mPeople = explainModel.getPhase4().getPeople();
+            Log.i(TAG, "displayResult(): phase 4 != null");
+            Log.i(TAG, "displayResult(): mPeople size = " + mPeople.size());
+
+            String result = "";
+            for (Person person : mPeople) {
+                try {
+                    if (person.getBlocked() == null) {
+
+
+                        Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
+                        Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+                        Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
+
+                        result = "--------------------------\n";
+                        result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                                "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+
+                        result = result.concat("--------------------------\n");
+
+                        Log.i(TAG, result);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

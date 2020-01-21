@@ -1,10 +1,5 @@
 package com.company.mawarees.View.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,10 +7,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.company.mawarees.Model.Callback.ItemSelectedListener;
 import com.company.mawarees.Model.Models.ExplanationModel;
 import com.company.mawarees.Model.Models.Person;
+import com.company.mawarees.Model.OConstants;
 import com.company.mawarees.Model.Utilities.AppUtils;
+import com.company.mawarees.PrefManager;
 import com.company.mawarees.R;
 import com.company.mawarees.View.adpters.ResultRVAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -71,8 +73,11 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
     private double totalMoney;
 
     ArrayList<String> mRelation;
+    private OConstants oConstants;
 
     private ExplanationModel explanation;
+    private PrefManager mPrefManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +97,8 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
         try {
             Log.i(TAG, "init is called");
             mCurrent = ResultActivity.this;
+            mPrefManager = new PrefManager(mCurrent);
+
             Toolbar mToolbar = AppUtils.setupToolbar(mCurrent, 1);
             AppUtils.setToolbarTitle(mToolbar, getString(R.string.problem_result));
 
@@ -102,6 +109,8 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
             totalMoney = getIntent().getDoubleExtra(getString(R.string.intent_total_money), 0.0);
 
             explanation = getIntent().getParcelableExtra(getString(R.string.explain_problem_result));
+
+            oConstants = getIntent().getParcelableExtra(getString(R.string.constants));
 
             LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mCurrent, LinearLayoutManager.HORIZONTAL, false);
             mResultRVAdapter = new ResultRVAdapter(mPeople, mCurrent, this);
@@ -122,6 +131,9 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
             Log.i(TAG, "init() is Called 5");
 
             mExplainProblemFab.setOnClickListener(this);
+
+            displayResult(oConstants);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -244,11 +256,141 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
             if (view.getId() == R.id.explain_problem_fab) {
                 Intent intent = new Intent(mCurrent, ProblemExplainActivity.class);
                 intent.putParcelableArrayListExtra(getString(R.string.intent_data_lbl), mPeople);
-                intent.putExtra(getString(R.string.explain_problem_result),explanation);
+                intent.putExtra(getString(R.string.explain_problem_result), explanation);
+                intent.putExtra(getString(R.string.constants),oConstants);
                 startActivity(intent);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    void displayResult(OConstants oConstants) {
+        try {
+            ExplanationModel explainModel = oConstants.getmExplanation();
+            ArrayList<Person> mPeople;
+            Log.i(TAG, "displayResult(): is called");
+            if (explainModel.getPhase1() != null && explainModel.getPhase1().getPeople() != null && !explainModel.getPhase1().getPeople().isEmpty()) {
+                mPeople = explainModel.getPhase1().getPeople();
+                Log.i(TAG, "displayResult(): phase 1 != null");
+
+                String result = "";
+                for (Person person : mPeople) {
+                    try {
+                        if (person.getBlocked() == null) {
+
+
+                            Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
+                            Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+                            Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
+
+                            result = "--------------------------\n";
+                            result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                                    "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+
+                            result = result.concat("--------------------------\n");
+
+                            Log.i(TAG, result);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            if (explainModel.getPhase2() != null && explainModel.getPhase2().getPeople() != null && !explainModel.getPhase2().getPeople().isEmpty()) {
+                mPeople = explainModel.getPhase2().getPeople();
+                Log.i(TAG, "displayResult(): phase 2 != null");
+
+                String result = "";
+                for (Person person : mPeople) {
+                    try {
+                        if (person.getBlocked() == null) {
+
+
+                            Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
+                            Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+                            Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
+
+                            result = "--------------------------\n";
+                            result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                                    "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+
+                            result = result.concat("--------------------------\n");
+
+                            Log.i(TAG, result);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            if (explainModel.getPhase3() != null && explainModel.getPhase3().getPeople() != null && !explainModel.getPhase3().getPeople().isEmpty()) {
+                mPeople = explainModel.getPhase3().getPeople();
+                Log.i(TAG, "displayResult(): phase 3 != null");
+
+                String result = "";
+                for (Person person : mPeople) {
+                    try {
+                        if (person.getBlocked() == null) {
+
+
+                            Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
+                            Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+                            Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
+
+                            result = "--------------------------\n";
+                            result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                                    "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+
+                            result = result.concat("--------------------------\n");
+
+                            Log.i(TAG, result);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            if (explainModel.getPhase4() != null && explainModel.getPhase4().getPeople() != null && !explainModel.getPhase4().getPeople().isEmpty()) {
+                mPeople = explainModel.getPhase4().getPeople();
+                Log.i(TAG, "displayResult(): phase 4 != null");
+
+                String result = "";
+                for (Person person : mPeople) {
+                    try {
+                        if (person.getBlocked() == null) {
+
+
+                            Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
+                            Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+                            Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
+
+                            result = "--------------------------\n";
+                            result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                                    "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+
+                            result = result.concat("--------------------------\n");
+
+                            Log.i(TAG, result);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        mPrefManager.saveInt(PrefManager.KEY_HEADS,0);
+        mPrefManager.saveInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN,0);
+        mPrefManager.saveInt(PrefManager.KEY_SAVED_NUMBER_1,0);
+        mPrefManager.saveInt(PrefManager.KEY_SAVED_NUMBER_2,0);
+        mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP,false);
     }
 }

@@ -59,4 +59,8 @@ public class PrefManager {
     public long readLong(String key) {
         return prefs.getLong(key, 0);
     }
+
+    public int readInt(String key) {
+        return prefs.getInt(key, 0);
+    }
 }

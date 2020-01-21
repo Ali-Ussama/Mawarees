@@ -15,7 +15,7 @@ public class ExplainPhase2 implements Parcelable {
 
     public ExplainPhase2(Parcel in) {
         totalFractionsSum = in.readParcelable(Fraction.class.getClassLoader());
-        people = in.readArrayList(Person.class.getClassLoader());
+        people = in.createTypedArrayList(Person.CREATOR);
     }
 
     public static final Creator<ExplainPhase2> CREATOR = new Creator<ExplainPhase2>() {
