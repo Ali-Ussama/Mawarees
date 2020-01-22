@@ -36,6 +36,7 @@ import butterknife.ButterKnife;
 public class ProblemExplainActivity extends AppCompatActivity {
 
     private static final String TAG = "ProblemExplainActivity";
+
     @BindView(R.id.activity_explain_first_step_rv)
     RecyclerView mFirstStepRV;
 
@@ -107,8 +108,6 @@ public class ProblemExplainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     private void init() {
@@ -145,7 +144,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
     private void handleFifthStep(int correctionValue) {
         try {
             if (correctionValue != 0) {
-                String result = "أصل المسألة ( ".concat(String.valueOf(problemOrigin)).concat(")") + "ومعامل تصحيح الأسهم ".concat("(").concat(String.valueOf(correctionValue)).concat(")").concat("\n")
+                String result = "أصل المسألة ( ".concat(String.valueOf((problemOrigin / correctionValue))).concat(")") + "ومعامل تصحيح الأسهم ".concat("(").concat(String.valueOf(correctionValue)).concat(")").concat("\n")
                         .concat("و أصبح أصل المسالة الجديد = ").concat(String.valueOf(problemOrigin)).concat(" x ").concat(String.valueOf(correctionValue)).concat(" = ").concat(String.valueOf(problemOrigin * correctionValue))
                         .concat(" سهم").concat("\n").concat("تم توزيعها بدون زيادة او نقصان");
 
@@ -248,13 +247,12 @@ public class ProblemExplainActivity extends AppCompatActivity {
         try {
             setCorrectionNumber();
             groups = new ArrayList<>();
-//            createGroups(groups);
 
             if (correctionValue != 0) {
                 viewAnimator.setDisplayedChild(1);
-                ArrayList<Person> data = createFourthStepData(oConstants.getmExplanation().getPhase1().getPeople());
+                ArrayList<Person> data = createFourthStepData(oConstants.getmExplanation().getPhase2().getPeople());
                 LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-                mFourthAdapter = new ExplanationFourthStepAdapter(groups, data, correctionValue, mCurrent);
+                mFourthAdapter = new ExplanationFourthStepAdapter(data, correctionValue, mCurrent);
                 mFourthStepRV.setLayoutManager(layoutManager);
                 mFourthStepRV.setAdapter(mFourthAdapter);
             } else {
@@ -268,6 +266,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
     private ArrayList<Person> createFourthStepData(ArrayList<Person> people) {
         ArrayList<Person> result = new ArrayList<>();
+
         for (Person person : people) {
             if (person.getProblemOrigin() != problemOrigin) {
                 result.add(person);

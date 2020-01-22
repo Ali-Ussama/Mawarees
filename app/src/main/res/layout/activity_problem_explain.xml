@@ -369,7 +369,7 @@
                 android:background="@drawable/custom_bg_with_borders"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="@string/explain_fourth_step_lbl"
+                android:text="@string/problem_origin"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
