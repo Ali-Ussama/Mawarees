@@ -47,6 +47,7 @@
     <string name="solving_the_problem">جاري حل المسألة…</string>
     <string name="problem">مسألة ميراث</string>
     <string name="problem_origin">أصل المسألة</string>
+    <string name="problem_origin_2">أصل المســــــــــــــــألــة</string>
     <string name="total_money">قيمة التركة</string>
     <string name="share_percent">نسبة النصيب</string>
     <string name="share_percent_per_person">نسبة النصيب للفرد</string>
@@ -66,7 +67,7 @@
     <string name="sunnah">السنّة</string>
     <string name="sheaa">الشيعة</string>
     <string name="doctrine">المذهب</string>
-    <string name="enter_money">ادخل المبلغ</string>
+    <string name="enter_money">ادخل مقدار التركة</string>
     <string name="splash">splash</string>
 
     <string name="explain_problem_result">شرح حل المسألة</string>
@@ -98,4 +99,12 @@
     <string name="divide">/</string>
     <string name="correction_number">معامل تصحيح الأسهم</string>
     <string name="constants">constants</string>
+    <string name="correction_not_needed">لا حاجة الى تصحيح الأسهم</string>
+    <string name="new_problem_origin">و تصح المســــألة مــــــن </string>
+    <string name="has_been_distributed_without_increasing_or_decreasing">تم توزيعها على الورثه بدون زيادة ولا نقصان</string>
+    <string name="enter_wives_number">أدخل عدد الزوجات</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="enter_sons_number">أدخل عدد الأولاد الذكر الأحياء</string>
+    <string name="enter_daughters_number">" أدخل عدد الأولاد الأنثى الأحياء"</string>
 </resources>

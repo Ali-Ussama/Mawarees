@@ -43,6 +43,8 @@ public class Person implements Parcelable {
 
     private String blockedBy;
 
+    private boolean group;
+
     protected Person(Parcel in) {
         id = in.readInt();
         count = in.readInt();
@@ -63,6 +65,7 @@ public class Person implements Parcelable {
         deadSonNumber = in.readInt();
         alive = in.readByte() != 0;
         blockedBy = in.readString();
+        group = in.readByte() != 0;
     }
 
     public Person() {
@@ -232,6 +235,14 @@ public class Person implements Parcelable {
         this.originalSharePercent = originalSharePercent;
     }
 
+    public boolean isGroup() {
+        return group;
+    }
+
+    public void setGroup(boolean group) {
+        this.group = group;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -258,5 +269,6 @@ public class Person implements Parcelable {
         dest.writeInt(deadSonNumber);
         dest.writeByte((byte) (alive ? 1 : 0));
         dest.writeString(blockedBy);
+        dest.writeByte((byte) (group ? 1 : 0));
     }
 }

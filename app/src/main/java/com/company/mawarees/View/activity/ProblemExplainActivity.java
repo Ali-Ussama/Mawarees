@@ -61,18 +61,35 @@ public class ProblemExplainActivity extends AppCompatActivity {
     @BindView(R.id.step_fourth_view_animator)
     ViewAnimator viewAnimator;
 
-    @BindView(R.id.activity_explain_fifth_step_value_lbl_1)
-    TextView mConclusionTV;
+//    @BindView(R.id.activity_explain_fifth_step_value_lbl_1)
+//    TextView mConclusionTV;
+//
+//    @BindView(R.id.activity_explain_fifth_step_layout)
+//    ConstraintLayout mFifthStepLayout;
+//
+//    @BindView(R.id.activity_explain_fifth_step_container_layout)
+//    LinearLayout mFifthStepContainerLayout;
 
-    @BindView(R.id.activity_explain_fifth_step_layout)
-    ConstraintLayout mFifthStepLayout;
+    @BindView(R.id.activity_explain_fifth_step_value_correction_value)
+    TextView mFifthStepCorrectionValue;
 
-    @BindView(R.id.activity_explain_fifth_step_container_layout)
-    LinearLayout mFifthStepContainerLayout;
+    @BindView(R.id.activity_explain_fifth_step_value_problem_origin)
+    TextView mFifthStepOldProblemOrigin;
 
-    @BindView(R.id.activity_explain_fifth_step_lbl)
-    TextView mFifthStepLbl;
+    @BindView(R.id.activity_explain_fifth_step_value_correction_value_2)
+    TextView mFifthStepCorrectionValue2;
 
+    @BindView(R.id.activity_explain_fifth_step_value_problem_origin_2)
+    TextView mFifthStepOldProblemOrigin2;
+
+    @BindView(R.id.activity_explain_fifth_step_value_new_problem_origin)
+    TextView mFifthStepNewProblemOrigin;
+
+    @BindView(R.id.activity_explain_fifth_step_value_problem_origin_2_2)
+    TextView mFifthStepOldProblemOrigin_2;
+
+    @BindView(R.id.activity_explain_fifth_step_value_view_animator)
+    ViewAnimator mFifthStepViewAnimator;
 
     private ExplainFirstStepRecAdapter mFirstAdapter;
     private ExplainSecondStepRecAdapter mSecondAdapter;
@@ -143,22 +160,17 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
     private void handleFifthStep(int correctionValue) {
         try {
-            if (correctionValue != 0) {
-                String result = "أصل المسألة ( ".concat(String.valueOf((problemOrigin / correctionValue))).concat(")") + "ومعامل تصحيح الأسهم ".concat("(").concat(String.valueOf(correctionValue)).concat(")").concat("\n")
-                        .concat("و أصبح أصل المسالة الجديد = ").concat(String.valueOf(problemOrigin)).concat(" x ").concat(String.valueOf(correctionValue)).concat(" = ").concat(String.valueOf(problemOrigin * correctionValue))
-                        .concat(" سهم").concat("\n").concat("تم توزيعها بدون زيادة او نقصان");
+            if (correctionValue > 1) {
+                mFifthStepViewAnimator.setDisplayedChild(0);
+                mFifthStepCorrectionValue.setText(String.valueOf(correctionValue));
+                mFifthStepOldProblemOrigin.setText(String.valueOf((problemOrigin / correctionValue)));
+                mFifthStepCorrectionValue2.setText(String.valueOf(correctionValue));
+                mFifthStepOldProblemOrigin_2.setText(String.valueOf((problemOrigin / correctionValue)));
+                mFifthStepNewProblemOrigin.setText(String.valueOf(problemOrigin));
 
-                mConclusionTV.setText(result);
-
-                mFifthStepContainerLayout.setVisibility(View.VISIBLE);
-                mFifthStepLayout.setVisibility(View.VISIBLE);
-                mFifthStepLbl.setVisibility(View.VISIBLE);
-                mConclusionTV.setVisibility(View.VISIBLE);
             } else {
-                mFifthStepContainerLayout.setVisibility(View.GONE);
-                mFifthStepLayout.setVisibility(View.GONE);
-                mFifthStepLbl.setVisibility(View.GONE);
-                mConclusionTV.setVisibility(View.GONE);
+                mFifthStepViewAnimator.setDisplayedChild(1);
+                mFifthStepOldProblemOrigin_2.setText(String.valueOf((problemOrigin)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -168,7 +180,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
     private void sumPeopleFractions() {
         try {
             StringBuilder summation = new StringBuilder("= س");
-            removeDuplicatedPeople();
+            collapsePeopleInGroups();
             originalValue = 0;
 
             for (int i = 0; i < mFirstStepData.size(); i++) {
@@ -223,6 +235,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
         try {
 //            removeDuplicatedPeople();
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            mFirstStepData = OConstants.sort(mFirstStepData);
             mFirstAdapter = new ExplainFirstStepRecAdapter(mFirstStepData, mCurrent);
             mFirstStepRV.setLayoutManager(layoutManager);
             mFirstStepRV.setAdapter(mFirstAdapter);
@@ -251,6 +264,8 @@ public class ProblemExplainActivity extends AppCompatActivity {
             if (correctionValue != 0) {
                 viewAnimator.setDisplayedChild(1);
                 ArrayList<Person> data = createFourthStepData(oConstants.getmExplanation().getPhase2().getPeople());
+                data = OConstants.sort(data);
+
                 LinearLayoutManager layoutManager = new LinearLayoutManager(this);
                 mFourthAdapter = new ExplanationFourthStepAdapter(data, correctionValue, mCurrent);
                 mFourthStepRV.setLayoutManager(layoutManager);
@@ -300,94 +315,6 @@ public class ProblemExplainActivity extends AppCompatActivity {
         }
     }
 
-    private void createGroups(ArrayList<Group> groups) {
-        try {
-            ArrayList<Person> phase1 = explanation.getPhase1().getPeople();
-            ArrayList<Person> phase4 = explanation.getPhase4().getPeople();
-
-            for (Person person : phase1) {
-                Log.i(TAG, "phase1: person relation = " + person.getRelation());
-            }
-
-            for (Person person : phase4) {
-                Log.i(TAG, "phase4: person relation = " + person.getRelation());
-            }
-
-            int sonsCount = OConstants.getPersonCount(phase1, OConstants.PERSON_SON);
-            int daughtersCount = OConstants.getPersonCount(phase1, OConstants.PERSON_DAUGHTER);
-
-            int wivesCount = OConstants.getPersonCount(phase1, OConstants.PERSON_WIFE);
-
-            if (wivesCount > 0) {
-
-            }
-
-            if (sonsCount > 0 && daughtersCount > 0) {
-                createSonsGroup(phase1, phase4, groups);
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void createSonsGroup(ArrayList<Person> phase1, ArrayList<Person> phase4, ArrayList<Group> groups) {
-        try {
-            int sonsCount = OConstants.getPersonCount(phase1, OConstants.PERSON_SON);
-            int daughtersCount = OConstants.getPersonCount(phase1, OConstants.PERSON_DAUGHTER);
-
-            Person oldSon = OConstants.getPerson(phase1, OConstants.PERSON_SON);
-            Person newSon = null;
-
-            if (sonsCount > 2) {
-                newSon = OConstants.getNewPerson(phase4, OConstants.PERSON_SONS);
-            } else if (sonsCount == 2) {
-                newSon = OConstants.getNewPerson(phase4, OConstants.PERSON_TWO_SONS);
-            } else if (sonsCount == 1) {
-                newSon = OConstants.getPerson(phase4, OConstants.PERSON_SON);
-            }
-
-            Person newDaughter = null;
-            if (daughtersCount > 2) {
-                newDaughter = OConstants.getNewPerson(phase4, OConstants.PERSON_DAUGHTERS);
-            } else if (daughtersCount == 2) {
-                newDaughter = OConstants.getNewPerson(phase4, OConstants.PERSON_TWO_DAUGHTERS);
-            } else if (daughtersCount == 1) {
-                newDaughter = OConstants.getPerson(phase4, OConstants.PERSON_DAUGHTER);
-            }
-
-            if (sonsCount != 0 && daughtersCount != 0) {
-                Group group = new Group();
-                group.setGroupName(OConstants.CHILDREN);
-                group.setBoys_count(sonsCount);
-                group.setGirls_count(daughtersCount);
-                group.setBoys_relation(newSon.getRelation());
-                group.setGirls_relation(newDaughter.getRelation());
-                group.setSingle_boy_relation(OConstants.PERSON_SON);
-                group.setSingle_girl_relation(OConstants.PERSON_DAUGHTER);
-                group.setGroupSharePercent(oldSon.getOriginalSharePercent());
-
-                if (newSon.getEachPersonSharePercent() != null) {
-                    group.setBoysLatestSharePercent(newSon.getEachPersonSharePercent());
-                } else {
-                    group.setBoysLatestSharePercent(newSon.getSharePercent());
-                }
-
-                if (newDaughter.getEachPersonSharePercent() != null) {
-                    group.setGirlsLatestSharePercent(newDaughter.getEachPersonSharePercent());
-                } else {
-                    group.setGirlsLatestSharePercent(newDaughter.getSharePercent());
-                }
-                group.setOriginalDenominator(originalValue);
-                groups.add(group);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -403,12 +330,13 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
     }
 
-    private void removeDuplicatedPeople() {
+    private void collapsePeopleInGroups() {
         mFirstStepData = new ArrayList<>();
         boolean children = false, brothers = false, motherUncles = false, fatherUncles = false;
         Set<Person> data = new HashSet<>();
 
         for (int i = 0; i < people.size(); i++) {
+            Log.i(TAG, "collapsePeopleInGroup(): person = " + people.get(i));
             if (people.get(i).getRelation().contains(OConstants.PERSON_DAUGHTERS) || people.get(i).getRelation().contains(OConstants.PERSON_SONS) ||
                     people.get(i).getRelation().contains(OConstants.PERSON_TWO_DAUGHTERS) || people.get(i).getRelation().contains(OConstants.PERSON_TWO_SONS) ||
                     people.get(i).getRelation().contains(OConstants.PERSON_DAUGHTER) || people.get(i).getRelation().contains(OConstants.PERSON_SON)) {
@@ -418,7 +346,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
                     createAlivePerson(mFirstStepData, person.getCount(), OConstants.PERSON_CHILDREN, OConstants.GENDER_MALE, true,
                             person.getOriginalSharePercent(), person.getShareValue(), person.getNumberOfShares(), person.getProblemOrigin(),
-                            person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy());
+                            person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy(), true);
                 }
             } else if (people.get(i).getRelation().contains(OConstants.PERSON_BROTHERS) || people.get(i).getRelation().contains(OConstants.PERSON_BROTHER) ||
                     people.get(i).getRelation().contains(OConstants.PERSON_TWO_BROTHERS) || people.get(i).getRelation().contains(OConstants.PERSON_SISTER) ||
@@ -427,9 +355,9 @@ public class ProblemExplainActivity extends AppCompatActivity {
                     brothers = true;
                     Person person = people.get(i);
 
-                    createAlivePerson(mFirstStepData, person.getCount(), OConstants.PERSON_BROTHERS, OConstants.GENDER_MALE, true,
+                    createAlivePerson(mFirstStepData, person.getCount(), OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER, OConstants.GENDER_MALE, true,
                             person.getOriginalSharePercent(), person.getShareValue(), person.getNumberOfShares(), person.getProblemOrigin(),
-                            person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy());
+                            person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy(), true);
                 }
             } else if (people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_UNCLE) || people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_UNCLES) ||
                     people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_AUNT) || people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_AUNTS)) {
@@ -440,7 +368,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
                     createAlivePerson(mFirstStepData, person.getCount(), OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true,
                             person.getOriginalSharePercent(), person.getShareValue(), person.getNumberOfShares(), person.getProblemOrigin(),
-                            person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy());
+                            person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy(), true);
                 }
             } else if (people.get(i).getRelation().contains(OConstants.PERSON_FATHER_UNCLE) || people.get(i).getRelation().contains(OConstants.PERSON_FATHER_UNCLES) ||
                     people.get(i).getRelation().contains(OConstants.PERSON_FATHER_AUNT) || people.get(i).getRelation().contains(OConstants.PERSON_FATHER_AUNTS)) {
@@ -451,7 +379,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
                     createAlivePerson(mFirstStepData, person.getCount(), OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true,
                             person.getOriginalSharePercent(), person.getShareValue(), person.getNumberOfShares(), person.getProblemOrigin(),
-                            person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy());
+                            person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy(), true);
                 }
             } else {
                 mFirstStepData.add(people.get(i));
@@ -462,7 +390,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
     public static void createAlivePerson(ArrayList<Person> data, int size, String relation, String gender,
                                          boolean isAlive, Fraction originalPercent, double shareValue,
                                          int numberOfShares, int problemOrigin, String explanation,
-                                         String proof, String blocked, String blockedBy) {
+                                         String proof, String blocked, String blockedBy, boolean group) {
         try {
 
             Person person = new Person();
@@ -479,6 +407,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
             person.setProof(proof);
             person.setBlocked(blocked);
             person.setBlockedBy(blockedBy);
+            person.setGroup(group);
             data.add(person);
 
 

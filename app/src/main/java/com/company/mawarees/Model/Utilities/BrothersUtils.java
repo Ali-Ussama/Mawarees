@@ -74,7 +74,9 @@ public class BrothersUtils {
 
                                 //TODO
                                 resetPerson(data, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER);
-                                createAlivePerson(data, (OConstants.getBrothersCount(data) + OConstants.getSistersCount(data)), OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER, OConstants.GENDER_MALE, true);
+                                createAlivePerson(data, (OConstants.getBrothersCount(data) + OConstants.getSistersCount(data)),
+                                        OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER, OConstants.GENDER_MALE, true, true);
+
                                 OConstants.setPersonSharePercent(data, OConstants.one_Third, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER); // اكثر من اخ
 
                                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_BROTHER, ProofsAndExplanations.BotherAndSistersProofs.ONE_THIRD_MORE_THAN_BROTHER_AND_SISTER_E, ProofsAndExplanations.BotherAndSistersProofs.p1);
@@ -164,7 +166,8 @@ public class BrothersUtils {
 
                 // نصيب الاختين = 2/3
                 resetPerson(data, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER);
-                createAlivePerson(data, (OConstants.getBrothersCount(data) + OConstants.getSistersCount(data)), OConstants.PERSON_TWO_SISTERS, OConstants.GENDER_MALE, true);
+                createAlivePerson(data, (OConstants.getBrothersCount(data) + OConstants.getSistersCount(data)),
+                        OConstants.PERSON_TWO_SISTERS, OConstants.GENDER_MALE, true,false);
                 OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_TWO_SISTERS); // نصيب الاختين = 2/3
                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_TWO_SISTERS, ProofsAndExplanations.BotherAndSistersProofs.TWO_THIRD_TWO_SISTERS_E, ProofsAndExplanations.BotherAndSistersProofs.p2);
 //                OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_SISTER);
@@ -187,7 +190,8 @@ public class BrothersUtils {
 
                 //TODO
                 resetPerson(data, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
-                createAlivePerson(data, (OConstants.getBrothersCount(data) + OConstants.getSistersCount(data)), OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER, OConstants.GENDER_MALE, true);
+                createAlivePerson(data, (OConstants.getBrothersCount(data) + OConstants.getSistersCount(data)),
+                        OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER, OConstants.GENDER_MALE, true,true);
                 OConstants.setPersonSharePercent(data, OConstants.one, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
 
                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_BROTHER, ProofsAndExplanations.BotherAndSistersProofs.MORE_THAN_THREE_BROTHER_AND_SISTER_E, ProofsAndExplanations.BotherAndSistersProofs.p2);
@@ -257,7 +261,7 @@ public class BrothersUtils {
 
     }
 
-    private static void createAlivePerson(ArrayList<Person> data, int size, String relation, String gender, boolean isAlive) {
+    private static void createAlivePerson(ArrayList<Person> data, int size, String relation, String gender, boolean isAlive, boolean group) {
         try {
 
             Person person = new Person();
@@ -266,7 +270,7 @@ public class BrothersUtils {
             person.setRelation(relation);
             person.setGender(gender);
             person.setDeadSonNumber(-1);
-
+            person.setGroup(group);
             data.add(person);
 
 

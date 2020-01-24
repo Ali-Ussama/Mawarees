@@ -1,6 +1,7 @@
 package com.company.mawarees.View.adpters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import butterknife.ButterKnife;
 
 public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<ExplanationFourthStepAdapter.viewHolder> {
 
+    private static final String TAG = "ExplainFourthAdapter";
     private Context context;
     private ArrayList<Person> data;
     private int correctionValue;
@@ -46,51 +48,59 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
     public void onBindViewHolder(@NonNull ExplanationFourthStepAdapter.viewHolder holder, int position) {
         try {
 
-            holder.mGroupName.setText(data.get(position).getRelation());
+            Person person = data.get(position);
+            String the = "ال";
+            if (person.getRelation().substring(0,2).contains(the)) {
+                Log.i(TAG,"onBindViewHolder(): person relation" + person.getRelation() + " contains the");
+                holder.mGroupName.setText(person.getRelation());
+            } else {
+                Log.i(TAG,"onBindViewHolder(): person relation" + person.getRelation() + " not contains the");
+                holder.mGroupName.setText(the.concat(person.getRelation()));
+            }
 
-            if (data.get(position).getRelation().matches(OConstants.PERSON_More_Than_three_DAUGHTERS) || data.get(position).getRelation().matches(OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER)) {
+            if (person.isGroup()) {
                 holder.mTogether.setVisibility(View.VISIBLE);
             } else {
                 holder.mTogether.setVisibility(View.GONE);
             }
 
 
-            if (data.get(position).getRelation().matches(OConstants.PERSON_SON) || data.get(position).getRelation().matches(OConstants.PERSON_BROTHER)
-                    || data.get(position).getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || data.get(position).getRelation().matches(OConstants.PERSON_MOTHER_UNCLE)) {
+            if (person.getRelation().matches(OConstants.PERSON_SON) || person.getRelation().matches(OConstants.PERSON_BROTHER)
+                    || person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE)) {
 
-                if (data.get(position).getRelation().matches(OConstants.PERSON_SON)) {
+                if (person.getRelation().matches(OConstants.PERSON_SON)) {
                     displayManValue(holder, position, OConstants.PERSON_SON, OConstants.PERSON_DAUGHTER);
 
-                } else if (data.get(position).getRelation().matches(OConstants.PERSON_BROTHER)) {
+                } else if (person.getRelation().matches(OConstants.PERSON_BROTHER)) {
                     displayManValue(holder, position, OConstants.PERSON_BROTHER, OConstants.PERSON_SISTER);
 
-                } else if (data.get(position).getRelation().matches(OConstants.PERSON_FATHER_UNCLE)) {
+                } else if (person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE)) {
                     displayManValue(holder, position, OConstants.PERSON_FATHER_UNCLE, OConstants.PERSON_FATHER_AUNT);
 
-                } else if (data.get(position).getRelation().matches(OConstants.PERSON_MOTHER_UNCLE)) {
+                } else if (person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE)) {
                     displayManValue(holder, position, OConstants.PERSON_MOTHER_UNCLE, OConstants.PERSON_MOTHER_AUNT);
                 }
 
-            } else if (data.get(position).getRelation().matches(OConstants.PERSON_DAUGHTER) || data.get(position).getRelation().matches(OConstants.PERSON_SISTER) || data.get(position).getRelation().matches(OConstants.PERSON_FATHER_AUNT)
-                    || data.get(position).getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) {
+            } else if (person.getRelation().matches(OConstants.PERSON_DAUGHTER) || person.getRelation().matches(OConstants.PERSON_SISTER) || person.getRelation().matches(OConstants.PERSON_FATHER_AUNT)
+                    || person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) {
 
-                if (data.get(position).getRelation().matches(OConstants.PERSON_DAUGHTER)) {
+                if (person.getRelation().matches(OConstants.PERSON_DAUGHTER)) {
                     displayWomanValue(holder, position, OConstants.PERSON_SON, OConstants.PERSON_DAUGHTER);
 
-                } else if (data.get(position).getRelation().matches(OConstants.PERSON_SISTER)) {
+                } else if (person.getRelation().matches(OConstants.PERSON_SISTER)) {
                     displayWomanValue(holder, position, OConstants.PERSON_BROTHER, OConstants.PERSON_SISTER);
 
-                } else if (data.get(position).getRelation().matches(OConstants.PERSON_FATHER_AUNT)) {
+                } else if (person.getRelation().matches(OConstants.PERSON_FATHER_AUNT)) {
                     displayWomanValue(holder, position, OConstants.PERSON_FATHER_UNCLE, OConstants.PERSON_FATHER_AUNT);
 
-                } else if (data.get(position).getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) {
+                } else if (person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) {
                     displayWomanValue(holder, position, OConstants.PERSON_MOTHER_UNCLE, OConstants.PERSON_MOTHER_AUNT);
                 }
 
             } else {
                 holder.mCorrectionValue.setText(String.valueOf(correctionValue));
-                holder.mShareValue.setText(String.valueOf(data.get(position).getSharePercent().getNumerator()));
-                holder.mMultiply.setText(String.valueOf((correctionValue * data.get(position).getSharePercent().getNumerator())));
+                holder.mShareValue.setText(String.valueOf(person.getSharePercent().getNumerator()));
+                holder.mMultiply.setText(String.valueOf((correctionValue * person.getSharePercent().getNumerator())));
 
                 holder.mBrackets_1.setVisibility(View.GONE);
                 holder.mBrackets_2.setVisibility(View.GONE);
@@ -106,20 +116,20 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
 
     private void displayManValue(ExplanationFourthStepAdapter.viewHolder holder, int position, String boysRelation, String girlsRelation) {
         try {
-
+            Person person = data.get(position);
             holder.mBrackets_1.setVisibility(View.VISIBLE);
             holder.mBrackets_2.setVisibility(View.VISIBLE);
             holder.mDivide.setVisibility(View.VISIBLE);
             holder.mGroupShareValue.setVisibility(View.VISIBLE);
 
             int count = OConstants.getPersonsInGirlsCount(data, boysRelation, girlsRelation);
-            double groupShare = (correctionValue * data.get(position).getSharePercent().getNumerator());
+            double groupShare = (correctionValue * person.getSharePercent().getNumerator());
 
             int mCorrectionValue = 2;
             holder.mGroupShareValue.setText(String.valueOf(groupShare));
 
             holder.mShareValue.setText(String.valueOf(mCorrectionValue));
-            holder.mCorrectionValue.setText(String.valueOf(data.get(position).getSharePercent().getNumerator()));
+            holder.mCorrectionValue.setText(String.valueOf(person.getSharePercent().getNumerator()));
 
             holder.mMultiply.setText(String.valueOf(((groupShare / count) * mCorrectionValue)));
         } catch (Exception e) {
@@ -129,19 +139,20 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
 
     private void displayWomanValue(ExplanationFourthStepAdapter.viewHolder holder, int position, String boysRelation, String girlsRelation) {
         try {
+            Person person = data.get(position);
             holder.mBrackets_1.setVisibility(View.VISIBLE);
             holder.mBrackets_2.setVisibility(View.VISIBLE);
             holder.mDivide.setVisibility(View.VISIBLE);
             holder.mGroupShareValue.setVisibility(View.VISIBLE);
 
             int count = OConstants.getPersonsInGirlsCount(data, boysRelation, girlsRelation);
-            double groupShare = (correctionValue * data.get(position).getSharePercent().getNumerator());
+            double groupShare = (correctionValue * person.getSharePercent().getNumerator());
 
             int mCorrectionValue = 1;
             holder.mGroupShareValue.setText(String.valueOf(groupShare));
 
             holder.mShareValue.setText(String.valueOf(mCorrectionValue));
-            holder.mCorrectionValue.setText(String.valueOf(data.get(position).getSharePercent().getNumerator()));
+            holder.mCorrectionValue.setText(String.valueOf(person.getSharePercent().getNumerator()));
 
             holder.mMultiply.setText(String.valueOf(((groupShare / count) * mCorrectionValue)));
         } catch (Exception e) {

@@ -1,396 +1,570 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
-    <include layout="@layout/common_toolbar_layout" />
-
-    <LinearLayout
-        android:id="@+id/standards_layout_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:padding="12dp">
-
-            <TextView
-                android:id="@+id/how_much_money_tv_lbl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/how_much_money"
-                android:textColor="@color/brown"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@+id/dead_person_gender_tv_lbl"
-                app:layout_constraintStart_toStartOf="@+id/dead_person_gender_tv_lbl"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/problem_activity_how_much_money_et_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="10dp"
-                android:padding="8dp"
-                android:background="@drawable/custom_white_rectangle_background"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="@string/enter_money"
-                android:inputType="number"
-                android:textColorHint="@color/browLight"
-                app:layout_constraintEnd_toStartOf="@+id/how_much_money_tv_lbl"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/dead_person_gender_tv_lbl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:text="@string/dead_gender"
-                android:textColor="@color/brown"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/gender_layout" />
-
-
-            <LinearLayout
-                android:id="@+id/gender_layout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/problem_activity_how_much_money_et_value"
-                app:layout_constraintStart_toStartOf="@id/problem_activity_how_much_money_et_value"
-                app:layout_constraintTop_toBottomOf="@id/problem_activity_how_much_money_et_value">
-
-                <Button
-                    android:id="@+id/problem_activity_dead_gender_female_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="8dp"
-                    android:background="@drawable/custom_white_rect_with_brown_borders"
-                    android:gravity="center"
-                    android:text="@string/female"
-                    android:textColor="@color/brown"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/problem_activity_dead_gender_male_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="8dp"
-                    android:background="@color/browLight"
-                    android:gravity="center"
-                    android:text="@string/male"
-                    android:textColor="@color/brown"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/doctrine_tv_lbl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:text="@string/doctrine"
-                android:textColor="@color/brown"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@id/how_much_money_tv_lbl"
-                app:layout_constraintStart_toStartOf="@+id/dead_person_gender_tv_lbl"
-                app:layout_constraintTop_toTopOf="@+id/doctrine_layout" />
-
-            <LinearLayout
-                android:id="@+id/doctrine_layout"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/gender_layout"
-                app:layout_constraintStart_toStartOf="@id/gender_layout"
-                app:layout_constraintTop_toBottomOf="@id/gender_layout">
-
-                <Button
-                    android:id="@+id/adnan_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="4dp"
-                    android:background="@color/browLight"
-                    android:gravity="center"
-                    android:text="@string/adnan"
-                    android:textColor="@color/brown"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/sunnah_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/custom_white_rect_with_brown_borders"
-                    android:gravity="center"
-                    android:text="@string/sunnah"
-                    android:textColor="@color/brown"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/sheaa_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/custom_white_rect_with_brown_borders"
-                    android:gravity="center"
-                    android:padding="4dp"
-                    android:text="@string/sheaa"
-                    android:textColor="@color/brown"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/sunnah_category_layout"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@id/gender_layout"
-                app:layout_constraintStart_toStartOf="@id/problem_activity_how_much_money_et_value"
-                app:layout_constraintTop_toBottomOf="@id/doctrine_layout">
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/custom_white_rect_with_brown_borders"
-                    android:gravity="center"
-                    android:text="@string/hanafy"
-                    android:textColor="@color/brown"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/custom_white_rect_with_brown_borders"
-                    android:text="@string/maleky"
-                    android:textColor="@color/brown"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/custom_white_rect_with_brown_borders"
-                    android:gravity="center"
-                    android:text="@string/shafeey"
-                    android:textColor="@color/brown"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/custom_white_rect_with_brown_borders"
-                    android:gravity="center"
-                    android:text="@string/hanbaly"
-                    android:textColor="@color/brown"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+    <include
+        layout="@layout/common_toolbar_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:layout_marginBottom="12dp"
+        android:paddingBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="12dp">
 
-            <!-- wife -->
-            <LinearLayout
-                android:id="@+id/problem_activity_wife_layout_container"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <EditText
-                    android:id="@+id/problem_activity_wife_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints="@string/default_zero"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:hint="@string/default_zero"
-                    android:inputType="number"
-                    android:padding="8dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/orange"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="@string/wife"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <!-- husband -->
-            <LinearLayout
-                android:id="@+id/problem_activity_husband_layout_container"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/problem_activity_husband_value"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/dark_brown"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="@string/man_dead"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/browLight"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="@string/husband"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <!--Alive Children-->
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/problem_activity_how_much_money_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/custom_bg_with_white_borders"
                 android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
+                android:hint="@string/enter_money"
+                android:padding="8dp"
+                android:textColorHint="@color/dark_brown"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/problem_activity_wife_layout_container">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/problem_activity_how_much_money_et_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    android:text="100" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/gender_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_bg_with_white_borders"
+                app:layout_constraintEnd_toEndOf="@id/problem_activity_how_much_money_layout"
+                app:layout_constraintStart_toStartOf="@id/problem_activity_how_much_money_layout"
+                app:layout_constraintTop_toBottomOf="@id/problem_activity_how_much_money_layout">
+
+                <TextView
+                    android:id="@+id/gender_lbl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center"
+                    android:text="@string/dead_gender"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gender_lbl">
 
-                    <EditText
-                        android:id="@+id/problem_activity_alive_daughter_value"
+                    <RadioButton
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
                         android:layout_weight="1"
-                        android:autofillHints="@string/default_zero"
-                        android:background="@color/white"
-                        android:gravity="center"
-                        android:hint="@string/default_zero"
-                        android:inputType="number"
-                        android:padding="8dp"
-                        android:ems="5"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black"
-                        android:textSize="12sp" />
+                        android:text="@string/female"
+                        android:textColor="@color/dark_brown"
+                        android:textStyle="bold" />
 
-                    <TextView
+                    <RadioButton
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
                         android:layout_weight="1"
-                        android:background="@color/orange"
-                        android:gravity="center"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:text="@string/alive_daughter"
-                         />
-                </LinearLayout>
+                        android:text="@string/male"
+                        android:textColor="@color/dark_brown"
+                        android:textStyle="bold" />
+                </RadioGroup>
 
-                <LinearLayout
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/problem_activity_wife_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_bg_with_white_borders"
+                android:gravity="center"
+                android:hint="@string/enter_wives_number"
+                android:padding="8dp"
+                android:textColorHint="@color/dark_brown"
+                app:layout_constraintEnd_toEndOf="@id/gender_container"
+                app:layout_constraintStart_toStartOf="@id/gender_container"
+                app:layout_constraintTop_toBottomOf="@+id/gender_container">
+
+                <ImageView
+                    android:id="@+id/wife_layout_iv"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/wife"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/problem_activity_wife_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:hint="@string/enter_wives_number"
+                    android:padding="4dp"
+                    android:textColorHint="@color/dark_brown"
+                    app:layout_constraintBottom_toBottomOf="@id/wife_layout_iv"
+                    app:layout_constraintEnd_toStartOf="@+id/wife_layout_iv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/wife_layout_iv">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/problem_activity_wife_et_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:text="" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/problem_activity_husband_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_bg_with_white_borders"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/gender_container"
+                app:layout_constraintStart_toStartOf="@+id/gender_container"
+                app:layout_constraintTop_toBottomOf="@+id/problem_activity_wife_container">
+
+                <ImageView
+                    android:id="@+id/husband_layout_iv"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/man"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/husband_layout_question_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="هل يوجد زوج ؟"
+                    android:textColor="@color/dark_brown"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="@id/husband_layout_iv"
+                    app:layout_constraintEnd_toStartOf="@+id/husband_layout_iv"
+                    app:layout_constraintTop_toTopOf="@id/husband_layout_iv" />
+
+                <RadioGroup
+                    android:id="@+id/husband_layout_radio_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <EditText
-                        android:id="@+id/problem_activity_alive_son_value"
+                    <RadioButton
+                        android:id="@+id/husband_rb_yes"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
                         android:layout_weight="1"
-                        android:autofillHints="@string/default_zero"
-                        android:background="@color/white"
-                        android:gravity="center"
-                        android:hint="@string/default_zero"
-                        android:inputType="number"
-                        android:padding="8dp"
-                        android:ems="5"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black"
-                        android:textSize="12sp" />
+                        android:text="@string/yes"
+                        android:textColor="@color/dark_brown"
+                        android:textStyle="bold" />
 
-                    <TextView
+                    <RadioButton
+                        android:id="@+id/husband_rb_no"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
                         android:layout_weight="1"
-                        android:background="@color/orange"
-                        android:gravity="center"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:text="@string/alive_son"/>
+                        android:text="@string/no"
+                        android:textColor="@color/dark_brown"
+                        android:textStyle="bold" />
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </LinearLayout>
-            </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/problem_activity_alive_son_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_bg_with_white_borders"
+                android:gravity="center"
+                android:hint="@string/enter_wives_number"
+                android:padding="8dp"
+                android:textColorHint="@color/dark_brown"
+                app:layout_constraintEnd_toEndOf="@+id/gender_container"
+                app:layout_constraintStart_toStartOf="@+id/gender_container"
+                app:layout_constraintTop_toBottomOf="@+id/problem_activity_husband_layout">
+
+                <ImageView
+                    android:id="@+id/son_layout_iv"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/son"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/problem_activity_alive_son_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:hint="@string/enter_sons_number"
+                    android:padding="4dp"
+                    android:textColorHint="@color/dark_brown"
+                    app:layout_constraintBottom_toBottomOf="@id/son_layout_iv"
+                    app:layout_constraintEnd_toStartOf="@+id/son_layout_iv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/son_layout_iv">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/problem_activity_alive_son_et_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:text="" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/problem_activity_alive_daughter_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_bg_with_white_borders"
+                android:gravity="center"
+                android:hint="@string/enter_wives_number"
+                android:padding="8dp"
+                android:textColorHint="@color/dark_brown"
+                app:layout_constraintEnd_toEndOf="@+id/gender_container"
+                app:layout_constraintStart_toStartOf="@+id/gender_container"
+                app:layout_constraintTop_toBottomOf="@+id/problem_activity_alive_son_container">
+
+                <ImageView
+                    android:id="@+id/daughter_layout_iv"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/daughter"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/problem_activity_alive_daughter_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:hint="@string/enter_daughters_number"
+                    android:padding="4dp"
+                    android:textColorHint="@color/dark_brown"
+                    app:layout_constraintBottom_toBottomOf="@id/daughter_layout_iv"
+                    app:layout_constraintEnd_toStartOf="@+id/daughter_layout_iv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/daughter_layout_iv">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/problem_activity_alive_daughter_et_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:text="" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/problem_activity_mother_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_bg_with_white_borders"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/gender_container"
+                app:layout_constraintStart_toStartOf="@+id/gender_container"
+                app:layout_constraintTop_toBottomOf="@+id/problem_activity_alive_daughter_container">
+
+                <ImageView
+                    android:id="@+id/mother_layout_iv"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/mother"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/mother_layout_question_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="هل يوجد والدة ؟"
+                    android:textColor="@color/dark_brown"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="@id/mother_layout_iv"
+                    app:layout_constraintEnd_toStartOf="@+id/mother_layout_iv"
+                    app:layout_constraintTop_toTopOf="@id/mother_layout_iv" />
+
+                <RadioGroup
+                    android:id="@+id/mother_layout_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/mother_rb_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/yes"
+                        android:textColor="@color/dark_brown"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/mother_rb_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/no"
+                        android:textColor="@color/dark_brown"
+                        android:textStyle="bold" />
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/problem_activity_father_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_bg_with_white_borders"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/gender_container"
+                app:layout_constraintStart_toStartOf="@+id/gender_container"
+                app:layout_constraintTop_toBottomOf="@+id/problem_activity_mother_layout">
+
+                <ImageView
+                    android:id="@+id/father_layout_iv"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/father"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/father_layout_question_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="هل يوجد والد ؟"
+                    android:textColor="@color/dark_brown"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="@id/father_layout_iv"
+                    app:layout_constraintEnd_toStartOf="@+id/father_layout_iv"
+                    app:layout_constraintTop_toTopOf="@id/father_layout_iv" />
+
+                <RadioGroup
+                    android:id="@+id/father_layout_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/father_rb_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/yes"
+                        android:textColor="@color/dark_brown"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/father_rb_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/no"
+                        android:textColor="@color/dark_brown"
+                        android:textStyle="bold" />
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/problem_activity_father_grandpa_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_bg_with_white_borders"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/gender_container"
+                app:layout_constraintStart_toStartOf="@+id/gender_container"
+                app:layout_constraintTop_toBottomOf="@+id/problem_activity_father_layout">
+
+                <ImageView
+                    android:id="@+id/father_grandpa_layout_iv"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/grandpa"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/father_grandpa_layout_question_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="هل يوجد جد لوالد ؟"
+                    android:textColor="@color/dark_brown"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="@id/father_grandpa_layout_iv"
+                    app:layout_constraintEnd_toStartOf="@+id/father_grandpa_layout_iv"
+                    app:layout_constraintTop_toTopOf="@id/father_grandpa_layout_iv" />
+
+                <RadioGroup
+                    android:id="@+id/father_grandpa_layout_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/father_grandpa_rb_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/yes"
+                        android:textColor="@color/dark_brown"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/father_grandpa_rb_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/no"
+                        android:textColor="@color/dark_brown"
+                        android:textStyle="bold" />
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/problem_activity_father_grandma_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_bg_with_white_borders"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/gender_container"
+                app:layout_constraintStart_toStartOf="@+id/gender_container"
+                app:layout_constraintTop_toBottomOf="@+id/problem_activity_father_grandpa_layout">
+
+                <ImageView
+                    android:id="@+id/father_grandma_layout_iv"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/grandma"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/father_grandma_layout_question_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="هل يوجد جدة والد ؟"
+                    android:textColor="@color/dark_brown"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="@id/father_grandma_layout_iv"
+                    app:layout_constraintEnd_toStartOf="@+id/father_grandma_layout_iv"
+                    app:layout_constraintTop_toTopOf="@id/father_grandma_layout_iv" />
+
+                <RadioGroup
+                    android:id="@+id/father_grandma_layout_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/father_grandma_rb_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/yes"
+                        android:textColor="@color/dark_brown"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/father_grandma_rb_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/no"
+                        android:textColor="@color/dark_brown"
+                        android:textStyle="bold" />
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

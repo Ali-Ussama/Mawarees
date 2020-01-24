@@ -122,9 +122,8 @@ public class HusbandAndWifeUtils {
             person.setRelation(relation);
             person.setGender(gender);
             person.setDeadSonNumber(-1);
-
+            person.setGroup(true);
             data.add(person);
-
 
             Log.i(TAG, "createAlivePerson() person relation = " + relation + " & Alive = " + isAlive + " & gender = " + gender + " created");
             Log.i(TAG, "createAlivePerson() people size = " + data.size());

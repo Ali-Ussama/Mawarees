@@ -155,7 +155,7 @@ public class DeadDaughterRVAdapter extends RecyclerView.Adapter<DeadDaughterRVAd
                 person.setDeadSonNumber(childNumber);
                 person.setRelation(relation);
                 person.setGender(OConstants.GENDER_MALE);
-
+                person.setGroup(false);
                 mSons.add(person);
             }
 
@@ -175,7 +175,7 @@ public class DeadDaughterRVAdapter extends RecyclerView.Adapter<DeadDaughterRVAd
                 person.setDeadSonNumber(childNumber);
                 person.setRelation(relation);
                 person.setGender(OConstants.GENDER_FEMALE);
-
+                person.setGroup(false);
                 mSons.add(person);
             }
 
