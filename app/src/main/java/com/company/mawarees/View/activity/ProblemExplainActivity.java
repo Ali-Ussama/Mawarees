@@ -207,7 +207,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
                             (people.get(i).getSharePercent().getNumerator() == 0) && people.get(i).getSharePercent().getDenominator() == 0) ||
                             (people.get(i).getRelation().contains(OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER) ||
                                     (people.get(i).getRelation().contains(OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER)) ||
-                                    (people.get(i).getRelation().contains(OConstants.PERSON_MORE_THAN_WIFE)) ||
+                                    (people.get(i).getRelation().contains(OConstants.PERSON_WIVES)) ||
                                     (people.get(i).getRelation().contains(OConstants.PERSON_More_Than_three_DAUGHTERS)) ||
                                     (people.get(i).getRelation().contains(OConstants.PERSON_FATHER_UNCLES_AND_AUNTS)) ||
                                     (people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS)))) {
@@ -261,7 +261,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
             setCorrectionNumber();
             groups = new ArrayList<>();
 
-            if (correctionValue != 0) {
+            if (correctionValue > 1) {
                 viewAnimator.setDisplayedChild(1);
                 ArrayList<Person> data = createFourthStepData(oConstants.getmExplanation().getPhase2().getPeople());
                 data = OConstants.sort(data);
@@ -336,7 +336,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
         Set<Person> data = new HashSet<>();
 
         for (int i = 0; i < people.size(); i++) {
-            Log.i(TAG, "collapsePeopleInGroup(): person = " + people.get(i));
+            Log.i(TAG, "collapsePeopleInGroup(): person = " + people.get(i).getRelation());
             if (people.get(i).getRelation().contains(OConstants.PERSON_DAUGHTERS) || people.get(i).getRelation().contains(OConstants.PERSON_SONS) ||
                     people.get(i).getRelation().contains(OConstants.PERSON_TWO_DAUGHTERS) || people.get(i).getRelation().contains(OConstants.PERSON_TWO_SONS) ||
                     people.get(i).getRelation().contains(OConstants.PERSON_DAUGHTER) || people.get(i).getRelation().contains(OConstants.PERSON_SON)) {

@@ -96,7 +96,8 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
                 } else if (person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) {
                     displayWomanValue(holder, position, OConstants.PERSON_MOTHER_UNCLE, OConstants.PERSON_MOTHER_AUNT);
                 }
-
+            }else if (person.getRelation().matches(OConstants.PERSON_WIFE)){
+                displayWomanValue(holder,position,"",OConstants.PERSON_WIFE);
             } else {
                 holder.mCorrectionValue.setText(String.valueOf(correctionValue));
                 holder.mShareValue.setText(String.valueOf(person.getSharePercent().getNumerator()));
@@ -129,7 +130,8 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
             holder.mGroupShareValue.setText(String.valueOf(groupShare));
 
             holder.mShareValue.setText(String.valueOf(mCorrectionValue));
-            holder.mCorrectionValue.setText(String.valueOf(person.getSharePercent().getNumerator()));
+//            holder.mCorrectionValue.setText(String.valueOf(person.getSharePercent().getNumerator()));
+            holder.mCorrectionValue.setText(String.valueOf(count));
 
             holder.mMultiply.setText(String.valueOf(((groupShare / count) * mCorrectionValue)));
         } catch (Exception e) {
@@ -152,7 +154,8 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
             holder.mGroupShareValue.setText(String.valueOf(groupShare));
 
             holder.mShareValue.setText(String.valueOf(mCorrectionValue));
-            holder.mCorrectionValue.setText(String.valueOf(person.getSharePercent().getNumerator()));
+//            holder.mCorrectionValue.setText(String.valueOf(person.getSharePercent().getNumerator()));
+            holder.mCorrectionValue.setText(String.valueOf(count));
 
             holder.mMultiply.setText(String.valueOf(((groupShare / count) * mCorrectionValue)));
         } catch (Exception e) {

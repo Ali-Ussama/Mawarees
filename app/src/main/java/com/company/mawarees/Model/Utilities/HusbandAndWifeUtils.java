@@ -30,9 +30,9 @@ public class HusbandAndWifeUtils {
                     OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_WIFE, ProofsAndExplanations.WifeProofs.E1, ProofsAndExplanations.WifeProofs.p1);
 
                     if (OConstants.getPersonCount(data, OConstants.PERSON_WIFE) > 1) {
-                        createAlivePerson(data, OConstants.getPersonCount(data, OConstants.PERSON_WIFE), OConstants.PERSON_MORE_THAN_WIFE, OConstants.GENDER_FEMALE, true);
-                        OConstants.setPersonSharePercent(data, OConstants.one_eighth, OConstants.PERSON_MORE_THAN_WIFE);
-                        OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_MORE_THAN_WIFE, ProofsAndExplanations.WifeProofs.E1, ProofsAndExplanations.WifeProofs.p1);
+                        createAlivePerson(data, OConstants.getPersonCount(data, OConstants.PERSON_WIFE), OConstants.PERSON_WIVES, OConstants.GENDER_FEMALE, true);
+                        OConstants.setPersonSharePercent(data, OConstants.one_eighth, OConstants.PERSON_WIVES);
+                        OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_WIVES, ProofsAndExplanations.WifeProofs.E1, ProofsAndExplanations.WifeProofs.p1);
                     }
 
                     Log.i(TAG, "CalculateHusbandAndWife(): setting wife with 1/8");
@@ -79,9 +79,9 @@ public class HusbandAndWifeUtils {
                     OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_WIFE, ProofsAndExplanations.WifeProofs.E1, ProofsAndExplanations.WifeProofs.p1);
 
                     if (OConstants.getPersonCount(data, OConstants.PERSON_WIFE) > 1) {
-                        createAlivePerson(data, OConstants.getPersonCount(data, OConstants.PERSON_WIFE), OConstants.PERSON_MORE_THAN_WIFE, OConstants.GENDER_FEMALE, true);
-                        OConstants.setPersonSharePercent(data, OConstants.quarter, OConstants.PERSON_MORE_THAN_WIFE);
-                        OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_MORE_THAN_WIFE, ProofsAndExplanations.WifeProofs.E1, ProofsAndExplanations.WifeProofs.p1);
+                        createAlivePerson(data, OConstants.getPersonCount(data, OConstants.PERSON_WIFE), OConstants.PERSON_WIVES, OConstants.GENDER_FEMALE, true);
+                        OConstants.setPersonSharePercent(data, OConstants.quarter, OConstants.PERSON_WIVES);
+                        OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_WIVES, ProofsAndExplanations.WifeProofs.E1, ProofsAndExplanations.WifeProofs.p1);
                     }
 
                     Log.i(TAG, "CalculateHusbandAndWife(): setting wife with 1/4");

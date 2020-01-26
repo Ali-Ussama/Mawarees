@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/white">
 
     <androidx.core.widget.NestedScrollView
@@ -14,7 +15,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
 
             <include
                 android:id="@+id/activity_explain_toolbar"
@@ -33,7 +35,7 @@
                 android:padding="8dp"
                 android:text="@string/explain_first_step"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -53,6 +55,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/activity_explain_first_step_rv"
+                    android:animateLayoutChanges="true"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -84,7 +87,7 @@
                 android:padding="8dp"
                 android:text="@string/explain_second_step_lbl"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +128,7 @@
                         android:gravity="center"
                         android:text="4"
                         android:textColor="@color/color_red"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -141,7 +144,7 @@
                         android:layout_marginEnd="4dp"
                         android:text="24"
                         android:textColor="@color/color_red"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <TextView
@@ -153,7 +156,7 @@
                     android:paddingBottom="8dp"
                     android:text="@string/explain_lbl_3"
                     android:textColor="@color/dark_grey"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -166,7 +169,7 @@
                     android:text="@string/explain_lbl_2"
                     android:textColor="@color/dark_grey"
                     android:textDirection="rtl"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -180,7 +183,7 @@
                     android:text="@string/explain_lbl_1"
                     android:textColor="@color/dark_grey"
                     android:textDirection="rtl"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
 
@@ -213,7 +216,7 @@
                         android:layout_marginEnd="8dp"
                         android:text="@string/equation"
                         android:textColor="@color/white"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -222,7 +225,7 @@
                         android:layout_gravity="center"
                         android:text="@string/explain_third_step_lbl"
                         android:textColor="@color/white"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -251,6 +254,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/activity_explain_third_step_rv"
+                    android:animateLayoutChanges="true"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -280,12 +284,14 @@
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:orientation="vertical"
                 android:padding="8dp"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activity_explain_fourth_step_lbl">
 
                 <ViewAnimator
                     android:id="@+id/step_fourth_view_animator"
+                    android:animateLayoutChanges="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -304,6 +310,7 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/activity_explain_fourth_step_correction_number_layout"
                             android:layout_width="match_parent"
+                            android:animateLayoutChanges="true"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp">
 
@@ -385,6 +392,7 @@
                 android:layout_margin="8dp"
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:padding="8dp"
+                android:animateLayoutChanges="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -392,11 +400,13 @@
 
                 <ViewAnimator
                     android:id="@+id/activity_explain_fifth_step_value_view_animator"
+                    android:animateLayoutChanges="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/activity_explain_fifth_step_layout"
+                        android:animateLayoutChanges="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -583,6 +593,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/activity_explain_fifth_step_layout_2"
+                        android:animateLayoutChanges="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 

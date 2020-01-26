@@ -105,6 +105,12 @@
     <string name="enter_wives_number">أدخل عدد الزوجات</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
-    <string name="enter_sons_number">أدخل عدد الأولاد الذكر الأحياء</string>
-    <string name="enter_daughters_number">" أدخل عدد الأولاد الأنثى الأحياء"</string>
+    <string name="enter_sons_number">أدخل عدد الأولاد الذكور الأحياء</string>
+    <string name="enter_daughters_number">" أدخل عدد الأولاد الأناث الأحياء"</string>
+    <string name="enter_mother_uncle_number">أدخل عدد الأخوال</string>
+    <string name="enter_mother_aunt_number">أدخل عدد الخالات</string>
+    <string name="enter_sisters_number">أدخل عدد الأخوات</string>
+    <string name="enter_brothers_number">أدخل عدد الأخوة</string>
+    <string name="enter_father_uncle_number">أدخل عدد الأعمام</string>
+    <string name="enter_father_aunts_number">أدخل عدد العمات</string>
 </resources>

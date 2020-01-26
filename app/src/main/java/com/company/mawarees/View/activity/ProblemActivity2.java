@@ -7,18 +7,17 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.company.mawarees.Model.Callback.DeadPersonListener;
-import com.company.mawarees.Model.Models.DeadPersonModel;
 import com.company.mawarees.Model.Models.ExplainPhase1;
 import com.company.mawarees.Model.Models.ExplainPhase4;
 import com.company.mawarees.Model.Models.Fraction;
@@ -34,128 +33,161 @@ import com.company.mawarees.Model.Utilities.MotherUtils2;
 import com.company.mawarees.Model.Utilities.UnclesAndAuntsUtils;
 import com.company.mawarees.PrefManager;
 import com.company.mawarees.R;
-import com.company.mawarees.View.adpters.DeadDaughterRVAdapter;
-import com.company.mawarees.View.adpters.DeadSonRVAdapter;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProblemActivity extends AppCompatActivity implements DeadPersonListener, View.OnClickListener {
+public class ProblemActivity2 extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
-    private static final String TAG = "ProblemActivity";
+    private static final String TAG = "ProblemActivity2";
 
     @BindView(R.id.problem_activity_how_much_money_et_value)
-    EditText mTotalMoneyET;
+    TextInputEditText mTotalMoneyET;
 
-    @BindView(R.id.problem_activity_dead_gender_male_btn)
-    Button mDeadGenderMale;
+    @BindView(R.id.activity_problem_gender_layout)
+    RadioGroup mGenderRadioGroup;
 
-    @BindView(R.id.problem_activity_dead_gender_female_btn)
-    Button mDeadGenderFemale;
+    @BindView(R.id.activity_problem_gender_female_radio_button)
+    RadioButton mFemaleRB;
 
-    @BindView(R.id.doctrine_layout)
-    LinearLayout mDoctrineLayout;
+    @BindView(R.id.activity_problem_gender_male_radio_button)
+    RadioButton mMaleRB;
 
-    @BindView(R.id.sunnah_category_layout)
-    LinearLayout mSunnahLayout;
-
-    @BindView(R.id.adnan_btn)
-    Button mAdnanBtn;
-
-    @BindView(R.id.sunnah_btn)
-    Button mSunnahBtn;
-
-    @BindView(R.id.sheaa_btn)
-    Button mSheaaBtn;
-
-    @BindView(R.id.problem_activity_wife_layout_container)
-    LinearLayout mWifeLayout;
-
-    @BindView(R.id.problem_activity_wife_value)
-    EditText mWifeValueET;
-
-    @BindView(R.id.problem_activity_husband_value)
-    TextView mHusbandValueTV;
-
-    @BindView(R.id.problem_activity_husband_layout_container)
-    LinearLayout mHusbandLayout;
-
-    @BindView(R.id.problem_activity_alive_son_value)
-    EditText mAliveSonValueTV;
-
-    @BindView(R.id.problem_activity_alive_daughter_value)
-    EditText mAliveDaughterValueTV;
-
-    @BindView(R.id.problem_activity_dead_son_value)
-    EditText mDeadSonValueET;
-
-    @BindView(R.id.problem_activity_dead_daughter_value)
-    EditText mDeadDaughterValueET;
-
-    @BindView(R.id.problem_activity_father_value)
-    TextView mFatherValueTV;
-
-    @BindView(R.id.problem_activity_mother_value)
-    TextView mMotherValueTV;
-
-    @BindView(R.id.problem_activity_father_grandpa_value)
-    TextView mFatherGrandPaValueTV;
-
-    @BindView(R.id.problem_activity_father_grandma_value)
-    TextView mFatherGrandMaValueTV;
-
-    @BindView(R.id.problem_activity_mother_grandpa_value)
-    TextView mMotherGrandPaValueTV;
-
-    @BindView(R.id.problem_activity_mother_grandma_value)
-    TextView mMotherGrandMaValueTV;
-
-    @BindView(R.id.problem_activity_brothers_value)
-    EditText mBrothersValueTV;
-
-    @BindView(R.id.problem_activity_sisters_value)
-    EditText mSistersValueTV;
-
-    @BindView(R.id.problem_activity_father_uncles_value)
-    EditText mFatherUnclesValueTV;
-
-    @BindView(R.id.problem_activity_father_aunts_value)
-    EditText mFatherAuntsValueTV;
-
-    @BindView(R.id.problem_activity_mother_uncles_value)
-    EditText mMotherUnclesValueTV;
-
-    @BindView(R.id.problem_activity_mother_aunts_value)
-    EditText mMotherAuntsValueTV;
-
-    @BindView(R.id.problem_activity_solve_button)
+    @BindView(R.id.problem_activity_solve_button_2)
     Button mSolveProblemBtn;
 
-    @BindView(R.id.problem_activity_new_problem_button)
-    Button mNewProblemBtn;
+    //Wife
+    @BindView(R.id.problem_activity_wife_container)
+    ConstraintLayout mWivesContainer;
 
-    ProblemActivity mCurrent;
+    @BindView(R.id.problem_activity_wife_et_value)
+    TextInputEditText mWifeValueET;
+
+    //Husband
+    @BindView(R.id.problem_activity_husband_layout)
+    ConstraintLayout mHusbandContainer;
+
+    @BindView(R.id.husband_layout_radio_group)
+    RadioGroup mHusbandRadioGroup;
+
+    @BindView(R.id.husband_rb_yes)
+    RadioButton mHusbandYesRB;
+
+    @BindView(R.id.husband_rb_no)
+    RadioButton mHusbandNoRB;
+
+    //Alive Son
+    @BindView(R.id.problem_activity_alive_son_et_value)
+    TextInputEditText mAliveSonValueTV;
+
+    //Alive Daughter
+    @BindView(R.id.problem_activity_alive_daughter_et_value)
+    TextInputEditText mAliveDaughterValueTV;
+
+    //Mother
+    @BindView(R.id.mother_layout_radio_group)
+    RadioGroup mMotherRadioGroup;
+
+    @BindView(R.id.mother_rb_yes)
+    RadioButton mMotherYesRB;
+
+    @BindView(R.id.mother_rb_no)
+    RadioButton mMotherNoRB;
+
+    //Father
+    @BindView(R.id.father_layout_radio_group)
+    RadioGroup mFatherRadioGroup;
+
+    @BindView(R.id.father_rb_yes)
+    RadioButton mFatherYesRB;
+
+    @BindView(R.id.father_rb_no)
+    RadioButton mFatherNoRB;
+
+    // Father GrandPa
+    @BindView(R.id.problem_activity_father_grandpa_layout)
+    ConstraintLayout mFatherGrandPaContainer;
+
+    @BindView(R.id.father_grandpa_layout_radio_group)
+    RadioGroup mFatherGrandpaRadioGroup;
+
+    @BindView(R.id.father_grandpa_rb_yes)
+    RadioButton mFatherGrandpaYesRB;
+
+    @BindView(R.id.father_grandpa_rb_no)
+    RadioButton mFatherGrandpaNoRB;
+
+    // Father GrandMa
+    @BindView(R.id.problem_activity_father_grandma_layout)
+    ConstraintLayout mFatherGrandMaContainer;
+
+    @BindView(R.id.father_grandma_layout_radio_group)
+    RadioGroup mFatherGrandmaRadioGroup;
+
+    @BindView(R.id.father_grandma_rb_yes)
+    RadioButton mFatherGrandmaYesRB;
+
+    @BindView(R.id.father_grandma_rb_no)
+    RadioButton mFatherGrandmaNoRB;
+
+    // Mother GrandMa
+    @BindView(R.id.problem_activity_mother_grandma_layout)
+    ConstraintLayout mMotherGrandMaContainer;
+
+    @BindView(R.id.mother_grandma_layout_radio_group)
+    RadioGroup mMotherGrandmaRadioGroup;
+
+    @BindView(R.id.mother_grandma_rb_yes)
+    RadioButton mMotherGrandmaYesRB;
+
+    @BindView(R.id.mother_grandma_rb_no)
+    RadioButton mMotherGrandmaNoRB;
+
+    // Mother GrandPa
+    @BindView(R.id.problem_activity_mother_grandpa_layout)
+    ConstraintLayout mMotherGrandPaContainer;
+
+    @BindView(R.id.mother_grandpa_layout_radio_group)
+    RadioGroup mMotherGrandpaRadioGroup;
+
+    @BindView(R.id.mother_grandpa_rb_yes)
+    RadioButton mMotherGrandpaYesRB;
+
+    @BindView(R.id.mother_grandpa_rb_no)
+    RadioButton mMotherGrandpaNoRB;
+
+    //Brothers
+    @BindView(R.id.problem_activity_brother_et_value)
+    TextInputEditText mBrothersValueTV;
+
+    //Sisters
+    @BindView(R.id.problem_activity_sister_et_value)
+    TextInputEditText mSistersValueTV;
+
+    //Father Uncle
+    @BindView(R.id.problem_activity_father_uncle_et_value)
+    EditText mFatherUnclesValueTV;
+
+    //Father Aunt
+    @BindView(R.id.problem_activity_father_aunt_et_value)
+    EditText mFatherAuntsValueTV;
+
+    //Mother Uncle
+    @BindView(R.id.problem_activity_mother_uncle_et_value)
+    EditText mMotherUnclesValueTV;
+
+    //Mother Aunt
+    @BindView(R.id.problem_activity_mother_aunt_et_value)
+    EditText mMotherAuntsValueTV;
+
+    ProblemActivity2 mCurrent;
     public ArrayList<Person> mPeople;
     public OConstants oConstants;
 
     private Toolbar mToolbar;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        try {
-            ButterKnife.bind(this);
-            init();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 
     @Override
     protected void onResume() {
@@ -178,10 +210,22 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
         }
     }
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        try {
+            setContentView(R.layout.activity_main2);
+            init();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void init() {
         try {
+            ButterKnife.bind(this);
+            mCurrent = ProblemActivity2.this;
 
-            mCurrent = ProblemActivity.this;
             mPeople = new ArrayList<>();
             oConstants = new OConstants(mCurrent);
 
@@ -199,24 +243,58 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             oConstants.setHasWife(false);
             oConstants.setWivesCount(0);
 
-            mDeadGenderMale.setOnClickListener(this);
-            mDeadGenderFemale.setOnClickListener(this);
-            mHusbandValueTV.setOnClickListener(this);
+            //Gender
+            mMaleRB.setOnCheckedChangeListener(this);
+            mFemaleRB.setOnCheckedChangeListener(this);
 
-            mFatherValueTV.setOnClickListener(this);
-            mMotherValueTV.setOnClickListener(this);
-            mFatherGrandPaValueTV.setOnClickListener(this);
-            mFatherGrandMaValueTV.setOnClickListener(this);
-            mMotherGrandPaValueTV.setOnClickListener(this);
-            mMotherGrandMaValueTV.setOnClickListener(this);
-            mSolveProblemBtn.setOnClickListener(this);
-            mNewProblemBtn.setOnClickListener(this);
+            //Husband
+            mHusbandYesRB.setOnCheckedChangeListener(this);
+            mHusbandNoRB.setOnCheckedChangeListener(this);
 
-            mAdnanBtn.setOnClickListener(this);
-            mSunnahBtn.setOnClickListener(this);
-            mSheaaBtn.setOnClickListener(this);
+            //Father RB
+            mFatherYesRB.setOnCheckedChangeListener(this);
+            mFatherNoRB.setOnCheckedChangeListener(this);
+
+            //Father GrandPa
+            mFatherGrandpaYesRB.setOnCheckedChangeListener(this);
+            mFatherGrandpaNoRB.setOnCheckedChangeListener(this);
+
+            //Father GrandMa
+            mFatherGrandmaYesRB.setOnCheckedChangeListener(this);
+            mFatherGrandmaNoRB.setOnCheckedChangeListener(this);
+
+            //Mother RB
+            mMotherYesRB.setOnCheckedChangeListener(this);
+            mMotherNoRB.setOnCheckedChangeListener(this);
+
+            //Mother GrandPa
+            mMotherGrandpaYesRB.setOnCheckedChangeListener(this);
+            mMotherGrandpaNoRB.setOnCheckedChangeListener(this);
+
+            //Mother GrandMa
+            mMotherGrandmaYesRB.setOnCheckedChangeListener(this);
+            mMotherGrandmaNoRB.setOnCheckedChangeListener(this);
 
             mWifeValueET.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    int value = 0;
+                    if (!charSequence.toString().trim().isEmpty()) {
+                        value = Integer.parseInt(charSequence.toString().trim());
+                    }
+                    handleWifeChecked(value);
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+            mAliveSonValueTV.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -230,144 +308,21 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                             value = Integer.parseInt(charSequence.toString().trim());
                         }
 
-                        resetAlivePerson(OConstants.PERSON_WIFE);
-
-                        if (value > 0) {
-                            createAlivePerson(value, OConstants.PERSON_WIFE, OConstants.GENDER_FEMALE, true, false);
-
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-
-                }
-            });
-            mDeadSonValueET.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    try {
-
-                        resetDeadSonsOrDaughter(OConstants.PERSON_SON);
-                        resetDeadSonsOrDaughterBoyAndGirl(OConstants.PERSON_SON_BOY);
-                        resetDeadSonsOrDaughterBoyAndGirl(OConstants.PERSON_SON_GIRL);
-
-                        int value = 0;
-                        if (!charSequence.toString().trim().isEmpty())
-                            value = Integer.parseInt(String.valueOf(charSequence).trim());
-
-                        createDeadSonOrDaughter(value, OConstants.PERSON_SON, OConstants.GENDER_MALE);
-
-                        if (value > 0) {
-
-                            try {
-                                MaterialDialog mAlertDlg = AppUtils.showAlertDialogWithCustomView(mCurrent, R.layout.dead_son_dlg);
-                                View view = mAlertDlg.getCustomView();
-
-                                if (view != null) {
-                                    RecyclerView mRecyclerView = view.findViewById(R.id.dead_son_dlg_RV);
-                                    mRecyclerView.setLayoutManager(new LinearLayoutManager(mCurrent));
-                                    ArrayList<DeadPersonModel> mDeadPersonModels = new ArrayList<>();
-                                    for (int x = 0; x < value; x++) {
-                                        mDeadPersonModels.add(new DeadPersonModel());
-                                    }
-
-                                    DeadSonRVAdapter mDeadSonRVAdapter = new DeadSonRVAdapter(mDeadPersonModels, mCurrent, mCurrent);
-                                    mRecyclerView.setAdapter(mDeadSonRVAdapter);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-
-                }
-            });
-            mDeadDaughterValueET.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    try {
-                        resetDeadSonsOrDaughter(OConstants.PERSON_DAUGHTER);
-                        resetDeadSonsOrDaughterBoyAndGirl(OConstants.PERSON_DAUGHTER_BOY);
-                        resetDeadSonsOrDaughterBoyAndGirl(OConstants.PERSON_DAUGHTER_GIRL);
-
-                        int value = 0;
-                        if (!charSequence.toString().trim().isEmpty())
-                            value = Integer.parseInt(String.valueOf(charSequence).trim());
-
-                        createDeadSonOrDaughter(value, OConstants.PERSON_DAUGHTER, OConstants.GENDER_FEMALE);
-
-                        if (value > 0) {
-                            MaterialDialog mAlertDlg = AppUtils.showAlertDialogWithCustomView(mCurrent, R.layout.dead_daughter_dlg);
-                            View view = mAlertDlg.getCustomView();
-
-                            if (view != null) {
-                                RecyclerView mRecyclerView = view.findViewById(R.id.dead_daughter_dlg_RV);
-                                mRecyclerView.setLayoutManager(new LinearLayoutManager(mCurrent));
-                                ArrayList<DeadPersonModel> mDeadPersonModels = new ArrayList<>();
-                                for (int x = 0; x < value; x++) {
-                                    mDeadPersonModels.add(new DeadPersonModel());
-                                }
-
-                                DeadDaughterRVAdapter mDeadSonRVAdapter = new DeadDaughterRVAdapter(mDeadPersonModels, mCurrent, mCurrent);
-                                mRecyclerView.setAdapter(mDeadSonRVAdapter);
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-
-                }
-            });
-
-            mAliveSonValueTV.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    int value = 0;
-                    if (!charSequence.toString().trim().isEmpty()) {
-                        value = Integer.parseInt(charSequence.toString().trim());
-                    }
-
-                    if (OConstants.getChildrenInDaughters(mPeople) > 2) {
-                        resetAlivePerson(OConstants.PERSON_More_Than_three_DAUGHTERS);
-                    }
-
-                    resetAlivePerson(OConstants.PERSON_SON);
-
-                    if (value > 0) {
-                        createAlivePerson(value, OConstants.PERSON_SON, OConstants.GENDER_MALE, true, false);
-
                         if (OConstants.getChildrenInDaughters(mPeople) > 2) {
-                            createAlivePerson(1, OConstants.PERSON_More_Than_three_DAUGHTERS, OConstants.GENDER_MALE, true, true);
+                            resetAlivePerson(OConstants.PERSON_More_Than_three_DAUGHTERS);
                         }
+
+                        resetAlivePerson(OConstants.PERSON_SON);
+
+                        if (value > 0) {
+                            createAlivePerson(value, OConstants.PERSON_SON, OConstants.GENDER_MALE, true, false);
+
+                            if (OConstants.getChildrenInDaughters(mPeople) > 2) {
+                                createAlivePerson(1, OConstants.PERSON_More_Than_three_DAUGHTERS, OConstants.GENDER_MALE, true, true);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
 
@@ -623,148 +578,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                 }
             });
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void resetAlivePerson(String relation) {
-        try {
-            ArrayList<Person> index = new ArrayList<>();
-
-            for (int i = 0; i < mPeople.size(); i++) {
-                if (mPeople.get(i).getRelation().matches(relation) && mPeople.get(i).isAlive()) {
-                    index.add(mPeople.get(i));
-                }
-            }
-
-            if (!index.isEmpty()) {
-                for (Person person : index) {
-                    mPeople.remove(person);
-                }
-            }
-            Log.i(TAG, "resetAlivePerson() people size = " + mPeople.size());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void createAlivePerson(int size, String relation, String gender, boolean isAlive, boolean group) {
-        try {
-            ArrayList<Person> people = new ArrayList<>();
-
-            for (int number = 0; number < size; number++) {
-
-                Person person = new Person();
-                person.setAlive(isAlive);
-                person.setCount(size);
-                person.setRelation(relation);
-                person.setGender(gender);
-                person.setDeadSonNumber(-1);
-                person.setGroup(group);
-                people.add(person);
-
-            }
-
-            if (!people.isEmpty()) {
-                mPeople.addAll(people);
-            }
-
-            Log.i(TAG, "createAlivePerson() person relation = " + relation + " & Alive = " + isAlive + " & gender = " + gender + " created");
-            Log.i(TAG, "createAlivePerson() people size = " + mPeople.size());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void resetDeadSonsOrDaughter(String relation) {
-        try {
-
-            ArrayList<Person> index = new ArrayList<>();
-
-            for (int i = 0; i < mPeople.size(); i++) {
-                if (mPeople.get(i).getRelation().matches(relation) && !mPeople.get(i).isAlive()) {
-                    index.add(mPeople.get(i));
-                }
-            }
-
-            for (Person person : index) {
-                mPeople.remove(person);
-            }
-
-            Log.i(TAG, "resetDeadSonsOrDaughter() people size = " + mPeople.size());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void resetDeadSonsOrDaughterBoyAndGirl(String relation) {
-        try {
-
-            ArrayList<Person> index = new ArrayList<>();
-
-            for (int i = 0; i < mPeople.size(); i++) {
-                if (mPeople.get(i).getRelation().matches(relation)) {
-                    index.add(mPeople.get(i));
-                }
-            }
-
-            for (Person person : index) {
-                mPeople.remove(person);
-            }
-
-            Log.i(TAG, "resetDeadSonsOrDaughterBoyAndGirl() people size = " + mPeople.size());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void createDeadSonOrDaughter(int size, String relation, String gender) {
-
-        ArrayList<Person> children = new ArrayList<>();
-
-        for (int number = 0; number < size; number++) {
-
-            Person person = new Person();
-            person.setAlive(false);
-            person.setCount(size);
-            person.setDeadSonNumber(number + 1);
-            person.setRelation(relation);
-            person.setGender(gender);
-            children.add(person);
-        }
-
-        if (!children.isEmpty()) {
-            mPeople.addAll(children);
-        }
-
-        Log.i(TAG, "createDeadSonOrDaughter() people size = " + mPeople.size());
-    }
-
-    @Override
-    public void addChildListener(ArrayList<Person> children, String relation, int deadChildNumber) {
-        try {
-            ArrayList<Person> index = new ArrayList<>();
-
-            for (int i = 0; i < mPeople.size(); i++) {
-                if (mPeople.get(i).getRelation().matches(relation) && mPeople.get(i).getDeadSonNumber() == deadChildNumber) {
-                    index.add(mPeople.get(i));
-                }
-            }
-            if (!index.isEmpty()) {
-                for (Person person : index) {
-                    mPeople.remove(person);
-                }
-            }
-
-            if (children != null && !children.isEmpty()) {
-                mPeople.addAll(children);
-            }
-            if (mPeople != null)
-                Log.i(TAG, "Created People size = " + mPeople.size());
+            mSolveProblemBtn.setOnClickListener(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -772,67 +586,14 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
     @Override
     public void onClick(View view) {
-        if (view.equals(mDeadGenderMale)) {
-            handleDeadGenderMale();
-
-        } else if (view.equals(mDeadGenderFemale)) {
-            handleDeadGenderFemale();
-
-        } else if (view.equals(mHusbandValueTV)) {
-            handleHusbandTV();
-
-        } else if (view.equals(mFatherValueTV)) {
-            handleDeadPersonTV(mFatherValueTV, OConstants.PERSON_FATHER, getString(R.string.man_dead));
-
-        } else if (view.equals(mFatherGrandPaValueTV)) {
-            handleDeadPersonTV(mFatherGrandPaValueTV, OConstants.PERSON_FATHER_GRANDFATHER, getString(R.string.man_dead));
-
-        } else if (view.equals(mFatherGrandMaValueTV)) {
-            handleDeadPersonTV(mFatherGrandMaValueTV, OConstants.PERSON_FATHER_GRANDMOTHER, getString(R.string.woman_dead));
-
-        } else if (view.equals(mMotherValueTV)) {
-            handleDeadPersonTV(mMotherValueTV, OConstants.PERSON_MOTHER, getString(R.string.woman_dead));
-
-        } else if (view.equals(mMotherGrandPaValueTV)) {
-            handleDeadPersonTV(mMotherGrandPaValueTV, OConstants.PERSON_MOTHER_GRANDFATHER, getString(R.string.man_dead));
-
-        } else if (view.equals(mMotherGrandMaValueTV)) {
-            handleDeadPersonTV(mMotherGrandMaValueTV, OConstants.PERSON_MOTHER_GRANDMOTHER, getString(R.string.woman_dead));
-        } else if (view.equals(mSolveProblemBtn)) {
-            handleSolveProblem();
-        } else if (view.equals(mAdnanBtn)) {
-            mSunnahLayout.setVisibility(View.GONE);
-
-            mAdnanBtn.setBackgroundColor(getResources().getColor(R.color.browLight));
-
-            mSunnahBtn.setBackground(getResources().getDrawable(R.drawable.custom_white_rect_with_brown_borders));
-
-            mSheaaBtn.setBackground(getResources().getDrawable(R.drawable.custom_white_rect_with_brown_borders));
-
-        } else if (view.equals(mSunnahBtn)) {
-
-            mSunnahLayout.setVisibility(View.VISIBLE);
-
-            mSunnahBtn.setBackgroundColor(getResources().getColor(R.color.browLight));
-
-            mAdnanBtn.setBackground(getResources().getDrawable(R.drawable.custom_white_rect_with_brown_borders));
-
-            mSheaaBtn.setBackground(getResources().getDrawable(R.drawable.custom_white_rect_with_brown_borders));
-        } else if (view.equals(mNewProblemBtn)) {
-            AppUtils.showConfirmationDialog(mCurrent, "هل تريد انشاء مسألة جديدة ؟", "نعم", "لا", new AppUtils.CallBack() {
-                @Override
-                public void OnPositiveClicked(MaterialDialog dlg) {
-                    resetViews();
-                    dlg.dismiss();
-                }
-
-                @Override
-                public void OnNegativeClicked(MaterialDialog dlg) {
-                    dlg.dismiss();
-                }
-            });
+        try {
+            if (view.equals(mSolveProblemBtn)) {
+//                Log.i(TAG,"")
+                handleSolveProblem();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
     }
 
     private void handleSolveProblem() {
@@ -843,6 +604,9 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
 
             if (mTotalMoneyET.getText() == null || mTotalMoneyET.getText().toString().trim().isEmpty()) {
                 mTotalMoneyET.setError(getString(R.string.required));
+                mTotalMoneyET.setFocusable(true);
+                mTotalMoneyET.requestFocus();
+
             } else if (mPeople.isEmpty()) {
                 AppUtils.showAlertDialog(mCurrent, getString(R.string.please_enter_people));
             } else {
@@ -1318,30 +1082,97 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
         }
     }
 
-    private void handleDeadPersonTV(TextView view, String relation, String gender) {
+    private void resetViews() {
         try {
-            if (view.getText().toString().matches(gender)) {
-                view.setText(getString(R.string.alive));
+            mTotalMoneyET.setText("");
+            mWifeValueET.setText("");
+            mAliveSonValueTV.setText("");
+            mAliveDaughterValueTV.setText("");
 
-                setHasOptions(relation, true);
+//            mDeadSonValueET.setText("");
+//            mDeadDaughterValueET.setText("");
 
-                // create alive person
-                if (gender.matches(getString(R.string.man_dead))) {
-                    createAlivePerson(1, relation, OConstants.GENDER_MALE, true, false);
+            mBrothersValueTV.setText("");
+            mSistersValueTV.setText("");
+            mMotherUnclesValueTV.setText("");
+            mMotherAuntsValueTV.setText("");
+            mFatherUnclesValueTV.setText("");
+            mFatherAuntsValueTV.setText("");
 
-                } else if (gender.matches(getString(R.string.woman_dead))) {
-                    createAlivePerson(1, relation, OConstants.GENDER_FEMALE, true, false);
-                }//end of create alive person
+            mFatherRadioGroup.clearCheck();
+            mFatherGrandPaContainer.setVisibility(View.GONE);
+            mFatherGrandMaContainer.setVisibility(View.GONE);
+            mFatherGrandpaRadioGroup.clearCheck();
+            mMotherGrandpaRadioGroup.clearCheck();
 
-            } else if (gender.matches(getString(R.string.man_dead))) {
-                view.setText(getString(R.string.man_dead));
-                resetAlivePerson(relation);
-                setHasOptions(relation, false);
-            } else {
-                view.setText(getString(R.string.woman_dead));
-                resetAlivePerson(relation);
-                setHasOptions(relation, false);
-            }
+            mMotherRadioGroup.clearCheck();
+            mMotherGrandPaContainer.setVisibility(View.GONE);
+            mMotherGrandMaContainer.setVisibility(View.GONE);
+            mMotherGrandmaRadioGroup.clearCheck();
+            mFatherGrandmaRadioGroup.clearCheck();
+
+            mGenderRadioGroup.clearCheck();
+
+            mMaleRB.setChecked(true);
+            mFemaleRB.setChecked(false);
+
+            mHusbandRadioGroup.clearCheck();
+            mHusbandContainer.setVisibility(View.GONE);
+            mWifeValueET.setText("");
+
+            handleDeadGenderMale();
+
+            mPeople.clear();
+            oConstants = new OConstants(mCurrent);
+            oConstants.setGender(OConstants.GENDER_MALE);
+            oConstants.isHandleChildrenGroup = false;
+            oConstants.isHandleWivesGroup = false;
+            oConstants.isHandleUnclesGroup = false;
+            oConstants.isHandleBrothersGroup = false;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleDeadGenderMale() {
+        try {
+            oConstants.setGender(OConstants.GENDER_MALE);
+
+            mWifeValueET.setText("");
+            mWivesContainer.setVisibility(View.VISIBLE);
+            mHusbandContainer.setVisibility(View.GONE);
+//            mHusbandRadioGroup.clearCheck();
+
+//            mDeadGenderMale.setBackgroundColor(getResources().getColor(R.color.browLight));
+//            mDeadGenderFemale.setBackground(getResources().getDrawable(R.drawable.custom_white_rect_with_brown_borders));
+
+            resetAlivePerson(OConstants.PERSON_HUSBAND);
+            resetAlivePerson(OConstants.PERSON_WIFE);
+
+            setHasOptions(OConstants.PERSON_HUSBAND, false);
+            setHasOptions(OConstants.PERSON_WIFE, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleDeadGenderFemale() {
+        try {
+
+            oConstants.setGender(OConstants.GENDER_FEMALE);
+            mWifeValueET.setText("");
+            mWivesContainer.setVisibility(View.GONE);
+            mHusbandContainer.setVisibility(View.VISIBLE);
+//            mHusbandRadioGroup.clearCheck();
+
+            resetAlivePerson(OConstants.PERSON_WIFE);
+            resetAlivePerson(OConstants.PERSON_HUSBAND);
+
+            setHasOptions(OConstants.PERSON_HUSBAND, false);
+            setHasOptions(OConstants.PERSON_WIFE, false);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1406,108 +1237,264 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
         }
     }
 
-    private void handleHusbandTV() {
+    private void resetAlivePerson(String relation) {
         try {
-            if (mHusbandValueTV.getText().toString().matches(getString(R.string.man_dead))) {
-                mHusbandValueTV.setText(getString(R.string.alive));
+            ArrayList<Person> index = new ArrayList<>();
 
-                setHasOptions(OConstants.PERSON_HUSBAND, true);
+            for (int i = 0; i < mPeople.size(); i++) {
+                if (mPeople.get(i).getRelation().matches(relation) && mPeople.get(i).isAlive()) {
+                    index.add(mPeople.get(i));
+                }
+            }
 
-                createAlivePerson(1, OConstants.PERSON_HUSBAND, OConstants.GENDER_MALE, true, false);
-            } else {
-                mHusbandValueTV.setText(getString(R.string.man_dead));
+            if (!index.isEmpty()) {
+                for (Person person : index) {
+                    mPeople.remove(person);
+                }
+            }
+            Log.i(TAG, "resetAlivePerson() people size = " + mPeople.size());
 
-                setHasOptions(OConstants.PERSON_HUSBAND, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-                resetAlivePerson(OConstants.PERSON_HUSBAND);
+    @Override
+    public void onCheckedChanged(CompoundButton radioButton, boolean b) {
+        try {
+            Log.i(TAG, "onCheckedChanged(): is called");
+            Log.i(TAG, "onCheckedChanged(): checked radioButton = " + radioButton.getText().toString());
+
+            if (radioButton.equals(mMaleRB)) {//Male Gender
+                if (mMaleRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mMaleRB is checked");
+                    handleDeadGenderMale();
+                }
+            } else if (radioButton.equals(mFemaleRB)) {//Female Gender
+                if (mFemaleRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mFemaleRB is checked");
+                    handleDeadGenderFemale();
+                }
+
+            } else if (radioButton.equals(mHusbandYesRB)) {// Husband Yes
+                if (mHusbandYesRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mHusbandYesRB is checked");
+                    handleHusbandChecked();
+                }
+
+            } else if (radioButton.equals(mHusbandNoRB)) {//Husband No
+                if (mHusbandNoRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mHusbandNoRB is checked");
+                    resetAlivePerson(OConstants.PERSON_HUSBAND);
+                    setHasOptions(OConstants.PERSON_HUSBAND, false);
+                }
+            } else if (radioButton.equals(mFatherYesRB)) {//Father Yes
+                if (mFatherYesRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mFatherYesRB is checked");
+                    handleFatherChecked();
+                }
+            } else if (radioButton.equals(mFatherNoRB)) {//Father No
+                if (mFatherNoRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mFatherNoRB is checked");
+                    handleDeadFather();
+                }
+            } else if (radioButton.equals(mMotherYesRB)) {//Mother Yes
+                if (mMotherYesRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mMotherYesRB is checked");
+                    handleMotherChecked();
+                }
+            } else if (radioButton.equals(mMotherNoRB)) {//Mother No
+                if (mMotherNoRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mMotherNoRB is checked");
+                    handleDeadMother();
+                }
+            } else if (radioButton.equals(mFatherGrandpaYesRB)) {//Father Grandpa Yes
+                if (mFatherGrandpaYesRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mFatherGrandpaYesRB is checked");
+                    handleGrandMaAndGrandPa(true, OConstants.PERSON_FATHER_GRANDMOTHER, OConstants.GENDER_FEMALE);
+                }
+            } else if (radioButton.equals(mFatherGrandpaNoRB)) {//Father Grandpa No
+                if (mFatherGrandpaNoRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mFatherGrandpaNoRB is checked");
+                    handleGrandMaAndGrandPa(false, OConstants.PERSON_FATHER_GRANDMOTHER, OConstants.GENDER_FEMALE);
+                }
+            } else if (radioButton.equals(mFatherGrandmaYesRB)) {//Father Grandma Yes
+                if (mFatherGrandmaYesRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mFatherGrandmaYesRB is checked");
+                    handleGrandMaAndGrandPa(true, OConstants.PERSON_FATHER_GRANDFATHER, OConstants.GENDER_MALE);
+                }
+            } else if (radioButton.equals(mFatherGrandmaNoRB)) {//Father Grandma No
+                if (mFatherGrandmaNoRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mFatherGrandmaNoRB is checked");
+                    handleGrandMaAndGrandPa(false, OConstants.PERSON_FATHER_GRANDFATHER, OConstants.GENDER_MALE);
+                }
+            } else if (radioButton.equals(mMotherGrandmaYesRB)) {//Mother Grandma Yes
+                if (mMotherGrandmaYesRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mMotherGrandmaYesRB is checked");
+                    handleGrandMaAndGrandPa(true, OConstants.PERSON_MOTHER_GRANDMOTHER, OConstants.GENDER_FEMALE);
+                }
+            } else if (radioButton.equals(mMotherGrandmaNoRB)) {//Mother Grandma No
+                if (mMotherGrandmaNoRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mMotherGrandmaNoRB is checked");
+                    handleGrandMaAndGrandPa(false, OConstants.PERSON_MOTHER_GRANDMOTHER, OConstants.GENDER_FEMALE);
+                }
+            } else if (radioButton.equals(mMotherGrandpaYesRB)) {//Mother Grandpa Yes
+                if (mMotherGrandpaYesRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mMotherGrandpaYesRB is checked");
+                    handleGrandMaAndGrandPa(true, OConstants.PERSON_MOTHER_GRANDFATHER, OConstants.GENDER_MALE);
+                }
+            } else if (radioButton.equals(mMotherGrandpaNoRB)) {//Mother Grandpa No
+                if (mMotherGrandpaNoRB.isChecked()) {
+                    Log.i(TAG, "onCheckedChanged(): mMotherGrandpaYesRB is checked");
+                    handleGrandMaAndGrandPa(false, OConstants.PERSON_MOTHER_GRANDFATHER, OConstants.GENDER_MALE);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void handleDeadGenderFemale() {
+    private void handleGrandMaAndGrandPa(boolean alive, String relation, String gender) {
+
+        resetAlivePerson(relation);
+        setHasOptions(relation, alive);
+
+        if (alive) {
+            createAlivePerson(1, relation, gender, alive, false);
+        }
+
+
+    }
+
+    private void handleDeadFather() {
         try {
+            resetAlivePerson(OConstants.PERSON_FATHER);
+            setHasOptions(OConstants.PERSON_FATHER, false);
 
-            oConstants.setGender(OConstants.GENDER_FEMALE);
+            if (mFatherGrandMaContainer.getVisibility() == View.GONE) {
+                mFatherGrandMaContainer.setVisibility(View.VISIBLE);
+            }
+            if (mFatherGrandPaContainer.getVisibility() == View.GONE) {
+                mFatherGrandPaContainer.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-            mWifeLayout.setVisibility(View.GONE);
-            mHusbandLayout.setVisibility(View.VISIBLE);
-            mHusbandValueTV.setText(getString(R.string.man_dead));
+    private void handleDeadMother() {
+        try {
+            resetAlivePerson(OConstants.PERSON_MOTHER);
+            setHasOptions(OConstants.PERSON_MOTHER, false);
+            if (mMotherGrandMaContainer.getVisibility() == View.GONE) {
+                mMotherGrandMaContainer.setVisibility(View.VISIBLE);
+            }
+            if (mMotherGrandPaContainer.getVisibility() == View.GONE) {
+                mMotherGrandPaContainer.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-            mDeadGenderFemale.setBackgroundColor(getResources().getColor(R.color.browLight));
-            mDeadGenderMale.setBackground(getResources().getDrawable(R.drawable.custom_white_rect_with_brown_borders));
+    private void handleMotherChecked() {
+        try {
+            resetAlivePerson(OConstants.PERSON_MOTHER);
+            createAlivePerson(1, OConstants.PERSON_MOTHER, OConstants.GENDER_FEMALE, true, false);
+            setHasOptions(OConstants.PERSON_MOTHER, true);
 
-            resetAlivePerson(OConstants.PERSON_WIFE);
+            if (mMotherGrandMaContainer.getVisibility() == View.VISIBLE) {
+                mMotherGrandMaContainer.setVisibility(View.GONE);
+            }
+            if (mMotherGrandPaContainer.getVisibility() == View.VISIBLE) {
+                mMotherGrandPaContainer.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleFatherChecked() {
+        try {
+            resetAlivePerson(OConstants.PERSON_FATHER);
+            createAlivePerson(1, OConstants.PERSON_FATHER, OConstants.GENDER_MALE, true, false);
+            setHasOptions(OConstants.PERSON_FATHER, true);
+
+            if (mFatherGrandMaContainer.getVisibility() == View.VISIBLE) {
+                mFatherGrandMaContainer.setVisibility(View.GONE);
+            }
+            if (mFatherGrandPaContainer.getVisibility() == View.VISIBLE) {
+                mFatherGrandPaContainer.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleHusbandChecked() {
+        try {
+            Log.i(TAG, "handleHusbandChecked(): is called");
+
+            setHasOptions(OConstants.PERSON_HUSBAND, true);
+
             resetAlivePerson(OConstants.PERSON_HUSBAND);
+            resetAlivePerson(OConstants.PERSON_WIFE);
+            resetAlivePerson(OConstants.PERSON_WIVES);
+            resetAlivePerson(OConstants.PERSON_MORE_THAN_WIFE);
 
+            createAlivePerson(1, OConstants.PERSON_HUSBAND, OConstants.GENDER_MALE, true, false);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void handleDeadGenderMale() {
+    private void handleWifeChecked(int count) {
         try {
-            oConstants.setGender(OConstants.GENDER_MALE);
+            Log.i(TAG, "handleWifeChecked(): is called");
+            Log.i(TAG, "handleWifeChecked(): count = " + count);
 
-            mWifeValueET.setText("");
-            mWifeLayout.setVisibility(View.VISIBLE);
-            mHusbandLayout.setVisibility(View.GONE);
-
-            mDeadGenderMale.setBackgroundColor(getResources().getColor(R.color.browLight));
-            mDeadGenderFemale.setBackground(getResources().getDrawable(R.drawable.custom_white_rect_with_brown_borders));
-
-            mHusbandValueTV.setText(getString(R.string.man_dead));
             resetAlivePerson(OConstants.PERSON_HUSBAND);
             resetAlivePerson(OConstants.PERSON_WIFE);
+            resetAlivePerson(OConstants.PERSON_WIVES);
+            resetAlivePerson(OConstants.PERSON_MORE_THAN_WIFE);
 
-            setHasOptions(OConstants.PERSON_HUSBAND, false);
-            setHasOptions(OConstants.PERSON_WIFE, false);
+            if (count > 0) {
+                setHasOptions(OConstants.PERSON_WIFE, true);
+                createAlivePerson(count, OConstants.PERSON_WIFE, OConstants.GENDER_FEMALE, true, false);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void resetViews() {
+    private void createAlivePerson(int size, String relation, String gender, boolean isAlive, boolean group) {
         try {
-            mTotalMoneyET.setText("");
-            mWifeValueET.setText("");
-            mAliveSonValueTV.setText("");
-            mAliveDaughterValueTV.setText("");
-            mDeadSonValueET.setText("");
-            mDeadDaughterValueET.setText("");
-            mBrothersValueTV.setText("");
-            mSistersValueTV.setText("");
-            mMotherUnclesValueTV.setText("");
-            mMotherAuntsValueTV.setText("");
-            mFatherUnclesValueTV.setText("");
-            mFatherAuntsValueTV.setText("");
+            ArrayList<Person> people = new ArrayList<>();
 
-            mFatherValueTV.setText(getString(R.string.man_dead));
-            mFatherGrandPaValueTV.setText(getString(R.string.man_dead));
-            mMotherGrandPaValueTV.setText(getString(R.string.man_dead));
+            for (int number = 0; number < size; number++) {
 
-            mMotherValueTV.setText(getString(R.string.woman_dead));
-            mMotherGrandMaValueTV.setText(getString(R.string.woman_dead));
-            mFatherGrandMaValueTV.setText(getString(R.string.woman_dead));
+                Person person = new Person();
+                person.setAlive(isAlive);
+                person.setCount(size);
+                person.setRelation(relation);
+                person.setGender(gender);
+                person.setDeadSonNumber(-1);
+                person.setGroup(group);
+                people.add(person);
 
-            mHusbandValueTV.setText(getString(R.string.man_dead));
-            mWifeValueET.setText("");
+            }
 
-            handleDeadGenderMale();
+            if (!people.isEmpty()) {
+                mPeople.addAll(people);
+            }
 
-            mPeople.clear();
-            oConstants = new OConstants(mCurrent);
-            oConstants.setGender(OConstants.GENDER_MALE);
-            oConstants.isHandleChildrenGroup = false;
-            oConstants.isHandleWivesGroup = false;
-            oConstants.isHandleUnclesGroup = false;
-            oConstants.isHandleBrothersGroup = false;
-
+            Log.i(TAG, "createAlivePerson() person relation = " + relation + " & Alive = " + isAlive + " & gender = " + gender + " created");
+            Log.i(TAG, "createAlivePerson() people size = " + mPeople.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }

@@ -48,6 +48,10 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+        <activity android:name=".View.activity.ProblemActivity2"
+            android:configChanges="orientation|keyboardHidden|keyboard|locale|screenSize|screenLayout|uiMode"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="InnerclassSeparator"/>
     </application>
 
 </manifest>

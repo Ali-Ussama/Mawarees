@@ -15,7 +15,7 @@ public class HandleTwoGroupsUtils {
             int heads = OConstants.getPersonsInGirlsCount(data, boysRelation, girlsRelation);
             int shares = group.getNumberOfShares();
 
-            if (OConstants.findGCD(shares, heads) == 1) {
+            if (OConstants.findGCD(shares, heads) == 1 || OConstants.findGCD(shares, heads) == 2) {
                 savedNumber = heads;
             } else {
                 savedNumber = OConstants.findGCD(heads, shares);

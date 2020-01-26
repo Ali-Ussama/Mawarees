@@ -651,6 +651,9 @@ public class OConstants implements Parcelable {
 
             Person wife = getNewPerson(data, OConstants.PERSON_WIFE);
             Person wives = getNewPerson(data, OConstants.PERSON_WIVES);
+            Person wives2 = getNewPerson(data, OConstants.PERSON_TWO_WIVES);
+            int wivesCount = getPersonCount(data, OConstants.PERSON_WIFE);
+
             Person husband = getPerson(data, OConstants.PERSON_HUSBAND);
 
             Person father = getPerson(data, OConstants.PERSON_FATHER);
@@ -701,10 +704,23 @@ public class OConstants implements Parcelable {
             //Husband and wife
             if (husband != null) {
                 result.add(husband);
-            } else if (wife != null) {
-                result.add(wife);
             } else if (wives != null) {
                 result.add(wives);
+
+                if (wife != null) {
+                    for (int i = 0; i < wivesCount; i++) {
+                        result.add(wife);
+                    }
+                }
+            } else if (wives2 != null) {
+                result.add(wives2);
+                if (wife != null) {
+                    for (int i = 0; i < 2; i++) {
+                        result.add(wife);
+                    }
+                }
+            } else if (wife != null) {
+                result.add(wife);
             }
 
             //Father
@@ -818,7 +834,11 @@ public class OConstants implements Parcelable {
                 Fraction mNewFraction = new Fraction(fraction.getNumerator(), fraction.getDenominator());
                 data.get(i).setSharePercent(mNewFraction);
 
-                if (fraction.getDenominator() == 24) {
+                if (relation.matches(OConstants.PERSON_DAUGHTER) && getDaughtersCount(data) == 2 && fraction.getDenominator() == 24) {
+                    Fraction fraction1 = new Fraction(mNewFraction.getNumerator() * 2, mNewFraction.getDenominator());
+                    data.get(i).setOriginalSharePercent(fraction1);
+
+                } else if (fraction.getDenominator() == 24) {
                     data.get(i).setOriginalSharePercent(fraction);
                 }
             }
@@ -1196,7 +1216,7 @@ public class OConstants implements Parcelable {
                 handleWivesGroup(data, oConstants);
             }
 
-            Person moreThanWife = getPerson(data, OConstants.PERSON_MORE_THAN_WIFE);
+            Person moreThanWife = getPerson(data, OConstants.PERSON_WIVES);
             double totalMoney = moreThanWife.getShareValue();
             int wivesCount = getPersonCount(data, OConstants.PERSON_WIFE);
 
@@ -1221,6 +1241,9 @@ public class OConstants implements Parcelable {
             if (!oConstants.isHandleChildrenGroup)
                 handleChildrenGroup(data, oConstants);
 
+            if (moreThanThreeDaughters != null && moreThanThreeDaughters.getSharePercent() != null) {
+                Log.i(TAG, "setMoreThanThreeDaughters(): children Share Percent = " + moreThanThreeDaughters.getSharePercent().getNumerator() + "/" + moreThanThreeDaughters.getSharePercent().getDenominator());
+            }
             Fraction eachPersonSharePercent = new Fraction((int) ((double) moreThanThreeDaughters.getSharePercent().getNumerator() / girlsCount), moreThanThreeDaughters.getSharePercent().getDenominator());
             double eachPersonValue;
             if (sharePercents == OConstants.two_Thirds) {
@@ -1616,7 +1639,9 @@ public class OConstants implements Parcelable {
         Person motherUnclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
 
         for (Person person : data) {
+            Log.i(TAG,"handleRemainPerson(): person " + person.getRelation());
             if (!isBlocked(person)) {
+                Log.i(TAG,"handleRemainPerson(): person " + person.getRelation() + " sharePercent" + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
 
                 if ((person.getRelation().matches(OConstants.PERSON_MOTHER) && (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one) || Fraction.isEqual(person.getSharePercent(), half)))) {
                     //When mother has the rest of money || has half of the rest of money
@@ -1631,6 +1656,7 @@ public class OConstants implements Parcelable {
                         person.setNumberOfShares(newFraction.getNumerator());
                         person.setShareValue(round(remain, 2));
                         person.setSharePercent(newFraction);
+                        person.setOriginalSharePercent(newFraction);
                         Log.i(TAG, "handleRemainPerson(): Mother Takes the rest");
 
                     } else if (Fraction.isEqual(person.getSharePercent(), half)) {
@@ -1644,13 +1670,14 @@ public class OConstants implements Parcelable {
                         person.setSharePercent(newFraction);
                         person.setProblemOrigin(newFraction.getDenominator());
                         person.setNumberOfShares(newFraction.getNumerator());
-
+                        person.setOriginalSharePercent(newFraction);
                         Log.i(TAG, "handleRemainPerson(): Mother Takes the half of the Rest");
                         Log.i(TAG, "handleRemainPerson(): person " + person.getRelation() + " has sharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
                     }
 
 
-                } else if (person.getRelation().matches(OConstants.PERSON_FATHER) && (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one) || Fraction.isEqual(person.getSharePercent(), half))) {
+                }
+                else if (person.getRelation().matches(OConstants.PERSON_FATHER) && (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one) || Fraction.isEqual(person.getSharePercent(), half))) {
 
                     //When father has the rest of money || has half of the rest of money
                     Log.i(TAG, "handleRemainPerson(): When father has the rest of money || has half of the rest of money");
@@ -1665,11 +1692,12 @@ public class OConstants implements Parcelable {
                         person.setProblemOrigin(newFraction.getDenominator());
                         person.setNumberOfShares(newFraction.getNumerator());
                         person.setSharePercent(newFraction);
-
+                        person.setOriginalSharePercent(newFraction);
                         person.setShareValue(round(remain, 2));
 
                         Log.i(TAG, "handleRemainPerson(): Father Takes the rest");
-                    } else if (Fraction.isEqual(person.getSharePercent(), half)) {
+                    }
+                    else if (Fraction.isEqual(person.getSharePercent(), half)) {
                         person.setShareValue(round((remain / 2), 2));
                         Fraction newFraction = new Fraction(X.getNumerator(), X.getDenominator());
 
@@ -1679,12 +1707,15 @@ public class OConstants implements Parcelable {
                         person.setSharePercent(newFraction);
                         person.setProblemOrigin(newFraction.getDenominator());
                         person.setNumberOfShares(newFraction.getNumerator());
+                        person.setOriginalSharePercent(newFraction);
+
                         Log.i(TAG, "handleRemainPerson(): Father Takes the half of the Rest");
                         Log.i(TAG, "handleRemainPerson(): person " + person.getRelation() + " has sharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
                     }
 
 
-                } else if ((person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_FATHER_AUNT)) &&
+                }
+                else if ((person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_FATHER_AUNT)) &&
                         (/*fatherUnclesAndAunts != null && */person.getSharePercent() != null && Fraction.isEqual(person.getSharePercent(), half))) {
                     //When Father uncles and/or aunts has 1/2
                     Log.i(TAG, "handleRemainPerson(): When Father uncles and/or aunts has 1/2");
@@ -2423,7 +2454,7 @@ public class OConstants implements Parcelable {
 
             String result = "";
 
-            Person moreThanWife = getPerson(mPeople, OConstants.PERSON_MORE_THAN_WIFE);
+            Person moreThanWife = getPerson(mPeople, OConstants.PERSON_WIVES);
             int wivesCount = getPersonCount(mPeople, OConstants.PERSON_WIFE);
 
             if (wivesCount > 1) {
@@ -2464,7 +2495,7 @@ public class OConstants implements Parcelable {
 
                 resetPerson(mPeople, OConstants.PERSON_WIFE);
 
-                resetPerson(mPeople, OConstants.PERSON_MORE_THAN_WIFE);
+                resetPerson(mPeople, OConstants.PERSON_WIVES);
             }
 
         } catch (Exception e) {
@@ -2655,7 +2686,7 @@ public class OConstants implements Parcelable {
             int heads = getPersonCount(mPeople, OConstants.PERSON_WIFE);
 
             Person wife = getPerson(mPeople, OConstants.PERSON_WIFE);
-            Person moreThanWife = getPerson(mPeople, OConstants.PERSON_MORE_THAN_WIFE);
+            Person moreThanWife = getPerson(mPeople, OConstants.PERSON_WIVES);
 
             int wivesNumberOfShares = moreThanWife.getNumberOfShares();
 
@@ -2671,11 +2702,11 @@ public class OConstants implements Parcelable {
                 Person moreThanBrotherAndSister = getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS);
 
                 int savedNumberOfWives = HandleTwoGroupsUtils.getGroupSavedNumber(mPeople, moreThanWife, "", OConstants.PERSON_WIFE);
-                int savedNumberOfBrothers = HandleTwoGroupsUtils.getGroupSavedNumber(mPeople, moreThanBrotherAndSister, OConstants.PERSON_SON, OConstants.PERSON_DAUGHTER);
+                int savedNumberOfChildren = HandleTwoGroupsUtils.getGroupSavedNumber(mPeople, moreThanBrotherAndSister, OConstants.PERSON_SON, OConstants.PERSON_DAUGHTER);
 
-                cacheSavedNumbers(oConstants, savedNumberOfWives, savedNumberOfBrothers);
+                cacheSavedNumbers(oConstants, savedNumberOfWives, savedNumberOfChildren);
                 Log.i(TAG, "handleWivesGroup(): wives saved number = " + savedNumberOfWives);
-                Log.i(TAG, "handleWivesGroup(): brothers saved number = " + savedNumberOfBrothers);
+                Log.i(TAG, "handleWivesGroup(): children saved number = " + savedNumberOfChildren);
 
 
                 // Calculating Number of shares summation
@@ -2687,7 +2718,7 @@ public class OConstants implements Parcelable {
                     }
                 }
 //                numberOfSharesSum += wivesNumberOfShares;
-                heads = HandleTwoGroupsUtils.getSimpleCommonMultiplier(savedNumberOfBrothers, savedNumberOfWives);
+                heads = HandleTwoGroupsUtils.getSimpleCommonMultiplier(savedNumberOfChildren, savedNumberOfWives);
 
 
                 newProblemOrigin = heads * numberOfSharesSum;

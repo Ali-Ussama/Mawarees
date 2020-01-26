@@ -2,12 +2,14 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:animateLayoutChanges="true"
     android:layout_height="wrap_content"
     app:cardCornerRadius="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:padding="8dp">
 
         <TextView
@@ -15,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/step_two_lbl_1"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +29,7 @@
             android:layout_marginEnd="4dp"
             android:text="الأب"
             android:textColor="@color/color_red"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_lbl_1"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +40,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="4dp"
             android:text="@string/with_each_other"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_person_relation"
             app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginEnd="4dp"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_lbl_4"
             app:layout_constraintTop_toTopOf="parent" />
@@ -59,7 +61,7 @@
             android:layout_marginEnd="4dp"
             android:text="@string/equation"
             android:textDirection="rtl"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_lbl_2"
             app:layout_constraintTop_toTopOf="parent" />
@@ -68,10 +70,10 @@
             android:id="@+id/step_two_rv_ri_equal_1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="4dp"
             android:text="@string/equal"
             android:textColor="@color/dark_grey"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_lbl_3"
             app:layout_constraintTop_toTopOf="@+id/step_two_rv_ri_lbl_3"
             app:layout_constraintBottom_toBottomOf="@+id/step_two_rv_ri_lbl_3"/>
@@ -80,7 +82,7 @@
             android:id="@+id/step_two_rv_ri_old_percent"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="2dp"
             android:orientation="vertical"
             android:padding="4dp"
             app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_equal_1"
@@ -93,7 +95,7 @@
                 android:layout_marginEnd="4dp"
                 android:gravity="center"
                 android:text="5"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -109,17 +111,17 @@
                 android:layout_marginEnd="4dp"
                 android:gravity="center"
                 android:text="24"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/step_two_rv_ri_divided_by"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="2dp"
             android:text="@string/divide"
             android:textColor="@color/dark_grey"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_old_percent"
             app:layout_constraintTop_toTopOf="@+id/step_two_rv_ri_old_percent"
             app:layout_constraintBottom_toBottomOf="@+id/step_two_rv_ri_old_percent"/>
@@ -128,7 +130,7 @@
             android:id="@+id/step_two_rv_ri_sum_percent"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="2dp"
             android:orientation="vertical"
             android:padding="4dp"
             app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_divided_by"
@@ -141,7 +143,7 @@
                 android:layout_marginEnd="4dp"
                 android:gravity="center"
                 android:text="3"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -157,24 +159,24 @@
                 android:layout_marginEnd="4dp"
                 android:gravity="center"
                 android:text="24"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/step_two_rv_ri_equal"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="4dp"
             android:text="@string/equal"
             android:textColor="@color/dark_grey"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/step_two_rv_ri_sum_percent"
             app:layout_constraintTop_toTopOf="@+id/step_two_rv_ri_sum_percent"
             app:layout_constraintBottom_toBottomOf="@+id/step_two_rv_ri_sum_percent"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="4dp"
             android:background="@drawable/custom_white_rect_with_brown_borders"
             android:orientation="vertical"
             android:padding="4dp"
@@ -189,7 +191,7 @@
                 android:gravity="center"
                 android:text="5"
                 android:textColor="@color/color_red"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -206,7 +208,7 @@
                 android:gravity="center"
                 android:text="24"
                 android:textColor="@color/color_red"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
