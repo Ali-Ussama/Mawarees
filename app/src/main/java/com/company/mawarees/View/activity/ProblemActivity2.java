@@ -442,11 +442,13 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                         if (value > 0) {
                             createAlivePerson(value, OConstants.PERSON_FATHER_UNCLE, OConstants.GENDER_MALE, true, false);
 
-                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_AUNT) > 1) {
-                                // if no father aunts created then create
-                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_AUNT) < 1)
-                                    createAlivePerson(1, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true);
+//                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_AUNT) > 1) {
+//                                // if no father aunts created then create
+//                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_AUNT) < 1)
+                            if (OConstants.getPerson(mPeople, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS) == null) {
+                                createAlivePerson(1, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true);
                             }
+//                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -481,12 +483,14 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                         if (value > 0) {
                             createAlivePerson(value, OConstants.PERSON_FATHER_AUNT, OConstants.GENDER_FEMALE, true, false);
 
-                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_UNCLE) > 1) {
-
-                                // if no father uncles created then create
-                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_UNCLE) < 1)
-                                    createAlivePerson(1, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true);
+//                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_UNCLE) > 1) {
+//
+//                                // if no father uncles created then create
+//                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_UNCLE) < 1)
+                            if (OConstants.getPerson(mPeople, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS) == null) {
+                                createAlivePerson(1, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true);
                             }
+//                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -521,12 +525,14 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                         if (value > 0) {
                             createAlivePerson(value, OConstants.PERSON_MOTHER_UNCLE, OConstants.GENDER_MALE, true, false);
-                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_AUNT) > 1) {
-
-                                // if no mother aunts created then create
-                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_AUNT) < 1)
-                                    createAlivePerson(1, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true);
+//                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_AUNT) > 1) {
+//
+//                                // if no mother aunts created then create
+//                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_AUNT) < 1)
+                            if (OConstants.getPerson(mPeople, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS) == null) {
+                                createAlivePerson(1, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true);
                             }
+//                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -560,12 +566,14 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                         if (value > 0) {
                             createAlivePerson(value, OConstants.PERSON_MOTHER_AUNT, OConstants.GENDER_FEMALE, true, false);
-                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_UNCLE) > 1) {
-
-                                // if no mother uncles created then create
-                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_UNCLE) < 1)
-                                    createAlivePerson(1, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true);
+//                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_UNCLE) > 1) {
+//
+//                                // if no mother uncles created then create
+//                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_UNCLE) < 1)
+                            if (OConstants.getPerson(mPeople, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS) == null) {
+                                createAlivePerson(1, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true);
                             }
+//                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

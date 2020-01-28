@@ -139,7 +139,8 @@ public class ProblemExplainActivity extends AppCompatActivity {
             people = getIntent().getParcelableArrayListExtra(getString(R.string.intent_data_lbl));
 
             if (people.get(0) != null) {
-                problemOrigin = people.get(0).getProblemOrigin();
+                Log.i(TAG, "init(): people.get(0) + " + people.get(0));
+                problemOrigin = people.get(0).getSharePercent().getDenominator();
             }
             explanation = getIntent().getParcelableExtra(getString(R.string.explain_problem_result));
             oConstants = getIntent().getParcelableExtra(getString(R.string.constants));

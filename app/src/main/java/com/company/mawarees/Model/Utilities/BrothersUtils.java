@@ -48,13 +48,13 @@ public class BrothersUtils {
                                 // نصيب الاخ / الاخت = 1/6
                                 if (OConstants.getBrothersCount(data) == 1) {
 
-                                    Log.i(TAG, "calculateBrothers() Has one sister tales 1/6");
+                                    Log.i(TAG, "calculateBrothers() Has one brother tales 1/6");
 
                                     OConstants.setPersonSharePercent(data, OConstants.one_Sixth, OConstants.PERSON_BROTHER);
                                     OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_BROTHER, ProofsAndExplanations.BotherAndSistersProofs.ONE_BROTHER_OR_SISTER_E, ProofsAndExplanations.BotherAndSistersProofs.p1);
 
                                 } else if (OConstants.getSistersCount(data) == 1) {
-                                    Log.i(TAG, "calculateBrothers() Has one brother takes 1/6");
+                                    Log.i(TAG, "calculateBrothers() Has one sister takes 1/6");
 
                                     OConstants.setPersonSharePercent(data, OConstants.one_Sixth, OConstants.PERSON_SISTER);
                                     OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_SISTER, ProofsAndExplanations.BotherAndSistersProofs.ONE_BROTHER_OR_SISTER_E, ProofsAndExplanations.BotherAndSistersProofs.p1);
@@ -168,8 +168,11 @@ public class BrothersUtils {
                 resetPerson(data, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER);
                 createAlivePerson(data, (OConstants.getBrothersCount(data) + OConstants.getSistersCount(data)),
                         OConstants.PERSON_TWO_SISTERS, OConstants.GENDER_MALE, true,false);
+
                 OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_TWO_SISTERS); // نصيب الاختين = 2/3
+                OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_SISTER); // نصيب الاختين = 2/3
                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_TWO_SISTERS, ProofsAndExplanations.BotherAndSistersProofs.TWO_THIRD_TWO_SISTERS_E, ProofsAndExplanations.BotherAndSistersProofs.p2);
+                OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_SISTER, ProofsAndExplanations.BotherAndSistersProofs.TWO_THIRD_TWO_SISTERS_E, ProofsAndExplanations.BotherAndSistersProofs.p2);
 //                OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_SISTER);
 
                 //حساب نصيب الاعمام و الاخوال

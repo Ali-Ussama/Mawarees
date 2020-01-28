@@ -65,8 +65,8 @@ public class UnclesAndAuntsUtils {
                             } else if (brotherAndSistersCountInGirls == 2) {
                                 Log.i(TAG, "calculate():  Has two sisters");
 
-                                handleFatherUnclesAndAunts(data, OConstants.half, OConstants.quarter);
-                                handleMotherUnclesAndAunts(data, OConstants.half, OConstants.quarter);
+                                handleFatherUnclesAndAunts(data, OConstants.one_Third, OConstants.one_Sixth);
+                                handleMotherUnclesAndAunts(data, OConstants.one_Third, OConstants.one_Sixth);
 
                             } else if (brotherAndSistersCountInGirls == 0) {
                                 Log.i(TAG, "calculate(): Has No sisters");

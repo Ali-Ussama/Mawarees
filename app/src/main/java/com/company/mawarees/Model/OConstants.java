@@ -952,6 +952,9 @@ public class OConstants implements Parcelable {
         setExplanationPhase2(oConstants, X, data);
         setExplanationPhase3(data, oConstants);
 
+        if (specialCaseRemainPeople != null) {
+            Log.i(TAG, "calculateShareValue(): remain people size = " + specialCaseRemainPeople.size());
+        }
         if (!specialCaseRemainPeople.isEmpty())
             handleRemainPerson(data, X, oConstants);
         if (!partners.isEmpty())
@@ -960,6 +963,317 @@ public class OConstants implements Parcelable {
 //        setExplanationPhase4(data, oConstants);
         handleDeadSonsAndDaughters(data);
 
+    }
+
+    private static void calculatePersonShareValue(Person person, OConstants oConstants, boolean isHasRemainPeople, Fraction X) {
+
+        try {
+
+            double money = 0;
+            if (isHasRemainPeople) {
+
+                remain = oConstants.getTotalMoney() - (oConstants.getTotalMoney() * ((double) X.getNumerator() / (double) X.getDenominator()));
+
+//                if (validPeopleCount > 1) {
+//                    money = oConstants.getTotalMoney() - remain;
+//                } else {
+                money = oConstants.getTotalMoney(); // TODO I Don't Know if right or not
+//                }
+                Log.i(TAG, "calculatePersonShareValue(): Has Remain People And Money = " + money + " & remain = " + remain);
+
+            } else {
+
+                money = oConstants.getTotalMoney();
+                remain = oConstants.getTotalMoney();
+
+                Log.i(TAG, "calculatePersonShareValue(): Not Has Remain People And Money = " + money + " & remain = " + remain);
+
+            }
+
+            double sharePercent = ((double) person.getSharePercent().getNumerator()) / ((double) person.getSharePercent().getDenominator());
+            double shareValue = round((money * sharePercent), 2);
+
+            sharePercent = round(sharePercent, 2);
+
+            Log.i(TAG, "calculatePersonShareValue(): Person = " + person.getRelation() + " & money = " + money + " & sharePercent = " + sharePercent + "% & ShareValue  = " + shareValue);
+
+            person.setShareValue(shareValue);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static boolean isRemainPerson(ArrayList<Person> data, Person person) {
+        Person fatherUnclesAndAunts = getPerson(data, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS);
+        Person motherUnclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
+
+        if ((person.getRelation().matches(OConstants.PERSON_MOTHER) && (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one) || Fraction.isEqual(person.getSharePercent(), half)))) {
+            //When mother has the rest of money || has half of the rest of money
+            Log.i(TAG, "isRemainPerson(): When " + person.getRelation() + " has the rest of money || has half of the rest of money");
+            if (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one)) {
+                Log.i(TAG, "isRemainPerson(): person " + person.getRelation() + " has null sharePercent");
+            } else if (Fraction.isEqual(person.getSharePercent(), half)) {
+                Log.i(TAG, "isRemainPerson(): person " + person.getRelation() + " has sharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+            }
+            return true;
+
+        } else if (person.getRelation().matches(OConstants.PERSON_FATHER) && (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one) || Fraction.isEqual(person.getSharePercent(), half))) {
+            //When father has the rest of money || has half of the rest of money
+            Log.i(TAG, "isRemainPerson(): When father has the rest of money || has half of the rest of money");
+
+            if (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one)) {
+                Log.i(TAG, "isRemainPerson(): person " + person.getRelation() + " has null sharePercent");
+            } else if (Fraction.isEqual(person.getSharePercent(), half)) {
+                Log.i(TAG, "isRemainPerson(): person " + person.getRelation() + " has sharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+            }
+            return true;
+
+        } else if ((person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_FATHER_AUNT)) &&
+                (/*fatherUnclesAndAunts != null && */person.getSharePercent() != null && (Fraction.isEqual(person.getSharePercent(), half) || Fraction.isEqual(person.getSharePercent(), quarter)))) {
+            //When Father uncles and/or aunts has 1/2
+            Log.i(TAG, "isRemainPerson(): When Father uncles and/or aunts has 1/2");
+            return true;
+
+        } else if ((person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) &&
+                (/*motherUnclesAndAunts != null &&*/ person.getSharePercent() != null && (Fraction.isEqual(person.getSharePercent(), half) || Fraction.isEqual(person.getSharePercent(), quarter)))) {
+            //When Mother uncles and/or aunts has 1/2
+            Log.i(TAG, "isRemainPerson(): When Mother uncles and/or aunts has 1/2");
+            return true;
+
+        }
+        if (person.getSharePercent() != null) {
+            Log.i(TAG, "isRemainPerson(): person = " + person.getRelation() + " with sharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() + " is Not a remain person");
+        } else {
+            Log.i(TAG, "isRemainPerson(): person = " + person.getRelation() + " with sharePercent = null is Not a remain person");
+        }
+        return false;
+    }
+
+    private static boolean isPartnerPerson(ArrayList<Person> data, Person person) {
+        try {
+            Person fatherUnclesAndAunts = getPerson(data, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS);
+            Person motherUnclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
+            Person moreThanBrotherAndSister = getPerson(data, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER);
+            Person moreThanThreeBrotherAndSister = getPerson(data, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
+            Person moreThanThreeDaughters = getPerson(data, OConstants.PERSON_More_Than_three_DAUGHTERS);
+
+            if (isMoreThanThreeDaughter(data, person, moreThanThreeDaughters)) {
+
+                //When sons and daughters count >= 3
+                Log.i(TAG, "isPartnerPerson(): person = " + person.getRelation() + " & Daughters >= 3 " + getChildrenInDaughters(data) + " is a special Case");
+                return true;
+
+            } else if (person.getRelation().matches(OConstants.PERSON_SON_BOY) || person.getRelation().matches(OConstants.PERSON_SON_GIRL)) {
+
+                // When a dead son's boys or daughters
+                Log.i(TAG, "isPartnerPerson():  When a dead son's boys or daughters");
+                return true;
+
+            } else if (person.getRelation().matches(OConstants.PERSON_DAUGHTER_BOY) || person.getRelation().matches(OConstants.PERSON_DAUGHTER_GIRL)) {
+
+                // When a dead daughter's boys or daughters
+                Log.i(TAG, "isPartnerPerson():  When a dead daughter's boys or daughters");
+                return true;
+
+            } else if (!isBlocked(person) && isMoreThanBrotherAndSister(data, person, moreThanBrotherAndSister)) {
+
+                //When More than brother and sister and has 1/3
+                Log.i(TAG, "isPartnerPerson(): When More than brother and sister and has 1/3");
+                return true;
+
+            } else if (!isBlocked(person) && isMoreThanThreeBrotherAndSister(data, person, moreThanThreeBrotherAndSister)) {
+
+                //When More than three brother and sister and has 24/24
+                Log.i(TAG, "isPartnerPerson(): When More than three brother and sister and has 1/3");
+                return true;
+            } else if (!isBlocked(person) && isTwoSisters(data, person)) {
+                //When two sister and has 16/24
+                Log.i(TAG, "isPartnerPerson(): When two sister and has 16/24");
+                return true;
+            } else if (isFatherUnclesAndAuntsPartnerConditions(data, person, fatherUnclesAndAunts)) {
+
+                //When Father uncles and/or aunts has 2/3
+                Log.i(TAG, "isPartnerPerson(): When Father uncles and/or aunts has 2/3");
+                return true;
+
+            } else if (isMotherUnclesAndAuntsPartnerConditions(data, person, motherUnclesAndAunts)) {
+
+                //When Mother uncles and/or aunts has 1/3
+                Log.i(TAG, "isPartnerPerson(): When Mother uncles and/or aunts has 1/3");
+                return true;
+
+            } else if (isMoreThanWife(data, person)) {
+
+                //When More than wife
+                Log.i(TAG, "isPartnerPerson(): When More than wife");
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Log.i(TAG, "Not a partner person");
+        return false;
+    }
+
+    private static void handleRemainPerson(ArrayList<Person> data, Fraction X, OConstants oConstants) {
+
+        Person fatherUnclesAndAunts = getPerson(data, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS);
+        Person motherUnclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
+
+        for (Person person : data) {
+            Log.i(TAG, "handleRemainPerson(): person " + person.getRelation());
+            if (!isBlocked(person)) {
+                Log.i(TAG, "handleRemainPerson(): person " + person.getRelation() + " sharePercent" + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+
+                if ((person.getRelation().matches(OConstants.PERSON_MOTHER) && (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one) || Fraction.isEqual(person.getSharePercent(), half)))) {
+                    //When mother has the rest of money || has half of the rest of money
+                    Log.i(TAG, "handleRemainPerson(): When " + person.getRelation() + " has the rest of money || has half of the rest of money");
+                    if (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one)) {
+                        //Mother Takes the rest
+                        Fraction newFraction = new Fraction(X.getNumerator(), X.getDenominator());
+
+                        Fraction.subtractFractions(newFraction, new Fraction(24, 24));
+
+                        person.setProblemOrigin(newFraction.getDenominator());
+                        person.setNumberOfShares(newFraction.getNumerator());
+                        person.setShareValue(round(remain, 2));
+                        person.setSharePercent(newFraction);
+                        person.setOriginalSharePercent(newFraction);
+                        Log.i(TAG, "handleRemainPerson(): Mother Takes the rest");
+
+                    } else if (Fraction.isEqual(person.getSharePercent(), half)) {
+                        person.setShareValue(round((remain / 2), 2));
+                        Fraction newFraction = new Fraction(X.getNumerator(), X.getDenominator());
+
+                        Fraction.subtractFractions(newFraction, new Fraction(24, 24));
+
+                        newFraction = Fraction.divideFraction(newFraction, new Fraction(1, 2));
+
+                        person.setSharePercent(newFraction);
+                        person.setProblemOrigin(newFraction.getDenominator());
+                        person.setNumberOfShares(newFraction.getNumerator());
+                        person.setOriginalSharePercent(newFraction);
+                        Log.i(TAG, "handleRemainPerson(): Mother Takes the half of the Rest");
+                        Log.i(TAG, "handleRemainPerson(): person " + person.getRelation() + " has sharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+                    }
+
+
+                } else if (person.getRelation().matches(OConstants.PERSON_FATHER) && (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one) || Fraction.isEqual(person.getSharePercent(), half))) {
+
+                    //When father has the rest of money || has half of the rest of money
+                    Log.i(TAG, "handleRemainPerson(): When father has the rest of money || has half of the rest of money");
+
+                    if (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one)) {
+                        //Father Takes the rest
+
+                        Fraction newFraction = new Fraction(X.getNumerator(), X.getDenominator());
+
+                        Fraction.subtractFractions(newFraction, new Fraction(24, 24));
+
+                        person.setProblemOrigin(newFraction.getDenominator());
+                        person.setNumberOfShares(newFraction.getNumerator());
+                        person.setSharePercent(newFraction);
+                        person.setOriginalSharePercent(newFraction);
+                        person.setShareValue(round(remain, 2));
+
+                        Log.i(TAG, "handleRemainPerson(): Father Takes the rest");
+                    } else if (Fraction.isEqual(person.getSharePercent(), half)) {
+                        person.setShareValue(round((remain / 2), 2));
+                        Fraction newFraction = new Fraction(X.getNumerator(), X.getDenominator());
+
+                        Fraction.subtractFractions(newFraction, new Fraction(24, 24));
+                        newFraction = Fraction.divideFraction(newFraction, new Fraction(1, 2));
+
+                        person.setSharePercent(newFraction);
+                        person.setProblemOrigin(newFraction.getDenominator());
+                        person.setNumberOfShares(newFraction.getNumerator());
+                        person.setOriginalSharePercent(newFraction);
+
+                        Log.i(TAG, "handleRemainPerson(): Father Takes the half of the Rest");
+                        Log.i(TAG, "handleRemainPerson(): person " + person.getRelation() + " has sharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+                    }
+
+
+                } else if ((person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_FATHER_AUNT)) &&
+                        (/*fatherUnclesAndAunts != null && */person.getSharePercent() != null && (Fraction.isEqual(person.getSharePercent(), half) || Fraction.isEqual(person.getSharePercent(), quarter)))) {
+                    //When Father uncles and/or aunts has 1/2
+                    Log.i(TAG, "handleRemainPerson(): When Father uncles and/or aunts has 1/2");
+
+                    setFatherUnclesAndAunts(data, person, half, remain, oConstants);
+
+                } else if ((person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) &&
+                        (/*motherUnclesAndAunts != null && */person.getSharePercent() != null && (Fraction.isEqual(person.getSharePercent(), half) || Fraction.isEqual(person.getSharePercent(), quarter)))) {
+                    //When Mother uncles and/or aunts has 1/2
+                    Log.i(TAG, "handleRemainPerson(): When Mother uncles and/or aunts has 1/2");
+                    setMotherUnclesAndAunts(data, person, half, oConstants);
+
+                }
+            }
+        }
+    }
+
+    private static void handlePartnerPeople(ArrayList<Person> data, OConstants oConstants, Fraction X) {
+
+        Log.i(TAG, "handlePartnerPeople(): is called");
+
+        for (Person person : data) {
+            try {
+                Log.i(TAG, "handlePartnerPeople(): person = " + person.getRelation());
+
+                if (!isBlocked(person)) {
+                    Person fatherUnclesAndAunts = getPerson(data, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS);
+                    Person motherUnclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
+                    Person moreThanBrotherAndSister = getPerson(data, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER);
+                    Person moreThanThreeBrotherAndSister = getPerson(data, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
+                    Person moreThanThreeDaughters = getPerson(data, OConstants.PERSON_More_Than_three_DAUGHTERS);
+
+                    if (isMoreThanThreeDaughter(data, person, moreThanThreeDaughters)) {
+
+                        //When sons and daughters count >= 3
+                        Log.i(TAG, "handlePartnerPeople(): person = " + person.getRelation() + " & Daughters >= 3 " + getChildrenInDaughters(data) + " is a special Case");
+                        setMoreThanThreeDaughters(data, person, two_Thirds, moreThanThreeDaughters.getShareValue(), moreThanThreeDaughters, oConstants);
+
+                    } else if (isFatherUnclesAndAuntsPartnerConditions(data, person, fatherUnclesAndAunts)) {
+
+                        //When Father uncles and/or aunts has 2/3 or half or quarter or all
+                        Log.i(TAG, "handlePartnerPeople(): When Father uncles and/or aunts has 2/3");
+                        setFatherUnclesAndAunts(data, person, fatherUnclesAndAunts.getSharePercent(), fatherUnclesAndAunts.getShareValue(), oConstants);
+
+                    } else if (isMotherUnclesAndAuntsPartnerConditions(data, person, motherUnclesAndAunts)) {
+
+                        //When Mother uncles and/or aunts has 1/3
+                        Log.i(TAG, "handlePartnerPeople(): When Mother uncles and/or aunts has 1/3");
+                        setMotherUnclesAndAunts(data, person, motherUnclesAndAunts.getSharePercent(), oConstants);
+
+                    } else if (!isBlocked(person) && isMoreThanBrotherAndSister(data, person, moreThanBrotherAndSister)) {
+
+                        //When More than brother and sister and has 1/3
+                        Log.i(TAG, "handlePartnerPeople(): When More than brother and sister and has 1/3");
+                        setMoreThanBrotherAndSister(data, person, one_Third, oConstants.getTotalMoney(), X, oConstants);
+
+                    } else if (!isBlocked(person) && isMoreThanThreeBrotherAndSister(data, person, moreThanThreeBrotherAndSister)) {
+
+                        //When More than three brother and sister and has 1/3
+                        Log.i(TAG, "handlePartnerPeople(): When More than three brother and sister and has 1/3");
+                        setMoreThanThreeBrotherAndSister(data, person, one, oConstants.getTotalMoney(), oConstants);
+                    } /*else if (!isBlocked(person) && isTwoSisters(data, person)) {
+                        //TODO two Sisters partners in two_third
+                        setTwoSistersPartners(person, oConstants.getTotalMoney());
+                    }*/else if (isMoreThanWife(data, person)) {
+
+                        //When More than wife
+                        Log.i(TAG, "isPartnerPerson(): When More than wife");
+                        setMoreThanWife(data, person, oConstants);
+
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static void setExplanationPhase4(ArrayList<Person> data, OConstants oConstants) {
@@ -1119,46 +1433,6 @@ public class OConstants implements Parcelable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private static void calculatePersonShareValue(Person person, OConstants oConstants, boolean isHasRemainPeople, Fraction X) {
-
-        try {
-
-            double money = 0;
-            if (isHasRemainPeople) {
-
-                remain = oConstants.getTotalMoney() - (oConstants.getTotalMoney() * ((double) X.getNumerator() / (double) X.getDenominator()));
-
-//                if (validPeopleCount > 1) {
-//                    money = oConstants.getTotalMoney() - remain;
-//                } else {
-                money = oConstants.getTotalMoney(); // TODO I Don't Know if right or not
-//                }
-                Log.i(TAG, "calculatePersonShareValue(): Has Remain People And Money = " + money + " & remain = " + remain);
-
-            } else {
-
-                money = oConstants.getTotalMoney();
-                remain = oConstants.getTotalMoney();
-
-                Log.i(TAG, "calculatePersonShareValue(): Not Has Remain People And Money = " + money + " & remain = " + remain);
-
-            }
-
-            double sharePercent = ((double) person.getSharePercent().getNumerator()) / ((double) person.getSharePercent().getDenominator());
-            double shareValue = round((money * sharePercent), 2);
-
-            sharePercent = round(sharePercent, 2);
-
-            Log.i(TAG, "calculatePersonShareValue(): Person = " + person.getRelation() + " & money = " + money + " & sharePercent = " + sharePercent + "% & ShareValue  = " + shareValue);
-
-            person.setShareValue(shareValue);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     private static void handleDeadSonsAndDaughters(ArrayList<Person> data) {
@@ -1394,6 +1668,7 @@ public class OConstants implements Parcelable {
 
             Fraction eachPersonSharePercent = new Fraction((int) ((double) unclesAndAunts.getSharePercent().getNumerator() / girlsCount), unclesAndAunts.getSharePercent().getDenominator());
 
+            totalMoney = unclesAndAunts.getShareValue();
             double eachPersonValue = 0;
             eachPersonValue = totalMoney / girlsCount;
 
@@ -1410,6 +1685,10 @@ public class OConstants implements Parcelable {
                 person.setProblemOrigin(unclesAndAunts.getProblemOrigin());
                 person.setNumberOfShares(person.getSharePercent().getNumerator());
             }
+
+            Log.i(TAG, "setFatherUnclesAndAunts(): \ntotalMoney = " + totalMoney + " - \neachPersonValue = " + eachPersonValue + " - \nrelation = " + person.getRelation() + " - \nshareValue = " + person.getShareValue() +
+                    " - \nsharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() + " - \nproblemOrigin = " + person.getProblemOrigin());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1424,7 +1703,7 @@ public class OConstants implements Parcelable {
             int auntsCount = getPersonCount(data, OConstants.PERSON_MOTHER_AUNT);
             Fraction eachPersonSharePercent = null;
             double eachPersonValue = 0;
-
+            double totalMoney = 0;
             if (unclesCount + auntsCount > 1) {
                 Log.i(TAG, "setMotherUnclesAndAunts(): uncles + aunts > 1");
 
@@ -1433,7 +1712,7 @@ public class OConstants implements Parcelable {
 
                 int girlsCount = OConstants.getPersonsInGirlsCount(data, OConstants.PERSON_MOTHER_UNCLE, OConstants.PERSON_MOTHER_AUNT);
                 Person unclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
-                double totalMoney = unclesAndAunts.getShareValue();
+                totalMoney = unclesAndAunts.getShareValue();
 
                 eachPersonSharePercent = new Fraction((int) ((double) unclesAndAunts.getSharePercent().getNumerator() / girlsCount), unclesAndAunts.getSharePercent().getDenominator());
 
@@ -1455,10 +1734,12 @@ public class OConstants implements Parcelable {
                 }
             } else if (unclesCount == 1) {
                 Log.i(TAG, "setMotherUnclesAndAunts(): uncle = 1 && aunt = 0");
-
                 Person uncle = getPerson(data, OConstants.PERSON_MOTHER_UNCLE);
+                Person unclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
+                totalMoney = unclesAndAunts.getShareValue();
+
                 eachPersonSharePercent = uncle.getSharePercent();
-                eachPersonValue = uncle.getShareValue();
+                eachPersonValue = totalMoney;
 
                 person.setShareValue(round((eachPersonValue), 2));
                 person.setSharePercent(new Fraction(eachPersonSharePercent.getNumerator(), eachPersonSharePercent.getDenominator()));
@@ -1468,10 +1749,13 @@ public class OConstants implements Parcelable {
 
             } else if (auntsCount == 1) {
                 Log.i(TAG, "setMotherUnclesAndAunts(): uncle = 0 && aunt = 1");
+                Person unclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
+                totalMoney = unclesAndAunts.getShareValue();
 
                 Person aunt = getPerson(data, OConstants.PERSON_MOTHER_AUNT);
                 eachPersonSharePercent = aunt.getSharePercent();
-                eachPersonValue = aunt.getShareValue();
+                eachPersonValue = totalMoney;
+
                 person.setShareValue(round((eachPersonValue), 2));
                 person.setSharePercent(new Fraction(eachPersonSharePercent.getNumerator(), eachPersonSharePercent.getDenominator()));
                 person.setProblemOrigin(aunt.getProblemOrigin());
@@ -1501,122 +1785,12 @@ public class OConstants implements Parcelable {
 //            }
 
 
+            Log.i(TAG, "setMotherUnclesAndAunts(): \ntotalMoney = " + totalMoney + " - \neachPersonValue = " + eachPersonValue + " - \nrelation = " + person.getRelation() + " - \nshareValue = " + person.getShareValue() +
+                    " - \nsharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() + " - \nproblemOrigin = " + person.getProblemOrigin());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private static boolean isRemainPerson(ArrayList<Person> data, Person person) {
-        Person fatherUnclesAndAunts = getPerson(data, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS);
-        Person motherUnclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
-
-        if ((person.getRelation().matches(OConstants.PERSON_MOTHER) && (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one) || Fraction.isEqual(person.getSharePercent(), half)))) {
-            //When mother has the rest of money || has half of the rest of money
-            Log.i(TAG, "isRemainPerson(): When " + person.getRelation() + " has the rest of money || has half of the rest of money");
-            if (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one)) {
-                Log.i(TAG, "isRemainPerson(): person " + person.getRelation() + " has null sharePercent");
-            } else if (Fraction.isEqual(person.getSharePercent(), half)) {
-                Log.i(TAG, "isRemainPerson(): person " + person.getRelation() + " has sharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
-            }
-            return true;
-
-        } else if (person.getRelation().matches(OConstants.PERSON_FATHER) && (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one) || Fraction.isEqual(person.getSharePercent(), half))) {
-            //When father has the rest of money || has half of the rest of money
-            Log.i(TAG, "isRemainPerson(): When father has the rest of money || has half of the rest of money");
-
-            if (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one)) {
-                Log.i(TAG, "isRemainPerson(): person " + person.getRelation() + " has null sharePercent");
-            } else if (Fraction.isEqual(person.getSharePercent(), half)) {
-                Log.i(TAG, "isRemainPerson(): person " + person.getRelation() + " has sharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
-            }
-            return true;
-
-        } else if ((person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_FATHER_AUNT)) &&
-                (/*fatherUnclesAndAunts != null && */person.getSharePercent() != null && Fraction.isEqual(person.getSharePercent(), quarter))) {
-            //When Father uncles and/or aunts has 1/2
-            Log.i(TAG, "isRemainPerson(): When Father uncles and/or aunts has 1/2");
-            return true;
-
-        } else if ((person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) &&
-                (/*motherUnclesAndAunts != null &&*/ person.getSharePercent() != null && Fraction.isEqual(person.getSharePercent(), quarter))) {
-            //When Mother uncles and/or aunts has 1/2
-            Log.i(TAG, "isRemainPerson(): When Mother uncles and/or aunts has 1/2");
-            return true;
-
-        }
-        if (person.getSharePercent() != null) {
-            Log.i(TAG, "isRemainPerson(): person = " + person.getRelation() + " with sharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() + " is Not a remain person");
-        } else {
-            Log.i(TAG, "isRemainPerson(): person = " + person.getRelation() + " with sharePercent = null is Not a remain person");
-        }
-        return false;
-    }
-
-    private static boolean isPartnerPerson(ArrayList<Person> data, Person person) {
-        try {
-            Person fatherUnclesAndAunts = getPerson(data, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS);
-            Person motherUnclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
-            Person moreThanBrotherAndSister = getPerson(data, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER);
-            Person moreThanThreeBrotherAndSister = getPerson(data, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
-            Person moreThanThreeDaughters = getPerson(data, OConstants.PERSON_More_Than_three_DAUGHTERS);
-
-            if (isMoreThanThreeDaughter(data, person, moreThanThreeDaughters)) {
-
-                //When sons and daughters count >= 3
-                Log.i(TAG, "isPartnerPerson(): person = " + person.getRelation() + " & Daughters >= 3 " + getChildrenInDaughters(data) + " is a special Case");
-                return true;
-
-            } else if (person.getRelation().matches(OConstants.PERSON_SON_BOY) || person.getRelation().matches(OConstants.PERSON_SON_GIRL)) {
-
-                // When a dead son's boys or daughters
-                Log.i(TAG, "isPartnerPerson():  When a dead son's boys or daughters");
-                return true;
-
-            } else if (person.getRelation().matches(OConstants.PERSON_DAUGHTER_BOY) || person.getRelation().matches(OConstants.PERSON_DAUGHTER_GIRL)) {
-
-                // When a dead daughter's boys or daughters
-                Log.i(TAG, "isPartnerPerson():  When a dead daughter's boys or daughters");
-                return true;
-
-            } else if (!isBlocked(person) && isMoreThanBrotherAndSister(data, person, moreThanBrotherAndSister)) {
-
-                //When More than brother and sister and has 1/3
-                Log.i(TAG, "isPartnerPerson(): When More than brother and sister and has 1/3");
-                return true;
-
-            } else if (!isBlocked(person) && isMoreThanThreeBrotherAndSister(data, person, moreThanThreeBrotherAndSister)) {
-
-                //When More than three brother and sister and has 24/24
-                Log.i(TAG, "isPartnerPerson(): When More than three brother and sister and has 1/3");
-                return true;
-            } else if (!isBlocked(person) && isTwoSisters(data, person)) {
-                //When two sister and has 16/24
-                Log.i(TAG, "isPartnerPerson(): When two sister and has 16/24");
-                return true;
-            } else if (isFatherUnclesAndAuntsPartnerConditions(data, person, fatherUnclesAndAunts)) {
-
-                //When Father uncles and/or aunts has 2/3
-                Log.i(TAG, "isPartnerPerson(): When Father uncles and/or aunts has 2/3");
-                return true;
-
-            } else if (isMotherUnclesAndAuntsPartnerConditions(data, person, motherUnclesAndAunts)) {
-
-                //When Mother uncles and/or aunts has 1/3
-                Log.i(TAG, "isPartnerPerson(): When Mother uncles and/or aunts has 1/3");
-                return true;
-
-            } else if (isMoreThanWife(data, person)) {
-
-                //When More than wife
-                Log.i(TAG, "isPartnerPerson(): When More than wife");
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        Log.i(TAG, "Not a partner person");
-        return false;
     }
 
     private static boolean isTwoSisters(ArrayList<Person> data, Person person) {
@@ -1633,171 +1807,10 @@ public class OConstants implements Parcelable {
         return person.getBlocked() != null && person.getBlocked().matches(BLOCKED);
     }
 
-    private static void handleRemainPerson(ArrayList<Person> data, Fraction X, OConstants oConstants) {
-
-        Person fatherUnclesAndAunts = getPerson(data, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS);
-        Person motherUnclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
-
-        for (Person person : data) {
-            Log.i(TAG,"handleRemainPerson(): person " + person.getRelation());
-            if (!isBlocked(person)) {
-                Log.i(TAG,"handleRemainPerson(): person " + person.getRelation() + " sharePercent" + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
-
-                if ((person.getRelation().matches(OConstants.PERSON_MOTHER) && (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one) || Fraction.isEqual(person.getSharePercent(), half)))) {
-                    //When mother has the rest of money || has half of the rest of money
-                    Log.i(TAG, "handleRemainPerson(): When " + person.getRelation() + " has the rest of money || has half of the rest of money");
-                    if (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one)) {
-                        //Mother Takes the rest
-                        Fraction newFraction = new Fraction(X.getNumerator(), X.getDenominator());
-
-                        Fraction.subtractFractions(newFraction, new Fraction(24, 24));
-
-                        person.setProblemOrigin(newFraction.getDenominator());
-                        person.setNumberOfShares(newFraction.getNumerator());
-                        person.setShareValue(round(remain, 2));
-                        person.setSharePercent(newFraction);
-                        person.setOriginalSharePercent(newFraction);
-                        Log.i(TAG, "handleRemainPerson(): Mother Takes the rest");
-
-                    } else if (Fraction.isEqual(person.getSharePercent(), half)) {
-                        person.setShareValue(round((remain / 2), 2));
-                        Fraction newFraction = new Fraction(X.getNumerator(), X.getDenominator());
-
-                        Fraction.subtractFractions(newFraction, new Fraction(24, 24));
-
-                        newFraction = Fraction.divideFraction(newFraction, new Fraction(1, 2));
-
-                        person.setSharePercent(newFraction);
-                        person.setProblemOrigin(newFraction.getDenominator());
-                        person.setNumberOfShares(newFraction.getNumerator());
-                        person.setOriginalSharePercent(newFraction);
-                        Log.i(TAG, "handleRemainPerson(): Mother Takes the half of the Rest");
-                        Log.i(TAG, "handleRemainPerson(): person " + person.getRelation() + " has sharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
-                    }
-
-
-                }
-                else if (person.getRelation().matches(OConstants.PERSON_FATHER) && (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one) || Fraction.isEqual(person.getSharePercent(), half))) {
-
-                    //When father has the rest of money || has half of the rest of money
-                    Log.i(TAG, "handleRemainPerson(): When father has the rest of money || has half of the rest of money");
-
-                    if (person.getSharePercent() == null || Fraction.isEqual(person.getSharePercent(), one)) {
-                        //Father Takes the rest
-
-                        Fraction newFraction = new Fraction(X.getNumerator(), X.getDenominator());
-
-                        Fraction.subtractFractions(newFraction, new Fraction(24, 24));
-
-                        person.setProblemOrigin(newFraction.getDenominator());
-                        person.setNumberOfShares(newFraction.getNumerator());
-                        person.setSharePercent(newFraction);
-                        person.setOriginalSharePercent(newFraction);
-                        person.setShareValue(round(remain, 2));
-
-                        Log.i(TAG, "handleRemainPerson(): Father Takes the rest");
-                    }
-                    else if (Fraction.isEqual(person.getSharePercent(), half)) {
-                        person.setShareValue(round((remain / 2), 2));
-                        Fraction newFraction = new Fraction(X.getNumerator(), X.getDenominator());
-
-                        Fraction.subtractFractions(newFraction, new Fraction(24, 24));
-                        newFraction = Fraction.divideFraction(newFraction, new Fraction(1, 2));
-
-                        person.setSharePercent(newFraction);
-                        person.setProblemOrigin(newFraction.getDenominator());
-                        person.setNumberOfShares(newFraction.getNumerator());
-                        person.setOriginalSharePercent(newFraction);
-
-                        Log.i(TAG, "handleRemainPerson(): Father Takes the half of the Rest");
-                        Log.i(TAG, "handleRemainPerson(): person " + person.getRelation() + " has sharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
-                    }
-
-
-                }
-                else if ((person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_FATHER_AUNT)) &&
-                        (/*fatherUnclesAndAunts != null && */person.getSharePercent() != null && Fraction.isEqual(person.getSharePercent(), half))) {
-                    //When Father uncles and/or aunts has 1/2
-                    Log.i(TAG, "handleRemainPerson(): When Father uncles and/or aunts has 1/2");
-
-                    setFatherUnclesAndAunts(data, person, half, remain, oConstants);
-
-                } else if ((person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) &&
-                        (/*motherUnclesAndAunts != null && */person.getSharePercent() != null && Fraction.isEqual(person.getSharePercent(), half))) {
-                    //When Mother uncles and/or aunts has 1/2
-                    Log.i(TAG, "handleRemainPerson(): When Mother uncles and/or aunts has 1/2");
-                    setMotherUnclesAndAunts(data, person, half, oConstants);
-
-                }
-            }
-        }
-    }
-
-    private static void handlePartnerPeople(ArrayList<Person> data, OConstants oConstants, Fraction X) {
-
-        Log.i(TAG, "handlePartnerPeople(): is called");
-
-        for (Person person : data) {
-            try {
-                Log.i(TAG, "handlePartnerPeople(): person = " + person.getRelation());
-
-                if (!isBlocked(person)) {
-                    Person fatherUnclesAndAunts = getPerson(data, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS);
-                    Person motherUnclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
-                    Person moreThanBrotherAndSister = getPerson(data, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER);
-                    Person moreThanThreeBrotherAndSister = getPerson(data, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
-                    Person moreThanThreeDaughters = getPerson(data, OConstants.PERSON_More_Than_three_DAUGHTERS);
-
-                    if (isMoreThanThreeDaughter(data, person, moreThanThreeDaughters)) {
-
-                        //When sons and daughters count >= 3
-                        Log.i(TAG, "handlePartnerPeople(): person = " + person.getRelation() + " & Daughters >= 3 " + getChildrenInDaughters(data) + " is a special Case");
-                        setMoreThanThreeDaughters(data, person, two_Thirds, moreThanThreeDaughters.getShareValue(), moreThanThreeDaughters, oConstants);
-
-                    } else if (isFatherUnclesAndAuntsPartnerConditions(data, person, fatherUnclesAndAunts)) {
-
-                        //When Father uncles and/or aunts has 2/3 or half or quarter or all
-                        Log.i(TAG, "handlePartnerPeople(): When Father uncles and/or aunts has 2/3");
-                        setFatherUnclesAndAunts(data, person, fatherUnclesAndAunts.getSharePercent(), fatherUnclesAndAunts.getShareValue(), oConstants);
-
-                    } else if (isMotherUnclesAndAuntsPartnerConditions(data, person, motherUnclesAndAunts)) {
-
-                        //When Mother uncles and/or aunts has 1/3
-                        Log.i(TAG, "handlePartnerPeople(): When Mother uncles and/or aunts has 1/3");
-                        setMotherUnclesAndAunts(data, person, motherUnclesAndAunts.getSharePercent(), oConstants);
-
-                    } else if (!isBlocked(person) && isMoreThanBrotherAndSister(data, person, moreThanBrotherAndSister)) {
-
-                        //When More than brother and sister and has 1/3
-                        Log.i(TAG, "handlePartnerPeople(): When More than brother and sister and has 1/3");
-                        setMoreThanBrotherAndSister(data, person, one_Third, oConstants.getTotalMoney(), X, oConstants);
-
-                    } else if (!isBlocked(person) && isMoreThanThreeBrotherAndSister(data, person, moreThanThreeBrotherAndSister)) {
-
-                        //When More than three brother and sister and has 1/3
-                        Log.i(TAG, "handlePartnerPeople(): When More than three brother and sister and has 1/3");
-                        setMoreThanThreeBrotherAndSister(data, person, one, oConstants.getTotalMoney(), oConstants);
-                    }/* else if (person.getRelation().matches(OConstants.PERSON_SISTER) && getPersonCount(data, OConstants.PERSON_SISTER) == 2 && getPersonCount(data, OConstants.PERSON_SON) == 0) {
-                        //TODO two Sisters partners in two_third
-                        setTwoSistersPartners(person, oConstants.getTotalMoney());
-                    }*/ else if (isMoreThanWife(data, person)) {
-
-                        //When More than wife
-                        Log.i(TAG, "isPartnerPerson(): When More than wife");
-                        setMoreThanWife(data, person, oConstants);
-
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     private static void setTwoSistersPartners(Person person, double totalMoney) {
         try {
 
-            double eachPersonValue = (totalMoney * ((double) (7 / 24)));
+            double eachPersonValue = (totalMoney * ((double) (6 / 24)));
             person.setShareValue(round(eachPersonValue, 2));
 
 
@@ -2143,7 +2156,7 @@ public class OConstants implements Parcelable {
                         double eachSisterValue = round(person.getShareValue() / 2, 2);
                         int eachSisterNumberOfShare = eachSisterPercent.getNumerator();
                         person.setEachPersonSharePercent(eachSisterPercent);
-                        person.setShareValue(eachSisterValue);
+                        person.setEachPersonShareValue(eachSisterValue);
                         person.setEachPersonNumberOfShares(eachSisterNumberOfShare);
 
                     } else if (moreThanBrotherAndSister != null) {
@@ -2876,7 +2889,6 @@ public class OConstants implements Parcelable {
                     handleMotherUncles(mPeople);
                     oConstants.handleGroupParent = PERSON_MOTHER_UNCLES_AND_AUNTS;
                 }
-
             }
 
         } catch (Exception e) {
@@ -3064,7 +3076,7 @@ public class OConstants implements Parcelable {
 
     private static boolean isMotherUnclesAndAuntsPartnerConditions(ArrayList<Person> data, Person person, Person motherUnclesAndAunts) {
         return (person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT))
-                && !isBlocked(person) && (getPersonCount(data, OConstants.PERSON_MOTHER_UNCLE) + getPersonCount(data, OConstants.PERSON_MOTHER_AUNT) > 1);
+                && !isBlocked(person) && (getPersonCount(data, OConstants.PERSON_MOTHER_UNCLE) + getPersonCount(data, OConstants.PERSON_MOTHER_AUNT) >= 1);
 
                 /*(motherUnclesAndAunts != null && motherUnclesAndAunts.getSharePercent() != null
                 && (Fraction.isEqual(motherUnclesAndAunts.getSharePercent(), one_Third) ||
@@ -3075,7 +3087,7 @@ public class OConstants implements Parcelable {
 
     private static boolean isFatherUnclesAndAuntsPartnerConditions(ArrayList<Person> data, Person person, Person fatherUnclesAndAunts) {
         return (person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) || person.getRelation().matches(OConstants.PERSON_FATHER_AUNT))
-                && !isBlocked(person) && (getPersonCount(data, OConstants.PERSON_FATHER_UNCLE) + getPersonCount(data, OConstants.PERSON_FATHER_AUNT) > 1);
+                && !isBlocked(person) && (getPersonCount(data, OConstants.PERSON_FATHER_UNCLE) + getPersonCount(data, OConstants.PERSON_FATHER_AUNT) >= 1);
         /*(fatherUnclesAndAunts != null && fatherUnclesAndAunts.getSharePercent() != null &&
                 (Fraction.isEqual(fatherUnclesAndAunts.getSharePercent(), two_Thirds) ||
                         Fraction.isEqual(fatherUnclesAndAunts.getSharePercent(), one) ||
