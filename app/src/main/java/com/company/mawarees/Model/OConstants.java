@@ -15,6 +15,7 @@ import com.company.mawarees.Model.Utilities.HandleTwoGroupsUtils;
 import com.company.mawarees.PrefManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class OConstants implements Parcelable {
 
@@ -35,41 +36,39 @@ public class OConstants implements Parcelable {
         this.mExplanation = new ExplanationModel();
     }
 
-    //    public static final String PERSON_FATHER = "Father";
-//    public static final String PERSON_FATHER_GRANDFATHER = "F_Grandfather";
-//    public static final String PERSON_FATHER_GRANDMOTHER = "F_Grandmother";
-//    public static final String PERSON_FATHER_UNCLE = "F_Uncle";
-//    public static final String PERSON_FATHER_AUNT = "F_Aunt";
-//    public static final String PERSON_FATHER_UNCLES_AND_AUNTS = "Father Uncles And Aunts";
-//
-//    public static final String PERSON_MOTHER = "Mother";
-//    public static final String PERSON_MOTHER_GRANDFATHER = "M_Grandfather";
-//    public static final String PERSON_MOTHER_GRANDMOTHER = "M_Grandmother";
-//    public static final String PERSON_MOTHER_UNCLE = "M_Uncle";
-//    public static final String PERSON_MOTHER_AUNT = "M_Aunt";
-//    public static final String PERSON_MOTHER_UNCLES_AND_AUNTS = "Mother Uncles And Aunts";
-//
-//    public static final String PERSON_SON = "Son";
-//    public static final String PERSON_SON_BOY = "SonNephew";
-//    public static final String PERSON_SON_GIRL = "SonNiece";
-//
-//    public static final String PERSON_DAUGHTER = "Daughter";
-//    public static final String PERSON_DAUGHTER_BOY = "DaughterNephew";
-//    public static final String PERSON_DAUGHTER_GIRL = "DaughterNiece";
-//
-//    public static final String PERSON_BROTHER = "Brother";
-//    public static final String PERSON_SISTER = "Sister";
-//
-//    public static final String PERSON_More_Than_three_DAUGHTERS = "MoreThanThreeDaughters";
-//    public static final String PERSON_MORE_THAN_BROTHER_OR_SISTER = "MoreThanBrotherOrSister";
-//    public static final String PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER = "MoreThanThreeBrotherAndSister";
-//
-//
-//    public static final String PERSON_HUSBAND = "Husband";
-//    public static final String PERSON_WIFE = "Wife";
-//
-//    public static final String GENDER_MALE = "Male";
-//    public static final String GENDER_FEMALE = "Female";
+
+    public static final int Children_ID = 1;
+    public static final int SON_ID = 2;
+    public static final int DAUGHTER_ID = 3;
+
+    public static final int WIVES_ID = 4;
+    public static final int WIFE_ID = 5;
+    public static final int HUSBAND_ID = 6;
+
+    public static final int FATHER_ID = 7;
+    public static final int MOTHER_ID = 8;
+    public static final int FATHER_GRANDFATHER_GRANDMOTHER_ID = 9;
+    public static final int MOTHER_GRANDFATHER_GRANDMOTHER_ID = 10;
+
+    public static final int BROTHERS_ID = 11;
+    public static final int BROTHER_ID = 12;
+    public static final int SISTER_ID = 13;
+
+    public static final int FATHER_UNCLES_AND_AUNTS_ID = 14;
+    public static final int FATHER_UNCLE_ID = 15;
+    public static final int FATHER_AUNT_ID = 16;
+
+    public static final int MOTHER_UNCLES_AND_AUNTS_ID = 17;
+    public static final int MOTHER_UNCLE_ID = 18;
+    public static final int MOTHER_AUNT_ID = 19;
+
+    public static final int DEAD_SON_CHILDREN_ID = 20;
+    public static final int DEAD_SON_BOY_ID = 21;
+    public static final int DEAD_SON_GIRL_ID = 22;
+
+    public static final int DEAD_DAUGHTER_CHILDREN_ID = 23;
+    public static final int DEAD_DAUGHTER_BOY_ID = 24;
+    public static final int DEAD_DAUGHTER_GIRL_ID = 25;
 
     public static final String BLOCKED = "Blocked";
     public static final String NOT_BLOCKED = "NotBlocked";
@@ -479,7 +478,6 @@ public class OConstants implements Parcelable {
         return sum;
     }
 
-
     public static void blockPerson(ArrayList<Person> data, String relation, String blockedBy) {
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getRelation().matches(relation)) {
@@ -845,6 +843,15 @@ public class OConstants implements Parcelable {
         }
     }
 
+    public static void setPersonProblemOrigin(ArrayList<Person> data, int problemOrigin, String relation) {
+
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getRelation().matches(relation)) {
+                data.get(i).setProblemOrigin(problemOrigin);
+            }
+        }
+    }
+
     public static void setPersonProofAndExplanation(ArrayList<Person> data, String relation, String explanation, String proof) {
         try {
             for (Person person : data) {
@@ -946,6 +953,15 @@ public class OConstants implements Parcelable {
                         " & Problem Origin = " + person.getProblemOrigin() + " & Person Number of Shares = " + person.getNumberOfShares());
 
                 calculatePersonShareValue(person, oConstants, !specialCaseRemainPeople.isEmpty(), X);
+
+                if (person.getRelation().matches(OConstants.PERSON_FATHER_UNCLES_AND_AUNTS)) {
+                    setPersonProblemOrigin(data, person.getProblemOrigin(), OConstants.PERSON_FATHER_UNCLE);
+                    setPersonProblemOrigin(data, person.getProblemOrigin(), OConstants.PERSON_FATHER_AUNT);
+
+                } else if (person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS)) {
+                    setPersonProblemOrigin(data, person.getProblemOrigin(), OConstants.PERSON_MOTHER_UNCLE);
+                    setPersonProblemOrigin(data, person.getProblemOrigin(), OConstants.PERSON_MOTHER_AUNT);
+                }
             }
         }
 
@@ -1262,7 +1278,7 @@ public class OConstants implements Parcelable {
                     } /*else if (!isBlocked(person) && isTwoSisters(data, person)) {
                         //TODO two Sisters partners in two_third
                         setTwoSistersPartners(person, oConstants.getTotalMoney());
-                    }*/else if (isMoreThanWife(data, person)) {
+                    }*/ else if (isMoreThanWife(data, person)) {
 
                         //When More than wife
                         Log.i(TAG, "isPartnerPerson(): When More than wife");
@@ -1350,7 +1366,12 @@ public class OConstants implements Parcelable {
                 person.setGroup(group);
                 data.add(person);
             }
+//            Collections.copy(data, mPeople);
             phase3.setPeople(data);
+
+            Log.i(TAG, "setExplanationPhase3(): print data");
+//            showResult(data);
+
             oConstants.getmExplanation().setPhase3(phase3);
 
         } catch (Exception e) {
@@ -1427,6 +1448,13 @@ public class OConstants implements Parcelable {
                 person.setGroup(group);
                 data.add(person);
             }
+
+
+//            Collections.copy(data, mPeople);
+
+            Log.i(TAG, "setExplanationPhase2(): print data");
+            showResult(data);
+
             mPhase2.setPeople(data);
             oConstants.getmExplanation().setPhase2(mPhase2);
 
@@ -1511,6 +1539,11 @@ public class OConstants implements Parcelable {
         try {
             Log.i(TAG, "setMoreThanThreeDaughters(): is called");
             int girlsCount = OConstants.getChildrenInDaughters(data);
+
+            Person wives = getNewPerson(data, OConstants.PERSON_WIVES);
+            if (!oConstants.isHandleWivesGroup && wives != null && wives.getSharePercent() != null && wives.getSharePercent().getNumerator() != 0 && wives.getSharePercent().getDenominator() != 0) {
+                handleWivesGroup(data, oConstants);
+            }
 
             if (!oConstants.isHandleChildrenGroup)
                 handleChildrenGroup(data, oConstants);
@@ -1736,9 +1769,10 @@ public class OConstants implements Parcelable {
                 Log.i(TAG, "setMotherUnclesAndAunts(): uncle = 1 && aunt = 0");
                 Person uncle = getPerson(data, OConstants.PERSON_MOTHER_UNCLE);
                 Person unclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
+
                 totalMoney = unclesAndAunts.getShareValue();
 
-                eachPersonSharePercent = uncle.getSharePercent();
+                eachPersonSharePercent = unclesAndAunts.getSharePercent();
                 eachPersonValue = totalMoney;
 
                 person.setShareValue(round((eachPersonValue), 2));
@@ -1750,10 +1784,12 @@ public class OConstants implements Parcelable {
             } else if (auntsCount == 1) {
                 Log.i(TAG, "setMotherUnclesAndAunts(): uncle = 0 && aunt = 1");
                 Person unclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
+                Person aunt = getPerson(data, OConstants.PERSON_MOTHER_AUNT);
+
                 totalMoney = unclesAndAunts.getShareValue();
 
-                Person aunt = getPerson(data, OConstants.PERSON_MOTHER_AUNT);
-                eachPersonSharePercent = aunt.getSharePercent();
+                eachPersonSharePercent = unclesAndAunts.getSharePercent();
+
                 eachPersonValue = totalMoney;
 
                 person.setShareValue(round((eachPersonValue), 2));
@@ -1843,7 +1879,8 @@ public class OConstants implements Parcelable {
 
     public static void createAlivePerson(ArrayList<Person> data, int size, String relation, String gender, boolean isAlive, Fraction originalPercent, Fraction sharePercent,
                                          Fraction eachPersonSharePercent, double shareValue, double eachPersonShareValue, int numberOfShares,
-                                         int eachPersonNumberOfShares, int problemOrigin, String explanation, String proof, String blocked, String blockedBy, boolean group) {
+                                         int eachPersonNumberOfShares, int problemOrigin, String explanation, String proof, String blocked, String blockedBy,
+                                         boolean group, int id) {
         try {
 
             Person person = new Person();
@@ -1865,6 +1902,7 @@ public class OConstants implements Parcelable {
             person.setBlocked(blocked);
             person.setBlockedBy(blockedBy);
             person.setGroup(group);
+            person.setId(id);
             data.add(person);
 
 
@@ -1897,10 +1935,10 @@ public class OConstants implements Parcelable {
                         Fraction sharePercent = new Fraction(son.getSharePercent().getNumerator() * 2, son.getSharePercent().getDenominator());
                         int numberOfShares = sharePercent.getNumerator();
 
-                        createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SISTER), OConstants.PERSON_TWO_SONS, OConstants.GENDER_MALE, true,
+                        createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SON), OConstants.PERSON_TWO_SONS, OConstants.GENDER_MALE, true,
                                 son.getOriginalSharePercent(), sharePercent, son.getSharePercent(), round((son.getShareValue() * 2), 2), son.getShareValue(),
                                 numberOfShares, son.getNumberOfShares(), moreThanThreeDaughters.getProblemOrigin(), son.getExplanation(), son.getProof(),
-                                son.getBlocked(), son.getBlockedBy(), false);
+                                son.getBlocked(), son.getBlockedBy(), false, OConstants.SON_ID);
 
                         Person person = getPerson(mPeople, OConstants.PERSON_TWO_SONS);
 
@@ -1921,10 +1959,10 @@ public class OConstants implements Parcelable {
                         Fraction sharePercent = new Fraction(son.getSharePercent().getNumerator() * 2, son.getSharePercent().getDenominator());
                         int numberOfShares = sharePercent.getNumerator();
 
-                        createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SISTER), OConstants.PERSON_TWO_SONS, OConstants.GENDER_MALE, true,
+                        createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SON), OConstants.PERSON_TWO_SONS, OConstants.GENDER_MALE, true,
                                 son.getOriginalSharePercent(), sharePercent, son.getSharePercent(), round((son.getShareValue() * 2), 2), son.getShareValue(),
                                 numberOfShares, son.getNumberOfShares(), moreThanThreeDaughters.getProblemOrigin(), son.getExplanation(),
-                                son.getProof(), son.getBlocked(), son.getBlockedBy(), false);
+                                son.getProof(), son.getBlocked(), son.getBlockedBy(), false, OConstants.SON_ID);
 
                         Person person = getPerson(mPeople, OConstants.PERSON_TWO_SONS);
 
@@ -1950,7 +1988,7 @@ public class OConstants implements Parcelable {
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SON), relation, OConstants.GENDER_MALE, true,
                                 son.getOriginalSharePercent(), sharePercent, son.getSharePercent(), shareValue, son.getShareValue(),
                                 numberOfShares, son.getNumberOfShares(), son.getProblemOrigin(), son.getExplanation(),
-                                son.getProof(), son.getBlocked(), son.getBlockedBy(), false);
+                                son.getProof(), son.getBlocked(), son.getBlockedBy(), false, OConstants.SON_ID);
 
                         Person person = getPerson(mPeople, relation);
 
@@ -1981,10 +2019,10 @@ public class OConstants implements Parcelable {
                         double shareValue = round((daughter.getShareValue() * 2), 2);
                         int numberOfShares = sharePercent.getNumerator();
 
-                        createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SON), OConstants.PERSON_TWO_DAUGHTERS, OConstants.GENDER_MALE, true,
+                        createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_DAUGHTER), OConstants.PERSON_TWO_DAUGHTERS, OConstants.GENDER_MALE, true,
                                 daughter.getOriginalSharePercent(), sharePercent, daughter.getSharePercent(), shareValue, daughter.getShareValue(),
                                 numberOfShares, daughter.getNumberOfShares(), moreThanThreeDaughters.getProblemOrigin(),
-                                daughter.getExplanation(), daughter.getProof(), daughter.getBlocked(), daughter.getBlockedBy(), false);
+                                daughter.getExplanation(), daughter.getProof(), daughter.getBlocked(), daughter.getBlockedBy(), false, OConstants.DAUGHTER_ID);
 
 
                         Person person = getPerson(mPeople, PERSON_TWO_DAUGHTERS);
@@ -2005,10 +2043,10 @@ public class OConstants implements Parcelable {
                         double shareValue = round((daughter.getShareValue() * 2), 2);
                         int numberOfShares = sharePercent.getNumerator();
 
-                        createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SON), OConstants.PERSON_TWO_DAUGHTERS, OConstants.GENDER_FEMALE, true,
+                        createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_DAUGHTER), OConstants.PERSON_TWO_DAUGHTERS, OConstants.GENDER_FEMALE, true,
                                 daughter.getOriginalSharePercent(), sharePercent, daughter.getSharePercent(), shareValue, daughter.getShareValue(),
                                 numberOfShares, daughter.getNumberOfShares(), daughter.getProblemOrigin(), daughter.getExplanation(),
-                                daughter.getProof(), daughter.getBlocked(), daughter.getBlockedBy(), false);
+                                daughter.getProof(), daughter.getBlocked(), daughter.getBlockedBy(), false, OConstants.DAUGHTER_ID);
 
 
                         Person person = getPerson(mPeople, PERSON_TWO_DAUGHTERS);
@@ -2034,7 +2072,7 @@ public class OConstants implements Parcelable {
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_DAUGHTER), relation, OConstants.GENDER_FEMALE, true,
                                 daughter.getOriginalSharePercent(), sharePercent, daughter.getSharePercent(), shareValue, daughter.getShareValue(),
                                 numberOfShares, daughter.getNumberOfShares(), moreThanThreeDaughters.getProblemOrigin(),
-                                daughter.getExplanation(), daughter.getProof(), daughter.getBlocked(), daughter.getBlockedBy(), false);
+                                daughter.getExplanation(), daughter.getProof(), daughter.getBlocked(), daughter.getBlockedBy(), false, OConstants.SISTER_ID);
 
                         Person person = getPerson(mPeople, relation);
 
@@ -2090,20 +2128,20 @@ public class OConstants implements Parcelable {
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_BROTHER), OConstants.PERSON_TWO_BROTHERS, OConstants.GENDER_MALE, true,
                                 brother.getOriginalSharePercent(), sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
                                 numberOfShares, brother.getNumberOfShares(), moreThanBrotherAndSister.getProblemOrigin(),
-                                brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy(), false);
+                                brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy(), false, OConstants.BROTHER_ID);
 
                     } else if (moreThanThreeBrotherAndSister != null) {
 
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_BROTHER), OConstants.PERSON_TWO_BROTHERS, OConstants.GENDER_MALE, true,
                                 brother.getOriginalSharePercent(), sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
                                 numberOfShares, brother.getNumberOfShares(), moreThanThreeBrotherAndSister.getProblemOrigin(),
-                                brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy(), false);
+                                brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy(), false, OConstants.BROTHER_ID);
 
                     } else {
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_BROTHER), OConstants.PERSON_TWO_BROTHERS, OConstants.GENDER_MALE, true,
                                 brother.getOriginalSharePercent(), sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
                                 numberOfShares, brother.getNumberOfShares(), brother.getProblemOrigin(),
-                                brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy(), false);
+                                brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy(), false, OConstants.BROTHER_ID);
 
                     }
                 } else {
@@ -2114,14 +2152,14 @@ public class OConstants implements Parcelable {
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_BROTHER), relation, OConstants.GENDER_MALE, true,
                                 brother.getOriginalSharePercent(), sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
                                 numberOfShares, brother.getNumberOfShares(), moreThanBrotherAndSister.getProblemOrigin(),
-                                brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy(), false);
+                                brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy(), false, OConstants.BROTHER_ID);
 
                     } else if (moreThanThreeBrotherAndSister != null) {
 
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_BROTHER), relation, OConstants.GENDER_MALE, true,
                                 brother.getOriginalSharePercent(), sharePercent, brother.getSharePercent(), shareValue, brother.getShareValue(),
                                 numberOfShares, brother.getNumberOfShares(), moreThanThreeBrotherAndSister.getProblemOrigin(),
-                                brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy(), false);
+                                brother.getExplanation(), brother.getProof(), brother.getBlocked(), brother.getBlockedBy(), false, OConstants.BROTHER_ID);
 
                     }
                 }
@@ -2163,21 +2201,21 @@ public class OConstants implements Parcelable {
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SISTER), OConstants.PERSON_TWO_SISTERS, OConstants.GENDER_MALE, true,
                                 sister.getOriginalSharePercent(), sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
                                 numberOfShares, sister.getNumberOfShares(), moreThanBrotherAndSister.getProblemOrigin(),
-                                sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy(), false);
+                                sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy(), false, OConstants.SISTER_ID);
 
                     } else if (moreThanThreeBrotherAndSister != null) {
 
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SISTER), OConstants.PERSON_TWO_SISTERS, OConstants.GENDER_MALE, true,
                                 sister.getOriginalSharePercent(), sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
                                 numberOfShares, sister.getNumberOfShares(), moreThanThreeBrotherAndSister.getProblemOrigin(),
-                                sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy(), false);
+                                sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy(), false, OConstants.SISTER_ID);
 
                     } else {
 
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SISTER), OConstants.PERSON_TWO_SISTERS, OConstants.GENDER_MALE, true,
                                 sister.getOriginalSharePercent(), sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
                                 numberOfShares, sister.getNumberOfShares(), sister.getProblemOrigin(),
-                                sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy(), false);
+                                sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy(), false, OConstants.SISTER_ID);
 
                     }
                 } else {
@@ -2187,14 +2225,14 @@ public class OConstants implements Parcelable {
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SISTER), relation, OConstants.GENDER_MALE, true,
                                 sister.getOriginalSharePercent(), sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
                                 numberOfShares, sister.getNumberOfShares(), moreThanBrotherAndSister.getProblemOrigin(),
-                                sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy(), false);
+                                sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy(), false, OConstants.SISTER_ID);
 
                     } else if (moreThanThreeBrotherAndSister != null) {
 
                         createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_SISTER), relation, OConstants.GENDER_MALE, true,
                                 sister.getOriginalSharePercent(), sharePercent, sister.getSharePercent(), shareValue, sister.getShareValue(),
                                 numberOfShares, sister.getNumberOfShares(), moreThanThreeBrotherAndSister.getProblemOrigin(),
-                                sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy(), false);
+                                sister.getExplanation(), sister.getProof(), sister.getBlocked(), sister.getBlockedBy(), false, OConstants.SISTER_ID);
 
                     }
                 }
@@ -2260,7 +2298,7 @@ public class OConstants implements Parcelable {
                     createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_FATHER_UNCLE), relation, OConstants.GENDER_MALE, true,
                             fatherUncle.getOriginalSharePercent(), sharePercent, fatherUncle.getSharePercent(), shareValue, fatherUncle.getShareValue(),
                             numberOfShares, fatherUncle.getNumberOfShares(), fatherUnclesAndAunts.getProblemOrigin(),
-                            fatherUncle.getExplanation(), fatherUncle.getProof(), fatherUncle.getBlocked(), fatherUncle.getBlockedBy(), false);
+                            fatherUncle.getExplanation(), fatherUncle.getProof(), fatherUncle.getBlocked(), fatherUncle.getBlockedBy(), false, OConstants.FATHER_UNCLES_AND_AUNTS_ID);
 
                     Person person = getPerson(mPeople, relation);
 
@@ -2305,7 +2343,7 @@ public class OConstants implements Parcelable {
                     createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_FATHER_AUNT), relation, OConstants.GENDER_FEMALE, true,
                             fatherAunt.getOriginalSharePercent(), sharePercent, fatherAunt.getSharePercent(), shareValue, fatherAunt.getShareValue(),
                             numberOfShares, fatherAunt.getNumberOfShares(), fatherUnclesAndAunts.getProblemOrigin(),
-                            fatherAunt.getExplanation(), fatherAunt.getProof(), fatherAunt.getBlocked(), fatherAunt.getBlockedBy(), false);
+                            fatherAunt.getExplanation(), fatherAunt.getProof(), fatherAunt.getBlocked(), fatherAunt.getBlockedBy(), false, OConstants.FATHER_UNCLES_AND_AUNTS_ID);
 
                     Person person = getPerson(mPeople, relation);
 
@@ -2379,7 +2417,7 @@ public class OConstants implements Parcelable {
                     createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_MOTHER_UNCLE), relation, OConstants.GENDER_MALE, true,
                             motherUncle.getOriginalSharePercent(), sharePercent, motherUncle.getSharePercent(), shareValue, motherUncle.getShareValue(),
                             numberOfShares, motherUncle.getNumberOfShares(), motherUnclesAndAunts.getProblemOrigin(),
-                            motherUncle.getExplanation(), motherUncle.getProof(), motherUncle.getBlocked(), motherUncle.getBlockedBy(), false);
+                            motherUncle.getExplanation(), motherUncle.getProof(), motherUncle.getBlocked(), motherUncle.getBlockedBy(), false, OConstants.MOTHER_UNCLES_AND_AUNTS_ID);
 
                     Person person = getPerson(mPeople, relation);
 
@@ -2423,7 +2461,7 @@ public class OConstants implements Parcelable {
                     createAlivePerson(mPeople, getPersonCount(mPeople, OConstants.PERSON_MOTHER_AUNT), relation, OConstants.GENDER_FEMALE, true,
                             motherAunt.getOriginalSharePercent(), sharePercent, motherAunt.getSharePercent(), shareValue, motherAunt.getShareValue(),
                             numberOfShares, motherAunt.getNumberOfShares(), motherUnclesAndAunts.getProblemOrigin(),
-                            motherAunt.getExplanation(), motherAunt.getProof(), motherAunt.getBlocked(), motherAunt.getBlockedBy(), false);
+                            motherAunt.getExplanation(), motherAunt.getProof(), motherAunt.getBlocked(), motherAunt.getBlockedBy(), false, OConstants.MOTHER_UNCLES_AND_AUNTS_ID);
 
                     Person person = getPerson(mPeople, relation);
 
@@ -2489,7 +2527,7 @@ public class OConstants implements Parcelable {
 
                     createAlivePerson(mPeople, wivesCount, relation, OConstants.GENDER_FEMALE, true, wife.getOriginalSharePercent(), sharePercent, wife.getSharePercent(),
                             shareValue, wife.getShareValue(), numberOfShares, wife.getNumberOfShares(), moreThanWife.getProblemOrigin(),
-                            wife.getExplanation(), wife.getProof(), wife.getBlocked(), wife.getBlockedBy(), false);
+                            wife.getExplanation(), wife.getProof(), wife.getBlocked(), wife.getBlockedBy(), false, OConstants.WIVES_ID);
 
                     Person person = getPerson(mPeople, relation);
 
@@ -2882,11 +2920,11 @@ public class OConstants implements Parcelable {
                     handleFatherAndMotherUncles(oConstants, mPeople);
                 } else if (fatherUncles != null && !isBlocked(fatherUncles) && motherUncles == null) {
                     oConstants.isHandleUnclesGroup = true;
-                    handleFatherUncles(mPeople);
+                    handleFatherUncles(mPeople, oConstants);
                     oConstants.handleGroupParent = PERSON_FATHER_UNCLES_AND_AUNTS;
                 } else if (motherUncles != null && !isBlocked(motherUncles) && fatherUncles == null) {
                     oConstants.isHandleUnclesGroup = true;
-                    handleMotherUncles(mPeople);
+                    handleMotherUncles(mPeople, oConstants);
                     oConstants.handleGroupParent = PERSON_MOTHER_UNCLES_AND_AUNTS;
                 }
             }
@@ -2926,6 +2964,8 @@ public class OConstants implements Parcelable {
 
             newProblemOrigin = heads * numberOfSharesSum;
 
+            cacheHeads(heads, newProblemOrigin, oConstants);
+
             Log.i(TAG, "handleFatherAndMotherUncles(): number Of shares = " + numberOfSharesSum + " heads = " + heads + " newProblem Origin = " + newProblemOrigin);
 
             for (Person mPerson : mPeople) {
@@ -2948,7 +2988,7 @@ public class OConstants implements Parcelable {
         }
     }
 
-    private static void handleMotherUncles(ArrayList<Person> mPeople) {
+    private static void handleMotherUncles(ArrayList<Person> mPeople, OConstants oConstants) {
 
         try {
 
@@ -2986,6 +3026,8 @@ public class OConstants implements Parcelable {
 
             }
 
+            cacheHeads(heads, newProblemOrigin, oConstants);
+
             for (Person mPerson : mPeople) {
                 if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE) && !mPerson.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) {
 
@@ -3005,7 +3047,7 @@ public class OConstants implements Parcelable {
         }
     }
 
-    private static void handleFatherUncles(ArrayList<Person> mPeople) {
+    private static void handleFatherUncles(ArrayList<Person> mPeople, OConstants oConstants) {
         try {
 
             Log.i(TAG, "handleFatherUncles(): is called");
@@ -3042,6 +3084,8 @@ public class OConstants implements Parcelable {
                 heads = (heads / findGCD(heads, unclesNumberOfShares));
 
             }
+
+            cacheHeads(heads, newProblemOrigin, oConstants);
 
             for (Person mPerson : mPeople) {
                 if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_FATHER_UNCLE) && !mPerson.getRelation().matches(OConstants.PERSON_FATHER_AUNT)) {
@@ -3150,4 +3194,37 @@ public class OConstants implements Parcelable {
         dest.writeByte((byte) (hasFather_GrandMother ? 1 : 0));
         dest.writeByte((byte) (hasBrothersAndSisters ? 1 : 0));
     }
+
+    private static void showResult(ArrayList<Person> mPeople) {
+
+        try {
+
+            String result = "";
+
+            for (Person person : mPeople) {
+                try {
+                    if (person.getBlocked() == null) {
+
+
+                        Log.i(TAG, " printOutput(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
+                        Log.i(TAG, " printOutput(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+                        Log.i(TAG, " printOutput(): person Problem Origin " + person.getProblemOrigin());
+
+                        result = "--------------------------\n";
+                        result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                                "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+
+                        result = result.concat("--------------------------\n");
+
+                        Log.i(TAG, result);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

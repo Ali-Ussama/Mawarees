@@ -101,7 +101,7 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
             } else {
                 holder.mCorrectionValue.setText(String.valueOf(correctionValue));
                 holder.mShareValue.setText(String.valueOf(person.getSharePercent().getNumerator()));
-                holder.mMultiply.setText(String.valueOf((correctionValue * person.getSharePercent().getNumerator())));
+                holder.mMultiply.setText(String.valueOf((correctionValue * person.getOriginalSharePercent().getNumerator())));
 
                 holder.mBrackets_1.setVisibility(View.GONE);
                 holder.mBrackets_2.setVisibility(View.GONE);

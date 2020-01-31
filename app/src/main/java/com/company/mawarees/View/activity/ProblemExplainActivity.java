@@ -27,6 +27,7 @@ import com.company.mawarees.View.adpters.ExplainSecondStepRecAdapter;
 import com.company.mawarees.View.adpters.ExplanationFourthStepAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -138,14 +139,17 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
             people = getIntent().getParcelableArrayListExtra(getString(R.string.intent_data_lbl));
 
-            if (people.get(0) != null) {
-                Log.i(TAG, "init(): people.get(0) + " + people.get(0));
-                problemOrigin = people.get(0).getSharePercent().getDenominator();
-            }
+
             explanation = getIntent().getParcelableExtra(getString(R.string.explain_problem_result));
             oConstants = getIntent().getParcelableExtra(getString(R.string.constants));
 
             removeBlockedPeople();
+            if (people.get(0) != null) {
+                Log.i(TAG, "init(): people.get(0) + " + people.get(0).getRelation());
+                problemOrigin = people.get(0).getSharePercent().getDenominator();
+            }
+            Log.i(TAG, "init(): display People after removing blocked people.");
+            showResult(people);
 
             sumPeopleFractions();
             initFirstRV();
@@ -164,14 +168,21 @@ public class ProblemExplainActivity extends AppCompatActivity {
             if (correctionValue > 1) {
                 mFifthStepViewAnimator.setDisplayedChild(0);
                 mFifthStepCorrectionValue.setText(String.valueOf(correctionValue));
+
                 mFifthStepOldProblemOrigin.setText(String.valueOf((problemOrigin / correctionValue)));
+
+                mFifthStepOldProblemOrigin2.setText(String.valueOf((problemOrigin / correctionValue)));
+
                 mFifthStepCorrectionValue2.setText(String.valueOf(correctionValue));
+
                 mFifthStepOldProblemOrigin_2.setText(String.valueOf((problemOrigin / correctionValue)));
+
                 mFifthStepNewProblemOrigin.setText(String.valueOf(problemOrigin));
 
             } else {
                 mFifthStepViewAnimator.setDisplayedChild(1);
                 mFifthStepOldProblemOrigin_2.setText(String.valueOf((problemOrigin)));
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -186,6 +197,9 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
             for (int i = 0; i < mFirstStepData.size(); i++) {
                 originalValue += mFirstStepData.get(i).getOriginalSharePercent().getNumerator();
+//                if (mFirstStepData.get(i).getProblemOrigin() != problemOrigin) {
+//                    originalValue += mFirstStepData.get(i).getSharePercent().getNumerator();
+//                }
             }
 
             summationOfFractionsNumerator.setText(String.valueOf(originalValue));
@@ -204,14 +218,15 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
             for (int i = 0; i < people.size(); i++) {
                 try {
-                    if ((people.get(i).getBlocked() != null && people.get(i).getBlockedBy() != null) || (people.get(i).getSharePercent() == null ||
-                            (people.get(i).getSharePercent().getNumerator() == 0) && people.get(i).getSharePercent().getDenominator() == 0) ||
-                            (people.get(i).getRelation().contains(OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER) ||
-                                    (people.get(i).getRelation().contains(OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER)) ||
-                                    (people.get(i).getRelation().contains(OConstants.PERSON_WIVES)) ||
-                                    (people.get(i).getRelation().contains(OConstants.PERSON_More_Than_three_DAUGHTERS)) ||
-                                    (people.get(i).getRelation().contains(OConstants.PERSON_FATHER_UNCLES_AND_AUNTS)) ||
-                                    (people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS)))) {
+//                    if ((people.get(i).getBlocked() != null && people.get(i).getBlockedBy() != null) || (people.get(i).getSharePercent() == null ||
+//                            (people.get(i).getSharePercent().getNumerator() == 0) && people.get(i).getSharePercent().getDenominator() == 0) ||
+//                            (people.get(i).getRelation().contains(OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER) ||
+//                                    (people.get(i).getRelation().contains(OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER)) ||
+//                                    (people.get(i).getRelation().contains(OConstants.PERSON_WIVES)) ||
+//                                    (people.get(i).getRelation().contains(OConstants.PERSON_More_Than_three_DAUGHTERS)) ||
+//                                    (people.get(i).getRelation().contains(OConstants.PERSON_FATHER_UNCLES_AND_AUNTS)) ||
+//                                    (people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS)))) {
+                    if ((people.get(i).getBlocked() != null && people.get(i).getBlockedBy() != null)) {
                         index.add(i);
                     }
                 } catch (Exception e) {
@@ -265,7 +280,10 @@ public class ProblemExplainActivity extends AppCompatActivity {
             if (correctionValue > 1) {
                 viewAnimator.setDisplayedChild(1);
                 ArrayList<Person> data = createFourthStepData(oConstants.getmExplanation().getPhase2().getPeople());
-                data = OConstants.sort(data);
+
+//                data = OConstants.sort(data);
+                Collections.sort(data);
+                showResult(data);
 
                 LinearLayoutManager layoutManager = new LinearLayoutManager(this);
                 mFourthAdapter = new ExplanationFourthStepAdapter(data, correctionValue, mCurrent);
@@ -281,10 +299,14 @@ public class ProblemExplainActivity extends AppCompatActivity {
     }
 
     private ArrayList<Person> createFourthStepData(ArrayList<Person> people) {
+        Log.i(TAG, "createFourthStepData(): is called");
         ArrayList<Person> result = new ArrayList<>();
 
+
         for (Person person : people) {
-            if (person.getProblemOrigin() != problemOrigin) {
+            Log.i(TAG, "createFourthStepData(): person = " + person.getRelation() + " - problem Origin = " + person.getProblemOrigin());
+            if (person.getProblemOrigin() != problemOrigin && person.getBlockedBy() == null && person.getBlocked() == null) {
+                Log.i(TAG, "createFourthStepData(): person = " + person.getRelation() + " - problem Origin = " + person.getProblemOrigin() + " is Added");
                 result.add(person);
             }
         }
@@ -419,6 +441,39 @@ public class ProblemExplainActivity extends AppCompatActivity {
         }
     }
 
+
+    private void showResult(ArrayList<Person> mPeople) {
+
+        try {
+
+            String result = "";
+
+            for (Person person : mPeople) {
+                try {
+                    if (person.getBlocked() == null) {
+
+
+                        Log.i(TAG, " showResult(): person Relation " + person.getRelation() + " & person Share Value = " + person.getShareValue());
+                        Log.i(TAG, " showResult(): person Share Percent " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator());
+                        Log.i(TAG, " showResult(): person Problem Origin " + person.getProblemOrigin());
+
+                        result = "--------------------------\n";
+                        result += person.getRelation() + "\nShareValue = " + person.getShareValue() + " \nShare Percent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                                "\nProblem Origin = " + person.getProblemOrigin() + "\nNumber Of Shares = " + person.getNumberOfShares() + "\n";
+
+                        result = result.concat("--------------------------\n");
+
+                        Log.i(TAG, result);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     void displayResult(OConstants oConstants) {
         ExplanationModel explainModel = oConstants.getmExplanation();
         ArrayList<Person> mPeople;
@@ -479,7 +534,6 @@ public class ProblemExplainActivity extends AppCompatActivity {
                 }
             }
         }
-
         if (explainModel.getPhase3() != null && explainModel.getPhase3().getPeople() != null && !explainModel.getPhase3().getPeople().isEmpty()) {
             mPeople = explainModel.getPhase3().getPeople();
             Log.i(TAG, "displayResult(): phase 3 != null");

@@ -15,7 +15,7 @@ public class UnclesAndAuntsUtils {
     public static void calculate(ArrayList<Person> data, OConstants oConstants) {
 
         if (OConstants.getPersonCount(data, OConstants.PERSON_FATHER_UNCLE) > 0 || OConstants.getPersonCount(data, OConstants.PERSON_FATHER_AUNT) > 0 ||
-                OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_UNCLE) > 0 || OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_UNCLE) > 0) {
+                OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_UNCLE) > 0 || OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_AUNT) > 0) {
 
             if (oConstants.isHasChildren()) {
                 //Has Children
@@ -71,8 +71,8 @@ public class UnclesAndAuntsUtils {
                             } else if (brotherAndSistersCountInGirls == 0) {
                                 Log.i(TAG, "calculate(): Has No sisters");
 
-                                handleFatherUnclesAndAunts(data, OConstants.one, OConstants.two_Thirds);
-                                handleMotherUnclesAndAunts(data, OConstants.one, OConstants.one_Third);
+                                handleFatherUnclesAndAunts(data, OConstants.two_Thirds, OConstants.two_Thirds);
+                                handleMotherUnclesAndAunts(data, OConstants.one_Third, OConstants.one_Third);
                             } else if (brotherAndSistersCountInGirls >= 3) {
 
                                 OConstants.blockPerson(data, OConstants.PERSON_FATHER_UNCLE, OConstants.PERSON_MORE_THAN_THREE_BROTHER_AND_SISTER);
@@ -87,6 +87,9 @@ public class UnclesAndAuntsUtils {
                     }
                 }
             }
+        }
+        else{
+            Log.i(TAG, "calculate(): no uncles and aunts");
         }
     }
 

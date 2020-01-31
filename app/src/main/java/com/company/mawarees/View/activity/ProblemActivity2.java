@@ -20,6 +20,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.company.mawarees.Model.Models.ExplainPhase1;
 import com.company.mawarees.Model.Models.ExplainPhase4;
+import com.company.mawarees.Model.Models.ExplanationModel;
 import com.company.mawarees.Model.Models.Fraction;
 import com.company.mawarees.Model.Models.Person;
 import com.company.mawarees.Model.OConstants;
@@ -36,6 +37,7 @@ import com.company.mawarees.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -315,10 +317,10 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                         resetAlivePerson(OConstants.PERSON_SON);
 
                         if (value > 0) {
-                            createAlivePerson(value, OConstants.PERSON_SON, OConstants.GENDER_MALE, true, false);
+                            createAlivePerson(value, OConstants.PERSON_SON, OConstants.GENDER_MALE, true, false, OConstants.SON_ID);
 
                             if (OConstants.getChildrenInDaughters(mPeople) > 2) {
-                                createAlivePerson(1, OConstants.PERSON_More_Than_three_DAUGHTERS, OConstants.GENDER_MALE, true, true);
+                                createAlivePerson(1, OConstants.PERSON_More_Than_three_DAUGHTERS, OConstants.GENDER_MALE, true, true, OConstants.Children_ID);
                             }
                         }
                     } catch (Exception e) {
@@ -352,10 +354,10 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                     resetAlivePerson(OConstants.PERSON_DAUGHTER);
 
                     if (value > 0) {
-                        createAlivePerson(value, OConstants.PERSON_DAUGHTER, OConstants.GENDER_FEMALE, true, false);
+                        createAlivePerson(value, OConstants.PERSON_DAUGHTER, OConstants.GENDER_FEMALE, true, false, OConstants.DAUGHTER_ID);
 
                         if (OConstants.getChildrenInDaughters(mPeople) > 2) {
-                            createAlivePerson(1, OConstants.PERSON_More_Than_three_DAUGHTERS, OConstants.GENDER_MALE, true, true);
+                            createAlivePerson(1, OConstants.PERSON_More_Than_three_DAUGHTERS, OConstants.GENDER_MALE, true, true, OConstants.Children_ID);
                         }
                     }
                 }
@@ -381,7 +383,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                     resetAlivePerson(OConstants.PERSON_BROTHER);
                     if (value > 0) {
-                        createAlivePerson(value, OConstants.PERSON_BROTHER, OConstants.GENDER_MALE, true, false);
+                        createAlivePerson(value, OConstants.PERSON_BROTHER, OConstants.GENDER_MALE, true, false, OConstants.BROTHER_ID);
                     }
                 }
 
@@ -406,7 +408,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                         resetAlivePerson(OConstants.PERSON_SISTER);
                         if (value > 0) {
-                            createAlivePerson(value, OConstants.PERSON_SISTER, OConstants.GENDER_FEMALE, true, false);
+                            createAlivePerson(value, OConstants.PERSON_SISTER, OConstants.GENDER_FEMALE, true, false, OConstants.SISTER_ID);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -440,13 +442,13 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                         resetAlivePerson(OConstants.PERSON_FATHER_UNCLE);
 
                         if (value > 0) {
-                            createAlivePerson(value, OConstants.PERSON_FATHER_UNCLE, OConstants.GENDER_MALE, true, false);
+                            createAlivePerson(value, OConstants.PERSON_FATHER_UNCLE, OConstants.GENDER_MALE, true, false, OConstants.FATHER_UNCLE_ID);
 
 //                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_AUNT) > 1) {
 //                                // if no father aunts created then create
 //                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_AUNT) < 1)
                             if (OConstants.getPerson(mPeople, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS) == null) {
-                                createAlivePerson(1, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true);
+                                createAlivePerson(1, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true, OConstants.FATHER_UNCLES_AND_AUNTS_ID);
                             }
 //                            }
                         }
@@ -481,14 +483,14 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                         resetAlivePerson(OConstants.PERSON_FATHER_AUNT);
 
                         if (value > 0) {
-                            createAlivePerson(value, OConstants.PERSON_FATHER_AUNT, OConstants.GENDER_FEMALE, true, false);
+                            createAlivePerson(value, OConstants.PERSON_FATHER_AUNT, OConstants.GENDER_FEMALE, true, false, OConstants.FATHER_AUNT_ID);
 
 //                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_UNCLE) > 1) {
 //
 //                                // if no father uncles created then create
 //                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_FATHER_UNCLE) < 1)
                             if (OConstants.getPerson(mPeople, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS) == null) {
-                                createAlivePerson(1, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true);
+                                createAlivePerson(1, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true, OConstants.FATHER_UNCLES_AND_AUNTS_ID);
                             }
 //                            }
                         }
@@ -524,13 +526,13 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                             resetAlivePerson(OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
 
                         if (value > 0) {
-                            createAlivePerson(value, OConstants.PERSON_MOTHER_UNCLE, OConstants.GENDER_MALE, true, false);
+                            createAlivePerson(value, OConstants.PERSON_MOTHER_UNCLE, OConstants.GENDER_MALE, true, false, OConstants.MOTHER_UNCLE_ID);
 //                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_AUNT) > 1) {
 //
 //                                // if no mother aunts created then create
 //                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_AUNT) < 1)
                             if (OConstants.getPerson(mPeople, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS) == null) {
-                                createAlivePerson(1, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true);
+                                createAlivePerson(1, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true, OConstants.MOTHER_UNCLES_AND_AUNTS_ID);
                             }
 //                            }
                         }
@@ -565,13 +567,13 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                         resetAlivePerson(OConstants.PERSON_MOTHER_AUNT);
 
                         if (value > 0) {
-                            createAlivePerson(value, OConstants.PERSON_MOTHER_AUNT, OConstants.GENDER_FEMALE, true, false);
+                            createAlivePerson(value, OConstants.PERSON_MOTHER_AUNT, OConstants.GENDER_FEMALE, true, false, OConstants.MOTHER_AUNT_ID);
 //                            if (value + OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_UNCLE) > 1) {
 //
 //                                // if no mother uncles created then create
 //                                if (OConstants.getPersonCount(mPeople, OConstants.PERSON_MOTHER_UNCLE) < 1)
                             if (OConstants.getPerson(mPeople, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS) == null) {
-                                createAlivePerson(1, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true);
+                                createAlivePerson(1, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS, OConstants.GENDER_MALE, true, true, OConstants.MOTHER_UNCLES_AND_AUNTS_ID);
                             }
 //                            }
                         }
@@ -648,12 +650,15 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                 UnclesAndAuntsUtils.calculate(mPeople, oConstants);
 
+                Collections.sort(mPeople);
 
                 validateBlockedPeople();
 
                 setExplanationPhase1();
 
                 OConstants.calculateShareValue(mPeople, oConstants);
+
+                Collections.sort(mPeople);
 
                 OConstants.handleMoreThanBrotherAndSisterResult(mPeople, oConstants);
                 OConstants.handleMoreThanSonAndDaughterResult(mPeople, oConstants);
@@ -667,7 +672,8 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                 Log.i(TAG, "handleSolveProblem(): calculations are done");
 
-                showResult(mPeople);
+                startResultActivity();
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -745,6 +751,9 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                 data.add(person);
             }
+//            Collections.copy(data, mPeople);
+            Log.i(TAG, "setExplainPhase4(): print phase 4");
+            showResult(data);
 
             phase4.setPeople(data);
             oConstants.getmExplanation().setPhase4(phase4);
@@ -822,7 +831,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                 person.setGroup(group);
                 data.add(person);
             }
-
+//            Collections.copy(data, mPeople);
             mExplainPhase1.setPeople(data);
             oConstants.getmExplanation().setPhase1(mExplainPhase1);
 
@@ -1046,6 +1055,22 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                     e.printStackTrace();
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void startResultActivity() {
+        try {
+            if (oConstants.getmExplanation() == null) {
+                Log.i(TAG, "startResultActivity(): Explanation == null");
+            } else if (oConstants.getmExplanation().getPhase2() == null) {
+                Log.i(TAG, "startResultActivity(): phase 2 == null");
+            } else if (oConstants.getmExplanation().getPhase2().getPeople() == null) {
+                Log.i(TAG, "startResultActivity(): phase 2 people  == null");
+            }
+
+            Collections.sort(mPeople);
             Intent intent = new Intent(mCurrent, ResultActivity.class);
             intent.putParcelableArrayListExtra(getString(R.string.intent_data_lbl), mPeople);
             intent.putExtra(getString(R.string.intent_total_money), oConstants.getTotalMoney());
@@ -1319,42 +1344,42 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             } else if (radioButton.equals(mFatherGrandpaYesRB)) {//Father Grandpa Yes
                 if (mFatherGrandpaYesRB.isChecked()) {
                     Log.i(TAG, "onCheckedChanged(): mFatherGrandpaYesRB is checked");
-                    handleGrandMaAndGrandPa(true, OConstants.PERSON_FATHER_GRANDMOTHER, OConstants.GENDER_FEMALE);
+                    handleGrandMaAndGrandPa(true, OConstants.PERSON_FATHER_GRANDMOTHER, OConstants.GENDER_MALE, OConstants.FATHER_GRANDFATHER_GRANDMOTHER_ID);
                 }
             } else if (radioButton.equals(mFatherGrandpaNoRB)) {//Father Grandpa No
                 if (mFatherGrandpaNoRB.isChecked()) {
                     Log.i(TAG, "onCheckedChanged(): mFatherGrandpaNoRB is checked");
-                    handleGrandMaAndGrandPa(false, OConstants.PERSON_FATHER_GRANDMOTHER, OConstants.GENDER_FEMALE);
+                    handleGrandMaAndGrandPa(false, OConstants.PERSON_FATHER_GRANDMOTHER, OConstants.GENDER_MALE, OConstants.FATHER_GRANDFATHER_GRANDMOTHER_ID);
                 }
             } else if (radioButton.equals(mFatherGrandmaYesRB)) {//Father Grandma Yes
                 if (mFatherGrandmaYesRB.isChecked()) {
                     Log.i(TAG, "onCheckedChanged(): mFatherGrandmaYesRB is checked");
-                    handleGrandMaAndGrandPa(true, OConstants.PERSON_FATHER_GRANDFATHER, OConstants.GENDER_MALE);
+                    handleGrandMaAndGrandPa(true, OConstants.PERSON_FATHER_GRANDFATHER, OConstants.GENDER_FEMALE, OConstants.FATHER_GRANDFATHER_GRANDMOTHER_ID);
                 }
             } else if (radioButton.equals(mFatherGrandmaNoRB)) {//Father Grandma No
                 if (mFatherGrandmaNoRB.isChecked()) {
                     Log.i(TAG, "onCheckedChanged(): mFatherGrandmaNoRB is checked");
-                    handleGrandMaAndGrandPa(false, OConstants.PERSON_FATHER_GRANDFATHER, OConstants.GENDER_MALE);
+                    handleGrandMaAndGrandPa(false, OConstants.PERSON_FATHER_GRANDFATHER, OConstants.GENDER_FEMALE, OConstants.FATHER_GRANDFATHER_GRANDMOTHER_ID);
                 }
             } else if (radioButton.equals(mMotherGrandmaYesRB)) {//Mother Grandma Yes
                 if (mMotherGrandmaYesRB.isChecked()) {
                     Log.i(TAG, "onCheckedChanged(): mMotherGrandmaYesRB is checked");
-                    handleGrandMaAndGrandPa(true, OConstants.PERSON_MOTHER_GRANDMOTHER, OConstants.GENDER_FEMALE);
+                    handleGrandMaAndGrandPa(true, OConstants.PERSON_MOTHER_GRANDMOTHER, OConstants.GENDER_FEMALE, OConstants.MOTHER_GRANDFATHER_GRANDMOTHER_ID);
                 }
             } else if (radioButton.equals(mMotherGrandmaNoRB)) {//Mother Grandma No
                 if (mMotherGrandmaNoRB.isChecked()) {
                     Log.i(TAG, "onCheckedChanged(): mMotherGrandmaNoRB is checked");
-                    handleGrandMaAndGrandPa(false, OConstants.PERSON_MOTHER_GRANDMOTHER, OConstants.GENDER_FEMALE);
+                    handleGrandMaAndGrandPa(false, OConstants.PERSON_MOTHER_GRANDMOTHER, OConstants.GENDER_FEMALE, OConstants.MOTHER_GRANDFATHER_GRANDMOTHER_ID);
                 }
             } else if (radioButton.equals(mMotherGrandpaYesRB)) {//Mother Grandpa Yes
                 if (mMotherGrandpaYesRB.isChecked()) {
                     Log.i(TAG, "onCheckedChanged(): mMotherGrandpaYesRB is checked");
-                    handleGrandMaAndGrandPa(true, OConstants.PERSON_MOTHER_GRANDFATHER, OConstants.GENDER_MALE);
+                    handleGrandMaAndGrandPa(true, OConstants.PERSON_MOTHER_GRANDFATHER, OConstants.GENDER_MALE, OConstants.MOTHER_GRANDFATHER_GRANDMOTHER_ID);
                 }
             } else if (radioButton.equals(mMotherGrandpaNoRB)) {//Mother Grandpa No
                 if (mMotherGrandpaNoRB.isChecked()) {
                     Log.i(TAG, "onCheckedChanged(): mMotherGrandpaYesRB is checked");
-                    handleGrandMaAndGrandPa(false, OConstants.PERSON_MOTHER_GRANDFATHER, OConstants.GENDER_MALE);
+                    handleGrandMaAndGrandPa(false, OConstants.PERSON_MOTHER_GRANDFATHER, OConstants.GENDER_MALE, OConstants.MOTHER_GRANDFATHER_GRANDMOTHER_ID);
                 }
             }
         } catch (Exception e) {
@@ -1362,16 +1387,14 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void handleGrandMaAndGrandPa(boolean alive, String relation, String gender) {
+    private void handleGrandMaAndGrandPa(boolean alive, String relation, String gender, int id) {
 
         resetAlivePerson(relation);
         setHasOptions(relation, alive);
 
         if (alive) {
-            createAlivePerson(1, relation, gender, alive, false);
+            createAlivePerson(1, relation, gender, alive, false, id);
         }
-
-
     }
 
     private void handleDeadFather() {
@@ -1408,7 +1431,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
     private void handleMotherChecked() {
         try {
             resetAlivePerson(OConstants.PERSON_MOTHER);
-            createAlivePerson(1, OConstants.PERSON_MOTHER, OConstants.GENDER_FEMALE, true, false);
+            createAlivePerson(1, OConstants.PERSON_MOTHER, OConstants.GENDER_FEMALE, true, false, OConstants.MOTHER_ID);
             setHasOptions(OConstants.PERSON_MOTHER, true);
 
             if (mMotherGrandMaContainer.getVisibility() == View.VISIBLE) {
@@ -1425,7 +1448,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
     private void handleFatherChecked() {
         try {
             resetAlivePerson(OConstants.PERSON_FATHER);
-            createAlivePerson(1, OConstants.PERSON_FATHER, OConstants.GENDER_MALE, true, false);
+            createAlivePerson(1, OConstants.PERSON_FATHER, OConstants.GENDER_MALE, true, false, OConstants.FATHER_ID);
             setHasOptions(OConstants.PERSON_FATHER, true);
 
             if (mFatherGrandMaContainer.getVisibility() == View.VISIBLE) {
@@ -1450,7 +1473,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             resetAlivePerson(OConstants.PERSON_WIVES);
             resetAlivePerson(OConstants.PERSON_MORE_THAN_WIFE);
 
-            createAlivePerson(1, OConstants.PERSON_HUSBAND, OConstants.GENDER_MALE, true, false);
+            createAlivePerson(1, OConstants.PERSON_HUSBAND, OConstants.GENDER_MALE, true, false, OConstants.HUSBAND_ID);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1469,7 +1492,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
             if (count > 0) {
                 setHasOptions(OConstants.PERSON_WIFE, true);
-                createAlivePerson(count, OConstants.PERSON_WIFE, OConstants.GENDER_FEMALE, true, false);
+                createAlivePerson(count, OConstants.PERSON_WIFE, OConstants.GENDER_FEMALE, true, false, OConstants.WIFE_ID);
             }
 
         } catch (Exception e) {
@@ -1477,7 +1500,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void createAlivePerson(int size, String relation, String gender, boolean isAlive, boolean group) {
+    private void createAlivePerson(int size, String relation, String gender, boolean isAlive, boolean group, int id) {
         try {
             ArrayList<Person> people = new ArrayList<>();
 
@@ -1490,6 +1513,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                 person.setGender(gender);
                 person.setDeadSonNumber(-1);
                 person.setGroup(group);
+                person.setId(id);
                 people.add(person);
 
             }
@@ -1504,5 +1528,4 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             e.printStackTrace();
         }
     }
-
 }

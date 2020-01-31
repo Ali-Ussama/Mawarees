@@ -3,7 +3,8 @@ package com.company.mawarees.Model.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Person implements Parcelable {
+public class Person implements Parcelable, Comparable<Person> {
+
 
     private int id;
 
@@ -270,5 +271,11 @@ public class Person implements Parcelable {
         dest.writeByte((byte) (alive ? 1 : 0));
         dest.writeString(blockedBy);
         dest.writeByte((byte) (group ? 1 : 0));
+    }
+
+
+    @Override
+    public int compareTo(Person person) {
+        return String.valueOf(id).compareTo(String.valueOf(person.id));
     }
 }
