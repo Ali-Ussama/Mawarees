@@ -62,11 +62,13 @@ public class ResultRVAdapter extends RecyclerView.Adapter<ResultRVAdapter.viewHo
             if (selectedPerson != null) {
                 if (!data.get(position).getRelation().matches(selectedPerson.getRelation())) {
 //
-                    holder.mPersonNameTV.setBackgroundColor(mContext.getResources().getColor(R.color.gold));
+                    holder.mPersonNameTV.setBackgroundColor(mContext.getResources().getColor(R.color.orange));
+                    holder.mPersonNameTV.setTextColor(mContext.getResources().getColor(R.color.white));
                     holder.mPersonNameTV.setText(data.get(position).getRelation());
 
                 } else {
                     holder.mPersonNameTV.setBackgroundColor(mContext.getResources().getColor(R.color.grey));
+                    holder.mPersonNameTV.setTextColor(mContext.getResources().getColor(R.color.orange));
                     holder.mPersonNameTV.setText(data.get(position).getRelation());
                 }
             } else {

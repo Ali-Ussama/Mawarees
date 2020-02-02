@@ -114,4 +114,10 @@
     <string name="enter_father_uncle_number">أدخل عدد الأعمام</string>
     <string name="enter_father_aunts_number">أدخل عدد العمات</string>
     <string name="enter_dead_sons_number">أدخل عدد الأولاد الذكور المتوفيين</string>
+    <string name="splash_libs_lbl">شرح الميراث في كتاب الله تعالى</string>
+
+    <string name="video_link">https://www.youtube.com/playlist?list=PLgUV-mU7SdBPB0mnvSgFKIjQyh5qfj1BY</string>
+    <string name="book_link">https://drive.google.com/file/d/1P_XHJ6l9QXUsD0_07_rEPcbWjSNJUPlY/view?usp=drivesdk</string>
+    <string name="readable_books">كتب مقروءة</string>
+    <string name="watchable_videos">فيديوهات مرئية</string>
 </resources>

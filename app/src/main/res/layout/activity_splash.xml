@@ -4,16 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash"
+    android:background="@drawable/background"
+    android:animateLayoutChanges="true"
     tools:context=".View.activity.SplashActivity">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+    <!--    <ImageView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        android:contentDescription="@string/splash"-->
+    <!--        android:src="@drawable/background"/>-->
+
+    <TextView
+        android:id="@+id/splash_activity_lbl_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginBottom="170dp"
+        android:gravity="center"
+        android:text="@string/splash_libs_lbl"
+        android:textColor="@color/gold"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/splash"
-        android:src="@drawable/splash2"/>
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/splash_activity_books_btn"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="64dp"
+        android:background="@drawable/splash_libs_btn_background"
+        android:visibility="gone"
+        android:elevation="4dp"
+        android:text="@string/readable_books"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/splash_activity_videos_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/splash_activity_videos_btn" />
+
+    <Button
+        android:id="@+id/splash_activity_videos_btn"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="125dp"
+        android:visibility="gone"
+        android:background="@drawable/splash_libs_btn_background"
+        android:elevation="4dp"
+        android:text="@string/watchable_videos"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/splash_activity_new_problem_btn"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="?actionBarSize"
+        android:background="@drawable/splash_libs_btn_background"
+        android:elevation="4dp"
+        android:visibility="gone"
+        android:text="@string/new_problem"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

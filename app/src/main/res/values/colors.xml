@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#795548</color>
-    <color name="colorPrimaryDark">#4b2c20</color>
-    <color name="colorAccent">#d3b8ae</color>
+    <color name="colorPrimary">#002628</color>
+    <color name="colorPrimaryDark">#2b4e50</color>
+    <color name="colorAccent">#2b4e50</color>
 
 
-    <color name="orange">#AF8861</color>
+    <color name="orange">#2b4e50</color>
     <color name="dark_brown">#8d6e63</color>
     <color name="dark_grey">#a4a4a4</color>
 
     <color name="grey">#efebe9</color>
     <color name="brown">#795548</color>
     <color name="browLight">#d3b8ae</color>
-    <color name="gold">#DBCCAD</color>
+    <color name="gold">#d4c170</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="color_red">#C62828</color>

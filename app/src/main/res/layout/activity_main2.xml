@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
@@ -331,6 +330,7 @@
                 android:hint="@string/enter_wives_number"
                 android:padding="8dp"
                 android:textColorHint="@color/dark_brown"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
                 app:layout_constraintTop_toBottomOf="@+id/problem_activity_alive_daughter_container">
@@ -379,6 +379,7 @@
                 android:hint="@string/enter_wives_number"
                 android:padding="8dp"
                 android:textColorHint="@color/dark_brown"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
                 app:layout_constraintTop_toBottomOf="@+id/problem_activity_dead_son_container">
