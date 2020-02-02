@@ -6,6 +6,6 @@ import com.company.mawarees.Model.OConstants;
 import java.util.ArrayList;
 
 public interface DeadPersonListener {
-    void addChildListener(ArrayList<Person> children, String relation, int deadChildNumber);
+    void addChildListener(ArrayList<Person> children, String relation, int deadChildNumber,int id);
 
 }

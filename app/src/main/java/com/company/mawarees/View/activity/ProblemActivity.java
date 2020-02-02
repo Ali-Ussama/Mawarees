@@ -745,7 +745,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
     }
 
     @Override
-    public void addChildListener(ArrayList<Person> children, String relation, int deadChildNumber) {
+    public void addChildListener(ArrayList<Person> children, String relation, int deadChildNumber,int id) {
         try {
             ArrayList<Person> index = new ArrayList<>();
 

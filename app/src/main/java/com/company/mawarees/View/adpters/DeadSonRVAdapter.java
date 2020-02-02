@@ -155,7 +155,7 @@ public class DeadSonRVAdapter extends RecyclerView.Adapter<DeadSonRVAdapter.Dead
                 mSons.add(person);
             }
 
-            mCallback.addChildListener(mSons, relation, childNumber);
+            mCallback.addChildListener(mSons, relation, childNumber,OConstants.DEAD_SON_BOY_ID);
         }
 
         private void createDaughters(int mValue) {
@@ -172,10 +172,11 @@ public class DeadSonRVAdapter extends RecyclerView.Adapter<DeadSonRVAdapter.Dead
                 person.setRelation(relation);
                 person.setGender(OConstants.GENDER_FEMALE);
                 person.setGroup(false);
+                person.setId(OConstants.DEAD_SON_BOY_ID);
                 mSons.add(person);
             }
 
-            mCallback.addChildListener(mSons, relation, childNumber);
+            mCallback.addChildListener(mSons, relation, childNumber,OConstants.DEAD_SON_GIRL_ID);
         }
     }
 }

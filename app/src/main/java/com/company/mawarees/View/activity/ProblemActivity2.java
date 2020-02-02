@@ -16,11 +16,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.company.mawarees.Model.Callback.DeadPersonListener;
+import com.company.mawarees.Model.Models.DeadPersonModel;
 import com.company.mawarees.Model.Models.ExplainPhase1;
 import com.company.mawarees.Model.Models.ExplainPhase4;
-import com.company.mawarees.Model.Models.ExplanationModel;
 import com.company.mawarees.Model.Models.Fraction;
 import com.company.mawarees.Model.Models.Person;
 import com.company.mawarees.Model.OConstants;
@@ -34,6 +37,8 @@ import com.company.mawarees.Model.Utilities.MotherUtils2;
 import com.company.mawarees.Model.Utilities.UnclesAndAuntsUtils;
 import com.company.mawarees.PrefManager;
 import com.company.mawarees.R;
+import com.company.mawarees.View.adpters.DeadDaughterRVAdapter;
+import com.company.mawarees.View.adpters.DeadSonRVAdapter;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -42,7 +47,7 @@ import java.util.Collections;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProblemActivity2 extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class ProblemActivity2 extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, DeadPersonListener {
 
     private static final String TAG = "ProblemActivity2";
 
@@ -88,6 +93,14 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
     //Alive Daughter
     @BindView(R.id.problem_activity_alive_daughter_et_value)
     TextInputEditText mAliveDaughterValueTV;
+
+    //Alive Son
+    @BindView(R.id.problem_activity_dead_son_et_value)
+    TextInputEditText mDeadSonValueET;
+
+    //Alive Daughter
+    @BindView(R.id.problem_activity_dead_daughter_et_value)
+    TextInputEditText mDeadDaughterValueET;
 
     //Mother
     @BindView(R.id.mother_layout_radio_group)
@@ -296,6 +309,8 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                 }
             });
+
+            //Alive son
             mAliveSonValueTV.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -333,6 +348,8 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                 }
             });
+
+            //Alive daughter
             mAliveDaughterValueTV.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -368,6 +385,107 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                 }
             });
 
+            //dead son
+            mDeadSonValueET.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    try {
+
+                        resetDeadSonsOrDaughter(OConstants.PERSON_SON);
+                        resetDeadSonsOrDaughterBoyAndGirl(OConstants.PERSON_SON_BOY);
+                        resetDeadSonsOrDaughterBoyAndGirl(OConstants.PERSON_SON_GIRL);
+
+                        int value = 0;
+                        if (!charSequence.toString().trim().isEmpty())
+                            value = Integer.parseInt(String.valueOf(charSequence).trim());
+
+                        createDeadSonOrDaughter(value, OConstants.PERSON_SON, OConstants.GENDER_MALE);
+
+                        if (value > 0) {
+
+                            try {
+                                MaterialDialog mAlertDlg = AppUtils.showAlertDialogWithCustomView(mCurrent, R.layout.dead_son_dlg);
+                                View view = mAlertDlg.getCustomView();
+
+                                if (view != null) {
+                                    RecyclerView mRecyclerView = view.findViewById(R.id.dead_son_dlg_RV);
+                                    mRecyclerView.setLayoutManager(new LinearLayoutManager(mCurrent));
+                                    ArrayList<DeadPersonModel> mDeadPersonModels = new ArrayList<>();
+                                    for (int x = 0; x < value; x++) {
+                                        mDeadPersonModels.add(new DeadPersonModel());
+                                    }
+
+                                    DeadSonRVAdapter mDeadSonRVAdapter = new DeadSonRVAdapter(mDeadPersonModels, mCurrent, mCurrent);
+                                    mRecyclerView.setAdapter(mDeadSonRVAdapter);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+
+            //dead daughter
+            mDeadDaughterValueET.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    try {
+                        resetDeadSonsOrDaughter(OConstants.PERSON_DAUGHTER);
+                        resetDeadSonsOrDaughterBoyAndGirl(OConstants.PERSON_DAUGHTER_BOY);
+                        resetDeadSonsOrDaughterBoyAndGirl(OConstants.PERSON_DAUGHTER_GIRL);
+
+                        int value = 0;
+                        if (!charSequence.toString().trim().isEmpty())
+                            value = Integer.parseInt(String.valueOf(charSequence).trim());
+
+                        createDeadSonOrDaughter(value, OConstants.PERSON_DAUGHTER, OConstants.GENDER_FEMALE);
+
+                        if (value > 0) {
+                            MaterialDialog mAlertDlg = AppUtils.showAlertDialogWithCustomView(mCurrent, R.layout.dead_daughter_dlg);
+                            View view = mAlertDlg.getCustomView();
+
+                            if (view != null) {
+                                RecyclerView mRecyclerView = view.findViewById(R.id.dead_daughter_dlg_RV);
+                                mRecyclerView.setLayoutManager(new LinearLayoutManager(mCurrent));
+                                ArrayList<DeadPersonModel> mDeadPersonModels = new ArrayList<>();
+                                for (int x = 0; x < value; x++) {
+                                    mDeadPersonModels.add(new DeadPersonModel());
+                                }
+
+                                DeadDaughterRVAdapter mDeadSonRVAdapter = new DeadDaughterRVAdapter(mDeadPersonModels, mCurrent, mCurrent);
+                                mRecyclerView.setAdapter(mDeadSonRVAdapter);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+
+            //Brother
             mBrothersValueTV.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -392,6 +510,8 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                 }
             });
+
+            //Sister
             mSistersValueTV.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -421,6 +541,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                 }
             });
 
+            //Father Uncles
             mFatherUnclesValueTV.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -462,6 +583,8 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                 }
             });
+
+            //Father Aunts
             mFatherAuntsValueTV.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -505,6 +628,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                 }
             });
 
+            //Mother Uncles
             mMotherUnclesValueTV.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -546,6 +670,8 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                 }
             });
+
+            //Mother Aunts
             mMotherAuntsValueTV.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -589,6 +715,101 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             });
 
             mSolveProblemBtn.setOnClickListener(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void resetDeadSonsOrDaughter(String relation) {
+        try {
+
+            ArrayList<Person> index = new ArrayList<>();
+
+            for (int i = 0; i < mPeople.size(); i++) {
+                if (mPeople.get(i).getRelation().matches(relation) && !mPeople.get(i).isAlive()) {
+                    index.add(mPeople.get(i));
+                }
+            }
+
+            for (Person person : index) {
+                mPeople.remove(person);
+            }
+
+            Log.i(TAG, "resetDeadSonsOrDaughter() people size = " + mPeople.size());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void resetDeadSonsOrDaughterBoyAndGirl(String relation) {
+        try {
+
+            ArrayList<Person> index = new ArrayList<>();
+
+            for (int i = 0; i < mPeople.size(); i++) {
+                if (mPeople.get(i).getRelation().matches(relation)) {
+                    index.add(mPeople.get(i));
+                }
+            }
+
+            for (Person person : index) {
+                mPeople.remove(person);
+            }
+
+            Log.i(TAG, "resetDeadSonsOrDaughterBoyAndGirl() people size = " + mPeople.size());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createDeadSonOrDaughter(int size, String relation, String gender) {
+
+        ArrayList<Person> children = new ArrayList<>();
+
+        for (int number = 0; number < size; number++) {
+
+            Person person = new Person();
+            person.setAlive(false);
+            person.setCount(size);
+            person.setDeadSonNumber(number + 1);
+            person.setRelation(relation);
+            person.setGender(gender);
+            children.add(person);
+        }
+
+        if (!children.isEmpty()) {
+            mPeople.addAll(children);
+        }
+
+        Log.i(TAG, "createDeadSonOrDaughter() people size = " + mPeople.size());
+    }
+
+    @Override
+    public void addChildListener(ArrayList<Person> children, String relation, int deadChildNumber, int id) {
+        try {
+            ArrayList<Person> index = new ArrayList<>();
+
+            if (mPeople != null && !mPeople.isEmpty()) {
+                for (int i = 0; i < mPeople.size(); i++) {
+                    if (mPeople.get(i).getRelation().matches(relation) && mPeople.get(i).getDeadSonNumber() == deadChildNumber) {
+                        index.add(mPeople.get(i));
+                    }
+                }
+
+                if (!index.isEmpty()) {
+                    for (Person person : index) {
+                        mPeople.remove(person);
+                    }
+                }
+
+                if (children != null && !children.isEmpty()) {
+                    mPeople.addAll(children);
+                }
+                if (mPeople != null)
+                    Log.i(TAG, "Created People size = " + mPeople.size());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -971,6 +1192,15 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             oConstants.setHasChildren(true);
         }
 
+        //Check if dead son
+        // doesn't have children
+        //then remove his object
+        validateDeadSonsChildren();
+
+        //Check if dead daughter
+        // doesn't have children
+        //then remove her object
+        validateDeadDaughterChildren();
 
         if (OConstants.getSistersCount(mPeople) + OConstants.getBrothersCount(mPeople) >= 3) {
             oConstants.setHasBrothersAndSisters(true);
@@ -1026,6 +1256,111 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
         Log.i(TAG, "validatePeople(): isHasWife " + oConstants.isHasWife());
         Log.i(TAG, "validatePeople(): isHasHusband " + oConstants.isHasHusband());
 
+    }
+
+    private void validateDeadSonsChildren() {
+        try {
+            Log.i(TAG, "validateDeadSonsChildren(): is called");
+            int deadSonsCount = OConstants.getDeadSonsCount(mPeople);
+            ArrayList<Person> sonsWhoDoNotHaveChildren = new ArrayList<>();
+            int[] deadSonsMemoization = new int[deadSonsCount];
+
+            Log.i(TAG, "validateDeadSonsChildren(): dead son count = " + deadSonsCount);
+
+            for (int i = 0; i < deadSonsCount; i++) {
+                int sonsCount = 0, daughtersCount = 0;
+
+                Log.i(TAG, "validateDeadSonsChildren(): dead son number = " + i);
+                for (Person person : mPeople) {
+                    if ((person.getRelation().contains(OConstants.PERSON_SON_BOY)) && person.getDeadSonNumber() == i) {
+                        Log.i(TAG, "validateDeadSonsChildren(): dead son number = " + i + " has children");
+                        deadSonsMemoization[i] = 1;
+                        sonsCount++;
+                    } else if ((person.getRelation().contains(OConstants.PERSON_SON_GIRL)) && person.getDeadSonNumber() == i) {
+                        Log.i(TAG, "validateDeadSonsChildren(): dead son number = " + i + " has children");
+                        deadSonsMemoization[i] = 1;
+                        daughtersCount++;
+                    }
+                }
+
+                if (deadSonsMemoization[i] == 1) {
+                    createDeadSonOrDaughterChildrenGroup(1, OConstants.PERSON_SON_CHILDREN, OConstants.GENDER_MALE, true, true, (i + 1), OConstants.DEAD_SON_CHILDREN_ID);
+                }
+            }
+            for (int i = 0; i < deadSonsMemoization.length; i++) {
+                if (deadSonsMemoization[i] == 0) {
+                    Log.i(TAG, "validateDeadSonsChildren(): dead son number = " + i + " hasn't children");
+                    for (Person person : mPeople) {
+                        if (person.getRelation().contains(OConstants.PERSON_SON) && person.getDeadSonNumber() == (i + 1)) {
+                            sonsWhoDoNotHaveChildren.add(person);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            for (Person sonsWhoDoNotHaveChild : sonsWhoDoNotHaveChildren) {
+                mPeople.remove(sonsWhoDoNotHaveChild);
+            }
+
+            Log.i(TAG, "validateDeadSonsChildren(): people size = " + mPeople.size());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void validateDeadDaughterChildren() {
+        try {
+            int deadDaughtersCount = OConstants.getDeadDeadDaughtersCount(mPeople);
+            ArrayList<Person> daughtersWhoDoNotHaveChildren = new ArrayList<>();
+            int[] deadDaughtersMemoization = new int[deadDaughtersCount];
+
+            Log.i(TAG, "validateDeadDaughterChildren(): dead daughter count = " + deadDaughtersCount);
+
+            for (int i = 0; i < deadDaughtersCount; i++) {
+                int sonsCount = 0, daughtersCount = 0;
+
+                Log.i(TAG, "validateDeadDaughterChildren(): dead son number = " + i);
+                for (Person person : mPeople) {
+                    if ((person.getRelation().contains(OConstants.PERSON_DAUGHTER_BOY)) && person.getDeadSonNumber() == i) {
+                        Log.i(TAG, "validateDeadDaughterChildren(): dead son number = " + i + " has children");
+                        deadDaughtersMemoization[i] = 1;
+                        sonsCount++;
+                    } else if ((person.getRelation().contains(OConstants.PERSON_DAUGHTER_GIRL)) && person.getDeadSonNumber() == i) {
+                        Log.i(TAG, "validateDeadDaughterChildren(): dead son number = " + i + " has children");
+                        deadDaughtersMemoization[i] = 1;
+                        daughtersCount++;
+                    }
+                }
+
+
+                if (deadDaughtersMemoization[i] == 1) {
+                    createDeadSonOrDaughterChildrenGroup(1, OConstants.PERSON_DAUGHTER_CHILDREN, OConstants.GENDER_MALE, true, true, (i + 1), OConstants.DEAD_SON_CHILDREN_ID);
+                }
+            }
+
+            for (int i = 0; i < deadDaughtersMemoization.length; i++) {
+                if (deadDaughtersMemoization[i] == 0) {
+                    for (Person person : mPeople) {
+                        if (person.getRelation().contains(OConstants.PERSON_DAUGHTER) && person.getDeadSonNumber() == (i + 1)) {
+                            Log.i(TAG, "validateDeadDaughterChildren(): dead daughter number = " + i + " hasn't children");
+                            daughtersWhoDoNotHaveChildren.add(person);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            for (Person sonsWhoDoNotHaveChild : daughtersWhoDoNotHaveChildren) {
+                mPeople.remove(sonsWhoDoNotHaveChild);
+            }
+
+            Log.i(TAG, "validateDeadDaughterChildren(): people size = " + mPeople.size());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void showResult(ArrayList<Person> mPeople) {
@@ -1500,7 +1835,8 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void createAlivePerson(int size, String relation, String gender, boolean isAlive, boolean group, int id) {
+    private void createAlivePerson(int size, String relation, String gender, boolean isAlive,
+                                   boolean group, int id) {
         try {
             ArrayList<Person> people = new ArrayList<>();
 
@@ -1524,6 +1860,37 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
             Log.i(TAG, "createAlivePerson() person relation = " + relation + " & Alive = " + isAlive + " & gender = " + gender + " created");
             Log.i(TAG, "createAlivePerson() people size = " + mPeople.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createDeadSonOrDaughterChildrenGroup(int size, String relation, String gender, boolean isAlive, boolean group, int deadSonNumber, int id) {
+        try {
+            ArrayList<Person> people = new ArrayList<>();
+
+            for (int number = 0; number < size; number++) {
+
+                Person person = new Person();
+                person.setAlive(isAlive);
+                person.setCount(size);
+                person.setRelation(relation);
+                person.setGender(gender);
+                person.setDeadSonNumber(-1);
+                person.setGroup(group);
+                person.setId(id);
+                person.setDeadSonNumber(deadSonNumber);
+
+                people.add(person);
+
+            }
+
+            if (!people.isEmpty()) {
+                mPeople.addAll(people);
+            }
+
+            Log.i(TAG, "createDeadSonOrDaughterChildrenGroup() person relation = " + relation + " & Alive = " + isAlive + " & gender = " + gender + " created");
+            Log.i(TAG, "createDeadSonOrDaughterChildrenGroup() people size = " + mPeople.size());
         } catch (Exception e) {
             e.printStackTrace();
         }

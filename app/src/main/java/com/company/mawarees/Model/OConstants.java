@@ -95,17 +95,18 @@ public class OConstants implements Parcelable {
     public static final String PERSON_SON = "الولد الذكر";
     public static final String PERSON_SONS = "ابناء";
     public static final String PERSON_TWO_SONS = "الابنين";
-    public static final String PERSON_SON_BOY = "ابن لإبن";
-    public static final String PERSON_SON_GIRL = "بنت لإبن";
+    public static final String PERSON_SON_CHILDREN = "اولاد لولد ذكر";
+    public static final String PERSON_SON_BOY = "ابن لولد ذكر";
+    public static final String PERSON_SON_GIRL = "بنت لولد ذكر";
 
 
     public static final String PERSON_DAUGHTER = "الولد الانثى";
     public static final String PERSON_DAUGHTERS = "بنات";
     public static final String PERSON_TWO_DAUGHTERS = "البنتين";
-    public static final String PERSON_DAUGHTER_BOY = "ابن لإبنة";
-    public static final String PERSON_DAUGHTER_GIRL = "بنت لإبنة";
+    public static final String PERSON_DAUGHTER_CHILDREN = "اولاد لولد انثي";
+    public static final String PERSON_DAUGHTER_BOY = "ابن لولد انثي";
+    public static final String PERSON_DAUGHTER_GIRL = "بنت لود انثى";
     public static final String PERSON_CHILDREN = "الاولاد";
-
 
     public static final String PERSON_BROTHER = "الأخ";
     public static final String PERSON_BROTHERS = "الاخوة";

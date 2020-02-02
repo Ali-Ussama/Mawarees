@@ -322,6 +322,102 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/problem_activity_dead_son_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_bg_with_white_borders"
+                android:gravity="center"
+                android:hint="@string/enter_wives_number"
+                android:padding="8dp"
+                android:textColorHint="@color/dark_brown"
+                app:layout_constraintEnd_toEndOf="@+id/gender_container"
+                app:layout_constraintStart_toStartOf="@+id/gender_container"
+                app:layout_constraintTop_toBottomOf="@+id/problem_activity_alive_daughter_container">
+
+                <ImageView
+                    android:id="@+id/dead_son_layout_iv"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/son"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/problem_activity_dead_son_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:hint="@string/enter_dead_sons_number"
+                    android:padding="4dp"
+                    android:textColorHint="@color/dark_brown"
+                    app:layout_constraintBottom_toBottomOf="@id/dead_son_layout_iv"
+                    app:layout_constraintEnd_toStartOf="@+id/dead_son_layout_iv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/dead_son_layout_iv">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/problem_activity_dead_son_et_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:textSize="14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/problem_activity_dead_daughter_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_bg_with_white_borders"
+                android:gravity="center"
+                android:hint="@string/enter_wives_number"
+                android:padding="8dp"
+                android:textColorHint="@color/dark_brown"
+                app:layout_constraintEnd_toEndOf="@+id/gender_container"
+                app:layout_constraintStart_toStartOf="@+id/gender_container"
+                app:layout_constraintTop_toBottomOf="@+id/problem_activity_dead_son_container">
+
+                <ImageView
+                    android:id="@+id/dead_daughter_layout_iv"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/son"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/problem_activity_dead_daughter_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:hint="@string/enter_dead_sons_number"
+                    android:padding="4dp"
+                    android:textColorHint="@color/dark_brown"
+                    app:layout_constraintBottom_toBottomOf="@id/dead_daughter_layout_iv"
+                    app:layout_constraintEnd_toStartOf="@+id/dead_daughter_layout_iv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/dead_daughter_layout_iv">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/problem_activity_dead_daughter_et_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:textSize="14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/problem_activity_mother_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -330,7 +426,7 @@
                 android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
-                app:layout_constraintTop_toBottomOf="@+id/problem_activity_alive_daughter_container">
+                app:layout_constraintTop_toBottomOf="@+id/problem_activity_dead_daughter_container">
 
                 <ImageView
                     android:id="@+id/mother_layout_iv"

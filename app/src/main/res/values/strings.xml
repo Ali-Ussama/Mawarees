@@ -113,4 +113,5 @@
     <string name="enter_brothers_number">أدخل عدد الأخوة</string>
     <string name="enter_father_uncle_number">أدخل عدد الأعمام</string>
     <string name="enter_father_aunts_number">أدخل عدد العمات</string>
+    <string name="enter_dead_sons_number">أدخل عدد الأولاد الذكور المتوفيين</string>
 </resources>
