@@ -88,13 +88,14 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+//        super.onBackPressed();
         backClicksCount++;
 
         if (backClicksCount == 1) {
             Toast.makeText(this, "اضغط رجوع مرة أخرى للخروج", Toast.LENGTH_SHORT).show();
         } else if (backClicksCount > 1) {
             finish();
+            System.exit(0);
         }
     }
 }

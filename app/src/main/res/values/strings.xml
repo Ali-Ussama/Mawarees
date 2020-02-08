@@ -2,7 +2,7 @@
 
     <string name="app_name">مواريث</string>
     <string name="how_much_money">مقدار التركة</string>
-    <string name="dead_gender">جنس المتوفي</string>
+    <string name="dead_gender">نوع المتوفي</string>
     <string name="hanbaly">حنبلي</string>
     <string name="hanafy">حنفي</string>
     <string name="maleky">مالكي</string>
@@ -67,7 +67,7 @@
     <string name="sunnah">السنّة</string>
     <string name="sheaa">الشيعة</string>
     <string name="doctrine">المذهب</string>
-    <string name="enter_money">ادخل مقدار التركة</string>
+    <string name="enter_money"><b>ادخل مقدار التركة</b></string>
     <string name="splash">splash</string>
 
     <string name="explain_problem_result">شرح حل المسألة</string>
@@ -102,18 +102,18 @@
     <string name="correction_not_needed">لا حاجة الى تصحيح الأسهم</string>
     <string name="new_problem_origin">و تصح المســــألة مــــــن </string>
     <string name="has_been_distributed_without_increasing_or_decreasing">تم توزيعها على الورثه بدون زيادة ولا نقصان</string>
-    <string name="enter_wives_number">أدخل عدد الزوجات</string>
+    <string name="enter_wives_number"><b>أدخل عدد الزوجات</b></string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
-    <string name="enter_sons_number">أدخل عدد الأولاد الذكور الأحياء</string>
-    <string name="enter_daughters_number">" أدخل عدد الأولاد الأناث الأحياء"</string>
-    <string name="enter_mother_uncle_number">أدخل عدد الأخوال</string>
-    <string name="enter_mother_aunt_number">أدخل عدد الخالات</string>
-    <string name="enter_sisters_number">أدخل عدد الأخوات</string>
-    <string name="enter_brothers_number">أدخل عدد الأخوة</string>
-    <string name="enter_father_uncle_number">أدخل عدد الأعمام</string>
-    <string name="enter_father_aunts_number">أدخل عدد العمات</string>
-    <string name="enter_dead_sons_number">أدخل عدد الأولاد الذكور المتوفيين</string>
+    <string name="enter_sons_number"><b>أدخل عدد الأولاد الذكور الأحياء</b></string>
+    <string name="enter_daughters_number"><b>أدخل عدد الأولاد الأناث الأحياء</b></string>
+    <string name="enter_mother_uncle_number"><b>أدخل عدد الأخوال</b></string>
+    <string name="enter_mother_aunt_number"><b>أدخل عدد الخالات</b></string>
+    <string name="enter_sisters_number"><b>أدخل عدد الأخوات</b></string>
+    <string name="enter_brothers_number"><b>أدخل عدد الأخوة</b></string>
+    <string name="enter_father_uncle_number"><b>أدخل عدد الأعمام</b></string>
+    <string name="enter_father_aunts_number"><b>أدخل عدد العمات</b></string>
+    <string name="enter_dead_sons_number"><b>أدخل عدد الأولاد الذكور المتوفيين</b></string>
     <string name="splash_libs_lbl">شرح الميراث في كتاب الله تعالى</string>
 
     <string name="video_link">https://www.youtube.com/playlist?list=PLgUV-mU7SdBPB0mnvSgFKIjQyh5qfj1BY</string>

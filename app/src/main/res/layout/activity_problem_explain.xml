@@ -55,9 +55,8 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/activity_explain_first_step_rv"
-                    android:animateLayoutChanges="true"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -254,7 +253,6 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/activity_explain_third_step_rv"
-                    android:animateLayoutChanges="true"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 

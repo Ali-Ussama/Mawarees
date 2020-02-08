@@ -140,8 +140,8 @@ public class ProblemExplainActivity extends AppCompatActivity {
             people = getIntent().getParcelableArrayListExtra(getString(R.string.intent_data_lbl));
 
 
-            explanation = getIntent().getParcelableExtra(getString(R.string.explain_problem_result));
             oConstants = getIntent().getParcelableExtra(getString(R.string.constants));
+            explanation = oConstants.getmExplanation();
 
             removeBlockedPeople();
             if (people.get(0) != null) {
@@ -349,20 +349,39 @@ public class ProblemExplainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void handleGroupsExplanation() {
-
-    }
-
     private void collapsePeopleInGroups() {
         mFirstStepData = new ArrayList<>();
-        boolean children = false, brothers = false, motherUncles = false, fatherUncles = false;
+        boolean children = false;
+        boolean brothers = false;
+        boolean motherUncles = false;
+        boolean fatherUncles = false;
+
         Set<Person> data = new HashSet<>();
 
         for (int i = 0; i < people.size(); i++) {
-            Log.i(TAG, "collapsePeopleInGroup(): person = " + people.get(i).getRelation());
-            if (people.get(i).getRelation().contains(OConstants.PERSON_DAUGHTERS) || people.get(i).getRelation().contains(OConstants.PERSON_SONS) ||
-                    people.get(i).getRelation().contains(OConstants.PERSON_TWO_DAUGHTERS) || people.get(i).getRelation().contains(OConstants.PERSON_TWO_SONS) ||
-                    people.get(i).getRelation().contains(OConstants.PERSON_DAUGHTER) || people.get(i).getRelation().contains(OConstants.PERSON_SON)) {
+
+            String personRelation = "";
+            String[] relationSplit = people.get(i).getRelation().split(" ");
+//            if (relationSplit.length == 0) {
+                personRelation = people.get(i).getRelation();
+//            } else if (relationSplit.length == 1) {
+//                personRelation = relationSplit[0];
+//            } else if (relationSplit.length > 1) {
+//                personRelation = relationSplit[1];
+//            }
+
+            Log.i(TAG, "collapsePeopleInGroup(): person = " + personRelation);
+
+
+            if (personRelation.contains(OConstants.PERSON_DAUGHTERS)
+                    || personRelation.contains(OConstants.PERSON_SONS)
+                    || personRelation.contains(OConstants.PERSON_TWO_DAUGHTERS)
+                    || personRelation.contains(OConstants.PERSON_TWO_SONS)
+                    || personRelation.contains(OConstants.PERSON_DAUGHTER)
+                    || personRelation.contains(OConstants.PERSON_SON)) {
+
+                Log.i(TAG, "collapsePeopleInGroup(): case = " + personRelation);
+
                 if (!children) {
                     children = true;
                     Person person = people.get(i);
@@ -371,9 +390,15 @@ public class ProblemExplainActivity extends AppCompatActivity {
                             person.getOriginalSharePercent(), person.getShareValue(), person.getNumberOfShares(), person.getProblemOrigin(),
                             person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy(), true);
                 }
-            } else if (people.get(i).getRelation().contains(OConstants.PERSON_BROTHERS) || people.get(i).getRelation().contains(OConstants.PERSON_BROTHER) ||
-                    people.get(i).getRelation().contains(OConstants.PERSON_TWO_BROTHERS) || people.get(i).getRelation().contains(OConstants.PERSON_SISTER) ||
-                    people.get(i).getRelation().contains(OConstants.PERSON_SISTERS) || people.get(i).getRelation().contains(OConstants.PERSON_TWO_SISTERS)) {
+            } else if (personRelation.contains(OConstants.PERSON_BROTHERS)
+                    || personRelation.matches(OConstants.PERSON_BROTHER)
+                    || personRelation.contains(OConstants.PERSON_TWO_BROTHERS)
+                    || personRelation.contains(OConstants.PERSON_SISTER)
+                    || personRelation.contains(OConstants.PERSON_SISTERS)
+                    || personRelation.contains(OConstants.PERSON_TWO_SISTERS)) {
+
+                Log.i(TAG, "collapsePeopleInGroup(): case brothers = " + personRelation);
+
                 if (!brothers) {
                     brothers = true;
                     Person person = people.get(i);
@@ -382,8 +407,12 @@ public class ProblemExplainActivity extends AppCompatActivity {
                             person.getOriginalSharePercent(), person.getShareValue(), person.getNumberOfShares(), person.getProblemOrigin(),
                             person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy(), true);
                 }
-            } else if (people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_UNCLE) || people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_UNCLES) ||
-                    people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_AUNT) || people.get(i).getRelation().contains(OConstants.PERSON_MOTHER_AUNTS)) {
+            } else if (personRelation.contains(OConstants.PERSON_MOTHER_UNCLE)
+                    || personRelation.contains(OConstants.PERSON_MOTHER_UNCLES)
+                    || personRelation.contains(OConstants.PERSON_MOTHER_AUNT)
+                    || personRelation.contains(OConstants.PERSON_MOTHER_AUNTS)) {
+
+                Log.i(TAG, "collapsePeopleInGroup(): case = " + personRelation);
 
                 if (!motherUncles) {
                     motherUncles = true;
@@ -393,8 +422,11 @@ public class ProblemExplainActivity extends AppCompatActivity {
                             person.getOriginalSharePercent(), person.getShareValue(), person.getNumberOfShares(), person.getProblemOrigin(),
                             person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy(), true);
                 }
-            } else if (people.get(i).getRelation().contains(OConstants.PERSON_FATHER_UNCLE) || people.get(i).getRelation().contains(OConstants.PERSON_FATHER_UNCLES) ||
-                    people.get(i).getRelation().contains(OConstants.PERSON_FATHER_AUNT) || people.get(i).getRelation().contains(OConstants.PERSON_FATHER_AUNTS)) {
+            } else if (personRelation.contains(OConstants.PERSON_FATHER_UNCLE)
+                    || personRelation.contains(OConstants.PERSON_FATHER_UNCLES)
+                    || personRelation.contains(OConstants.PERSON_FATHER_AUNT)
+                    || personRelation.contains(OConstants.PERSON_FATHER_AUNTS)) {
+                Log.i(TAG, "collapsePeopleInGroup(): case = " + personRelation);
 
                 if (!fatherUncles) {
                     fatherUncles = true;
@@ -405,6 +437,8 @@ public class ProblemExplainActivity extends AppCompatActivity {
                             person.getExplanation(), person.getProof(), person.getBlocked(), person.getBlockedBy(), true);
                 }
             } else {
+
+                Log.i(TAG, "collapsePeopleInGroup(): else is called");
                 mFirstStepData.add(people.get(i));
             }
         }

@@ -50,11 +50,11 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
 
             Person person = data.get(position);
             String the = "ال";
-            if (person.getRelation().substring(0,2).contains(the)) {
-                Log.i(TAG,"onBindViewHolder(): person relation" + person.getRelation() + " contains the");
+            if (person.getRelation().substring(0, 2).contains(the)) {
+                Log.i(TAG, "onBindViewHolder(): person relation" + person.getRelation() + " contains the");
                 holder.mGroupName.setText(person.getRelation());
             } else {
-                Log.i(TAG,"onBindViewHolder(): person relation" + person.getRelation() + " not contains the");
+                Log.i(TAG, "onBindViewHolder(): person relation" + person.getRelation() + " not contains the");
                 holder.mGroupName.setText(the.concat(person.getRelation()));
             }
 
@@ -96,8 +96,8 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
                 } else if (person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) {
                     displayWomanValue(holder, position, OConstants.PERSON_MOTHER_UNCLE, OConstants.PERSON_MOTHER_AUNT);
                 }
-            }else if (person.getRelation().matches(OConstants.PERSON_WIFE)){
-                displayWomanValue(holder,position,"",OConstants.PERSON_WIFE);
+            } else if (person.getRelation().matches(OConstants.PERSON_WIFE)) {
+                displayWomanValue(holder, position, "", OConstants.PERSON_WIFE);
             } else {
                 holder.mCorrectionValue.setText(String.valueOf(correctionValue));
                 holder.mShareValue.setText(String.valueOf(person.getSharePercent().getNumerator()));
@@ -123,10 +123,33 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
             holder.mDivide.setVisibility(View.VISIBLE);
             holder.mGroupShareValue.setVisibility(View.VISIBLE);
 
-            int count = OConstants.getPersonsInGirlsCount(data, boysRelation, girlsRelation);
+            int count = 0;
+            if ((boysRelation.matches(OConstants.PERSON_MOTHER_UNCLE) &&
+                    ((OConstants.getPersonCount(data, OConstants.PERSON_FATHER_AUNT) + OConstants.getPersonCount(data, OConstants.PERSON_FATHER_UNCLE) > 0)
+                            || (OConstants.getPersonCount(data, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(data, OConstants.PERSON_SISTER) > 0)))
+                    || (boysRelation.matches(OConstants.PERSON_FATHER_UNCLE) &&
+                    ((OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_AUNT) + OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_UNCLE) > 0)
+                            || (OConstants.getPersonCount(data, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(data, OConstants.PERSON_SISTER) > 0)))) {
+
+                count = OConstants.getPersonCount(data, boysRelation) + OConstants.getPersonCount(data, girlsRelation);
+
+            } else {
+                count = OConstants.getPersonsInGirlsCount(data, boysRelation, girlsRelation);
+            }
             double groupShare = (correctionValue * person.getSharePercent().getNumerator());
 
-            int mCorrectionValue = 2;
+            int mCorrectionValue;
+            if ((boysRelation.matches(OConstants.PERSON_MOTHER_UNCLE) &&
+                    ((OConstants.getPersonCount(data, OConstants.PERSON_FATHER_AUNT) + OConstants.getPersonCount(data, OConstants.PERSON_FATHER_UNCLE) > 0)
+                            || (OConstants.getPersonCount(data, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(data, OConstants.PERSON_SISTER) > 0)))
+                    || (boysRelation.matches(OConstants.PERSON_FATHER_UNCLE) &&
+                    ((OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_AUNT) + OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_UNCLE) > 0)
+                            || (OConstants.getPersonCount(data, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(data, OConstants.PERSON_SISTER) > 0)))) {
+
+                mCorrectionValue = 1;
+            } else {
+                mCorrectionValue = 2;
+            }
             holder.mGroupShareValue.setText(String.valueOf(groupShare));
 
             holder.mShareValue.setText(String.valueOf(mCorrectionValue));
@@ -142,12 +165,23 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
     private void displayWomanValue(ExplanationFourthStepAdapter.viewHolder holder, int position, String boysRelation, String girlsRelation) {
         try {
             Person person = data.get(position);
+
             holder.mBrackets_1.setVisibility(View.VISIBLE);
             holder.mBrackets_2.setVisibility(View.VISIBLE);
             holder.mDivide.setVisibility(View.VISIBLE);
             holder.mGroupShareValue.setVisibility(View.VISIBLE);
 
-            int count = OConstants.getPersonsInGirlsCount(data, boysRelation, girlsRelation);
+            int count = 0;
+            if ((girlsRelation.matches(OConstants.PERSON_MOTHER_AUNT) &&
+                    ((OConstants.getPersonCount(data, OConstants.PERSON_FATHER_AUNT) + OConstants.getPersonCount(data, OConstants.PERSON_FATHER_UNCLE) > 0)
+                            || (OConstants.getPersonCount(data, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(data, OConstants.PERSON_SISTER) > 0)))
+                    || (girlsRelation.matches(OConstants.PERSON_FATHER_AUNT) &&
+                    ((OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_AUNT) + OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_UNCLE) > 0)
+                            || (OConstants.getPersonCount(data, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(data, OConstants.PERSON_SISTER) > 0)))) {
+                count = OConstants.getPersonCount(data, boysRelation) + OConstants.getPersonCount(data, girlsRelation);
+            } else {
+                count = OConstants.getPersonsInGirlsCount(data, boysRelation, girlsRelation);
+            }
             double groupShare = (correctionValue * person.getSharePercent().getNumerator());
 
             int mCorrectionValue = 1;

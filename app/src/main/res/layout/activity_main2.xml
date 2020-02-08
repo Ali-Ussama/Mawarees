@@ -52,7 +52,8 @@
                     android:gravity="center"
                     android:inputType="numberDecimal"
                     android:text="100"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -156,7 +157,8 @@
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:inputType="numberDecimal"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -189,6 +191,7 @@
                     android:text="هل يوجد زوج ؟"
                     android:textColor="@color/dark_brown"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/husband_layout_iv"
                     app:layout_constraintEnd_toStartOf="@+id/husband_layout_iv"
                     app:layout_constraintTop_toTopOf="@id/husband_layout_iv" />
@@ -268,7 +271,8 @@
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:inputType="numberDecimal"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -316,7 +320,8 @@
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:inputType="numberDecimal"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -446,6 +451,7 @@
                     android:text="هل يوجد والدة ؟"
                     android:textColor="@color/dark_brown"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/mother_layout_iv"
                     app:layout_constraintEnd_toStartOf="@+id/mother_layout_iv"
                     app:layout_constraintTop_toTopOf="@id/mother_layout_iv" />
@@ -511,6 +517,7 @@
                     android:text="هل يوجد جد لوالدة ؟"
                     android:textColor="@color/dark_brown"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/mother_grandma_layout_iv"
                     app:layout_constraintEnd_toStartOf="@+id/mother_grandma_layout_iv"
                     app:layout_constraintTop_toTopOf="@id/mother_grandma_layout_iv" />
@@ -576,6 +583,7 @@
                     android:text="هل يوجد جدة لوالدة ؟"
                     android:textColor="@color/dark_brown"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/mother_grandpa_layout_iv"
                     app:layout_constraintEnd_toStartOf="@+id/mother_grandpa_layout_iv"
                     app:layout_constraintTop_toTopOf="@id/mother_grandpa_layout_iv" />
@@ -639,6 +647,7 @@
                     android:text="هل يوجد والد ؟"
                     android:textColor="@color/dark_brown"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/father_layout_iv"
                     app:layout_constraintEnd_toStartOf="@+id/father_layout_iv"
                     app:layout_constraintTop_toTopOf="@id/father_layout_iv" />
@@ -703,6 +712,7 @@
                     android:text="هل يوجد جد لوالد ؟"
                     android:textColor="@color/dark_brown"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/father_grandpa_layout_iv"
                     app:layout_constraintEnd_toStartOf="@+id/father_grandpa_layout_iv"
                     app:layout_constraintTop_toTopOf="@id/father_grandpa_layout_iv" />
@@ -767,6 +777,7 @@
                     android:text="هل يوجد جدة لوالد ؟"
                     android:textColor="@color/dark_brown"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/father_grandma_layout_iv"
                     app:layout_constraintEnd_toStartOf="@+id/father_grandma_layout_iv"
                     app:layout_constraintTop_toTopOf="@id/father_grandma_layout_iv" />
@@ -803,15 +814,90 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/problem_activity_brothers_question_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:animateLayoutChanges="true"
+                android:background="@drawable/custom_bg_with_white_borders"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/gender_container"
+                app:layout_constraintStart_toStartOf="@+id/gender_container"
+                app:layout_constraintTop_toBottomOf="@+id/problem_activity_father_grandma_layout">
+
+                <ImageView
+                    android:id="@+id/brothers_question_layout_iv"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/man"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/brothers_question_layout_iv_2"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/daughter"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/brothers_question_layout_iv"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/brothers_question_layout_question_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:text="هل يوجد أخوة و أخوات ؟"
+                    android:textColor="@color/dark_brown"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/brothers_question_layout_iv"
+                    app:layout_constraintEnd_toStartOf="@+id/brothers_question_layout_iv_2"
+                    app:layout_constraintTop_toTopOf="@id/brothers_question_layout_iv" />
+
+                <RadioGroup
+                    android:id="@+id/brothers_question_layout_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/brothers_question_rb_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/yes"
+                        android:textColor="@color/dark_brown"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/brothers_question_rb_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/no"
+                        android:textColor="@color/dark_brown"
+                        android:textStyle="bold" />
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/problem_activity_brother_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:padding="8dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
-                app:layout_constraintTop_toBottomOf="@+id/problem_activity_father_grandma_layout">
+                app:layout_constraintTop_toBottomOf="@+id/problem_activity_brothers_question_layout">
 
                 <ImageView
                     android:id="@+id/brother_layout_iv"
@@ -843,7 +929,8 @@
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:inputType="numberDecimal"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -854,6 +941,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:padding="8dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
                 app:layout_constraintTop_toBottomOf="@+id/problem_activity_brother_container">
@@ -888,7 +976,8 @@
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:inputType="numberDecimal"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -899,6 +988,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:padding="8dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
                 app:layout_constraintTop_toBottomOf="@+id/problem_activity_sister_container">
@@ -933,7 +1023,8 @@
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:inputType="numberDecimal"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -944,6 +1035,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:padding="8dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
                 app:layout_constraintTop_toBottomOf="@+id/problem_activity_mother_uncle_container">
@@ -978,7 +1070,8 @@
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:inputType="numberDecimal"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -989,6 +1082,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:padding="8dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
                 app:layout_constraintTop_toBottomOf="@+id/problem_activity_mother_aunt_container">
@@ -1023,7 +1117,8 @@
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:inputType="numberDecimal"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -1035,6 +1130,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:padding="8dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
                 app:layout_constraintTop_toBottomOf="@+id/problem_activity_father_uncle_container">
@@ -1069,7 +1165,8 @@
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:inputType="numberDecimal"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,7 +65,10 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
     TextView mProofTV;
 
     @BindView(R.id.explain_problem_fab)
-    FloatingActionButton mExplainProblemFab;
+    Button mExplainProblemFab;
+
+    @BindView(R.id.activity_result_correction_value)
+    TextView mCorrectionValueTV;
 
     ArrayList<Person> mPeople;
 
@@ -108,18 +112,11 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
 
             totalMoney = getIntent().getDoubleExtra(getString(R.string.intent_total_money), 0.0);
 
-            explanation = getIntent().getParcelableExtra(getString(R.string.explain_problem_result));
-
-            oConstants = getIntent().getParcelableExtra(getString(R.string.constants));
-
-            LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mCurrent, LinearLayoutManager.HORIZONTAL, false);
-            mResultRVAdapter = new ResultRVAdapter(mPeople, mCurrent, this);
 
             Log.i(TAG, "init() is Called 3");
-
-
-            mRecyclerView.setLayoutManager(mLinearLayoutManager);
-            mRecyclerView.setNestedScrollingEnabled(true);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(mCurrent, LinearLayoutManager.HORIZONTAL, false));
+//            mRecyclerView.setNestedScrollingEnabled(true);
+            mResultRVAdapter = new ResultRVAdapter(mPeople, mCurrent, this);
             mResultRVAdapter.setSelectedPerson(mPeople.get(0));
             mRecyclerView.setAdapter(mResultRVAdapter);
             setViewsWithResult(mPeople.get(0));
@@ -132,8 +129,24 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
 
             mExplainProblemFab.setOnClickListener(this);
 
-            displayResult(oConstants);
+            oConstants = getIntent().getParcelableExtra(getString(R.string.constants));
+            explanation = oConstants.getmExplanation();
 
+            setCorrectionNumber();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setCorrectionNumber() {
+        try {
+            int heads = mPrefManager.readInt(PrefManager.KEY_HEADS);
+            int newProblemOrigin = mPrefManager.readInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN);
+
+            if (heads != 0 && newProblemOrigin != 0) {
+                mCorrectionValueTV.setText(String.valueOf(heads));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -256,8 +269,8 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
             if (view.getId() == R.id.explain_problem_fab) {
                 Intent intent = new Intent(mCurrent, ProblemExplainActivity.class);
                 intent.putParcelableArrayListExtra(getString(R.string.intent_data_lbl), mPeople);
-                intent.putExtra(getString(R.string.explain_problem_result), explanation);
-                intent.putExtra(getString(R.string.constants),oConstants);
+//                intent.putExtra(getString(R.string.explain_problem_result), explanation);
+                intent.putExtra(getString(R.string.constants), oConstants);
                 startActivity(intent);
             }
         } catch (Exception e) {
@@ -378,7 +391,7 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -387,10 +400,10 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
     public void onBackPressed() {
         super.onBackPressed();
 
-        mPrefManager.saveInt(PrefManager.KEY_HEADS,0);
-        mPrefManager.saveInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN,0);
-        mPrefManager.saveInt(PrefManager.KEY_SAVED_NUMBER_1,0);
-        mPrefManager.saveInt(PrefManager.KEY_SAVED_NUMBER_2,0);
-        mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP,false);
+        mPrefManager.saveInt(PrefManager.KEY_HEADS, 0);
+        mPrefManager.saveInt(PrefManager.KEY_NEW_PROBLEM_ORIGIN, 0);
+        mPrefManager.saveInt(PrefManager.KEY_SAVED_NUMBER_1, 0);
+        mPrefManager.saveInt(PrefManager.KEY_SAVED_NUMBER_2, 0);
+        mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP, false);
     }
 }

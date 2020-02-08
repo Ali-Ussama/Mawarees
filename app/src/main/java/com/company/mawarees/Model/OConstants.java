@@ -97,15 +97,18 @@ public class OConstants implements Parcelable {
     public static final String PERSON_TWO_SONS = "الابنين";
     public static final String PERSON_SON_CHILDREN = "اولاد لولد ذكر";
     public static final String PERSON_SON_BOY = "ابن لولد ذكر";
+    public static final String PERSON_SON_TWO_BOY = "ابنان لولد ذكر";
     public static final String PERSON_SON_GIRL = "بنت لولد ذكر";
-
+    public static final String PERSON_SON_TWO_GIRL = "بنتان لولد ذكر";
 
     public static final String PERSON_DAUGHTER = "الولد الانثى";
     public static final String PERSON_DAUGHTERS = "بنات";
     public static final String PERSON_TWO_DAUGHTERS = "البنتين";
     public static final String PERSON_DAUGHTER_CHILDREN = "اولاد لولد انثي";
     public static final String PERSON_DAUGHTER_BOY = "ابن لولد انثي";
+    public static final String PERSON_DAUGHTER_TWO_BOY = "ابنان لولد انثي";
     public static final String PERSON_DAUGHTER_GIRL = "بنت لود انثى";
+    public static final String PERSON_DAUGHTER_TWO_GIRL = "بنتان لود انثى";
     public static final String PERSON_CHILDREN = "الاولاد";
 
     public static final String PERSON_BROTHER = "الأخ";
@@ -188,6 +191,9 @@ public class OConstants implements Parcelable {
 
     private boolean hasBrothersAndSisters;
 
+    private int deadSonCount;
+
+    private int deadDaughterCount;
 
     protected OConstants(Parcel in) {
         isHandleChildrenGroup = in.readByte() != 0;
@@ -209,6 +215,8 @@ public class OConstants implements Parcelable {
         hasFather_GrandFather = in.readByte() != 0;
         hasFather_GrandMother = in.readByte() != 0;
         hasBrothersAndSisters = in.readByte() != 0;
+        deadDaughterCount = in.readInt();
+        deadSonCount = in.readInt();
     }
 
     public static final Creator<OConstants> CREATOR = new Creator<OConstants>() {
@@ -333,6 +341,22 @@ public class OConstants implements Parcelable {
 
     public void setmExplanation(ExplanationModel mExplanation) {
         this.mExplanation = mExplanation;
+    }
+
+    public int getDeadSonCount() {
+        return deadSonCount;
+    }
+
+    public void setDeadSonCount(int deadSonCount) {
+        this.deadSonCount = deadSonCount;
+    }
+
+    public int getDeadDaughterCount() {
+        return deadDaughterCount;
+    }
+
+    public void setDeadDaughterCount(int deadDaughterCount) {
+        this.deadDaughterCount = deadDaughterCount;
     }
 
     /*--------------------------------------------------------------------------------------------*/
@@ -1454,7 +1478,7 @@ public class OConstants implements Parcelable {
 //            Collections.copy(data, mPeople);
 
             Log.i(TAG, "setExplanationPhase2(): print data");
-            showResult(data);
+//            showResult(data);
 
             mPhase2.setPeople(data);
             oConstants.getmExplanation().setPhase2(mPhase2);
@@ -1697,32 +1721,58 @@ public class OConstants implements Parcelable {
                 if (!oConstants.isHandleUnclesGroup)
                     handleUnclesGroup(data, oConstants);
 
-            int girlsCount = OConstants.getPersonsInGirlsCount(data, OConstants.PERSON_FATHER_UNCLE, OConstants.PERSON_FATHER_AUNT);
-            Person unclesAndAunts = getPerson(data, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS);
+            if (!oConstants.isHasBrothersAndSisters() && (getPersonCount(data, OConstants.PERSON_MOTHER_AUNT) + getPersonCount(data, OConstants.PERSON_MOTHER_UNCLE) < 1)) {
 
-            Fraction eachPersonSharePercent = new Fraction((int) ((double) unclesAndAunts.getSharePercent().getNumerator() / girlsCount), unclesAndAunts.getSharePercent().getDenominator());
+                Log.i(TAG, "setFatherUnclesAndAunts(): just father uncles and aunts");
 
-            totalMoney = unclesAndAunts.getShareValue();
-            double eachPersonValue = 0;
-            eachPersonValue = totalMoney / girlsCount;
+                int girlsCount = OConstants.getPersonsInGirlsCount(data, OConstants.PERSON_FATHER_UNCLE, OConstants.PERSON_FATHER_AUNT);
+                Person unclesAndAunts = getPerson(data, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS);
 
-            if (person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE)) {
-                person.setShareValue(round((eachPersonValue * 2), 2));
-                person.setSharePercent(new Fraction(eachPersonSharePercent.getNumerator() * 2, eachPersonSharePercent.getDenominator()));
-                person.setProblemOrigin(unclesAndAunts.getProblemOrigin());
-                person.setNumberOfShares(person.getSharePercent().getNumerator());
+                Fraction eachPersonSharePercent = new Fraction((int) ((double) unclesAndAunts.getSharePercent().getNumerator() / girlsCount), unclesAndAunts.getSharePercent().getDenominator());
 
-            } else if (person.getRelation().matches(OConstants.PERSON_FATHER_AUNT)) {
+                totalMoney = unclesAndAunts.getShareValue();
+                double eachPersonValue = 0;
+                eachPersonValue = totalMoney / girlsCount;
+
+                if (person.getRelation().matches(OConstants.PERSON_FATHER_UNCLE)) {
+                    person.setShareValue(round((eachPersonValue * 2), 2));
+                    person.setSharePercent(new Fraction(eachPersonSharePercent.getNumerator() * 2, eachPersonSharePercent.getDenominator()));
+                    person.setProblemOrigin(unclesAndAunts.getProblemOrigin());
+                    person.setNumberOfShares(person.getSharePercent().getNumerator());
+
+                } else if (person.getRelation().matches(OConstants.PERSON_FATHER_AUNT)) {
+
+                    person.setShareValue(round(eachPersonValue, 2));
+                    person.setSharePercent(eachPersonSharePercent);
+                    person.setProblemOrigin(unclesAndAunts.getProblemOrigin());
+                    person.setNumberOfShares(person.getSharePercent().getNumerator());
+                }
+
+                Log.i(TAG, "setFatherUnclesAndAunts(): \ntotalMoney = " + totalMoney + " - \neachPersonValue = " + eachPersonValue + " - \nrelation = " + person.getRelation() + " - \nshareValue = " + person.getShareValue() +
+                        " - \nsharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() + " - \nproblemOrigin = " + person.getProblemOrigin());
+            } else {
+
+                Log.i(TAG, "setFatherUnclesAndAunts(): father uncles and aunts with other");
+
+                int girlsCount = OConstants.getPersonCount(data, OConstants.PERSON_FATHER_UNCLE) + OConstants.getPersonCount(data, OConstants.PERSON_FATHER_AUNT);
+                Person unclesAndAunts = getPerson(data, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS);
+
+                Fraction eachPersonSharePercent = new Fraction((int) ((double) unclesAndAunts.getSharePercent().getNumerator() / girlsCount), unclesAndAunts.getSharePercent().getDenominator());
+
+                totalMoney = unclesAndAunts.getShareValue();
+                double eachPersonValue = 0;
+                eachPersonValue = totalMoney / girlsCount;
 
                 person.setShareValue(round(eachPersonValue, 2));
                 person.setSharePercent(eachPersonSharePercent);
                 person.setProblemOrigin(unclesAndAunts.getProblemOrigin());
                 person.setNumberOfShares(person.getSharePercent().getNumerator());
+
+
+                Log.i(TAG, "setFatherUnclesAndAunts(): \ntotalMoney = " + totalMoney + " - \neachPersonValue = " + eachPersonValue + " - \nrelation = " + person.getRelation() + " - \nshareValue = " + person.getShareValue() +
+                        " - \nsharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() + " - \nproblemOrigin = " + person.getProblemOrigin());
+
             }
-
-            Log.i(TAG, "setFatherUnclesAndAunts(): \ntotalMoney = " + totalMoney + " - \neachPersonValue = " + eachPersonValue + " - \nrelation = " + person.getRelation() + " - \nshareValue = " + person.getShareValue() +
-                    " - \nsharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() + " - \nproblemOrigin = " + person.getProblemOrigin());
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1744,27 +1794,46 @@ public class OConstants implements Parcelable {
                 if (!oConstants.isHandleUnclesGroup)
                     handleUnclesGroup(data, oConstants);
 
-                int girlsCount = OConstants.getPersonsInGirlsCount(data, OConstants.PERSON_MOTHER_UNCLE, OConstants.PERSON_MOTHER_AUNT);
-                Person unclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
-                totalMoney = unclesAndAunts.getShareValue();
+                if (!oConstants.isHasBrothersAndSisters() && (getPersonCount(data, OConstants.PERSON_FATHER_AUNT) + getPersonCount(data, OConstants.PERSON_FATHER_UNCLE) < 1)) {
+                    Log.i(TAG, "setMotherUnclesAndAunts(): just mother uncles and aunts");
 
-                eachPersonSharePercent = new Fraction((int) ((double) unclesAndAunts.getSharePercent().getNumerator() / girlsCount), unclesAndAunts.getSharePercent().getDenominator());
+                    int girlsCount = OConstants.getPersonsInGirlsCount(data, OConstants.PERSON_MOTHER_UNCLE, OConstants.PERSON_MOTHER_AUNT);
+                    Person unclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
+                    totalMoney = unclesAndAunts.getShareValue();
 
-                eachPersonValue = totalMoney / girlsCount;
+                    eachPersonSharePercent = new Fraction((int) ((double) unclesAndAunts.getSharePercent().getNumerator() / girlsCount), unclesAndAunts.getSharePercent().getDenominator());
 
-                if (person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE)) {
+                    eachPersonValue = totalMoney / girlsCount;
 
-                    person.setShareValue(round((eachPersonValue * 2), 2));
-                    person.setSharePercent(new Fraction(eachPersonSharePercent.getNumerator() * 2, eachPersonSharePercent.getDenominator()));
-                    person.setProblemOrigin(unclesAndAunts.getProblemOrigin());
-                    person.setNumberOfShares(person.getSharePercent().getNumerator());
+                    if (person.getRelation().matches(OConstants.PERSON_MOTHER_UNCLE)) {
 
-                } else if (person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) {
+                        person.setShareValue(round((eachPersonValue * 2), 2));
+                        person.setSharePercent(new Fraction(eachPersonSharePercent.getNumerator() * 2, eachPersonSharePercent.getDenominator()));
+                        person.setProblemOrigin(unclesAndAunts.getProblemOrigin());
+                        person.setNumberOfShares(person.getSharePercent().getNumerator());
+
+                    } else if (person.getRelation().matches(OConstants.PERSON_MOTHER_AUNT)) {
+
+                        person.setShareValue(round(eachPersonValue, 2));
+                        person.setSharePercent(eachPersonSharePercent);
+                        person.setProblemOrigin(unclesAndAunts.getProblemOrigin());
+                        person.setNumberOfShares(person.getSharePercent().getNumerator());
+                    }
+                } else {
+                    Log.i(TAG, "setMotherUnclesAndAunts(): mother uncles and aunts with other");
+                    int girlsCount = OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_UNCLE) + OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_AUNT);
+                    Person unclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
+                    totalMoney = unclesAndAunts.getShareValue();
+
+                    eachPersonSharePercent = new Fraction((int) ((double) unclesAndAunts.getSharePercent().getNumerator() / girlsCount), unclesAndAunts.getSharePercent().getDenominator());
+
+                    eachPersonValue = totalMoney / girlsCount;
 
                     person.setShareValue(round(eachPersonValue, 2));
                     person.setSharePercent(eachPersonSharePercent);
                     person.setProblemOrigin(unclesAndAunts.getProblemOrigin());
                     person.setNumberOfShares(person.getSharePercent().getNumerator());
+
                 }
             } else if (unclesCount == 1) {
                 Log.i(TAG, "setMotherUnclesAndAunts(): uncle = 1 && aunt = 0");
@@ -1798,29 +1867,6 @@ public class OConstants implements Parcelable {
                 person.setProblemOrigin(aunt.getProblemOrigin());
                 person.setNumberOfShares(person.getSharePercent().getNumerator());
             }
-//            if (Fraction.isEqual(sharePercents, OConstants.half)) {
-//
-////                double halfOfRemain = (remain / 2);
-//                eachPersonValue = totalMoney / girlsCount;
-//
-//
-//            } else if (Fraction.isEqual(sharePercents, OConstants.one_Third)) {
-//
-////                double twoThirdRemain = (remain / 3);
-//                eachPersonValue = totalMoney / girlsCount;
-//
-//            } else if (Fraction.isEqual(sharePercents, OConstants.quarter)) {
-//
-////                double twoThirdRemain = (remain / 4);
-//                eachPersonValue = totalMoney / girlsCount;
-//
-//            } else if (Fraction.isEqual(sharePercents, OConstants.one)) {
-//
-////                double twoThirdRemain = (remain);
-//                eachPersonValue = totalMoney / girlsCount;
-//
-//            }
-
 
             Log.i(TAG, "setMotherUnclesAndAunts(): \ntotalMoney = " + totalMoney + " - \neachPersonValue = " + eachPersonValue + " - \nrelation = " + person.getRelation() + " - \nshareValue = " + person.getShareValue() +
                     " - \nsharePercent = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() + " - \nproblemOrigin = " + person.getProblemOrigin());
@@ -3227,5 +3273,8 @@ public class OConstants implements Parcelable {
             e.printStackTrace();
         }
     }
+
+    /**------------------------------------Handle dead son / daughter sons------------------------*/
+
 
 }
