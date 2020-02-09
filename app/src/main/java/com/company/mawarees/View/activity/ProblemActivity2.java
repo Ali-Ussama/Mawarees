@@ -28,6 +28,7 @@ import com.company.mawarees.Model.Models.DeadPersonModel;
 import com.company.mawarees.Model.Models.ExplainPhase1;
 import com.company.mawarees.Model.Models.ExplainPhase4;
 import com.company.mawarees.Model.Models.Fraction;
+import com.company.mawarees.Model.Models.GrandChildren;
 import com.company.mawarees.Model.Models.Person;
 import com.company.mawarees.Model.OConstants;
 import com.company.mawarees.Model.Utilities.AppUtils;
@@ -235,6 +236,8 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
     ProblemActivity2 mCurrent;
     public ArrayList<Person> mPeople;
+    public ArrayList<GrandChildren> mGrandChildren;
+
     public OConstants oConstants;
 
     private Toolbar mToolbar;
@@ -280,6 +283,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             mCurrent = ProblemActivity2.this;
 
             mPeople = new ArrayList<>();
+            mGrandChildren = new ArrayList<>();
             oConstants = new OConstants(mCurrent);
             mainProcessCallback = mCurrent;
 
@@ -1442,6 +1446,8 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
         try {
             int deadDaughtersCount = OConstants.getDeadDeadDaughtersCount(mPeople);
             ArrayList<Person> daughtersWhoDoNotHaveChildren = new ArrayList<>();
+            ArrayList<Person> grandChildren = new ArrayList<>();
+
             int[] deadDaughtersMemoization = new int[deadDaughtersCount];
 
             Log.i(TAG, "validateDeadDaughterChildren(): dead daughter count = " + deadDaughtersCount);
@@ -1455,13 +1461,16 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                         Log.i(TAG, "validateDeadDaughterChildren(): dead daughter number = " + i + " has children");
                         deadDaughtersMemoization[i] = 1;
                         sonsCount++;
+                        grandChildren.add(person);
                     } else if ((person.getRelation().contains(OConstants.PERSON_DAUGHTER_GIRL)) && person.getDeadSonNumber() == i) {
                         Log.i(TAG, "validateDeadDaughterChildren(): dead daughter number = " + i + " has children");
                         deadDaughtersMemoization[i] = 1;
                         daughtersCount++;
+                        grandChildren.add(person);
                     }
                 }
 
+                createGrandChildrenGroup(grandChildren, sonsCount, daughtersCount);
 
                 if (deadDaughtersMemoization[i] == 1) {
                     createDeadSonOrDaughterChildrenGroup(1, OConstants.PERSON_DAUGHTER_CHILDREN, OConstants.GENDER_MALE, true, true, (i + 1), OConstants.DEAD_SON_CHILDREN_ID);
@@ -1488,6 +1497,23 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             Log.i(TAG, "validateDeadDaughterChildren(): people size = " + mPeople.size());
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createGrandChildrenGroup(ArrayList<Person> grandChildren, int sonsCount, int daughtersCount) {
+        try{
+            GrandChildren mGrandChildrenGroup = new GrandChildren();
+            Fraction fraction = new Fraction(16,24);
+            if (!grandChildren.isEmpty()){
+                mGrandChildrenGroup.setBoysCount(sonsCount);
+                mGrandChildrenGroup.setGirlsCount(daughtersCount);
+                mGrandChildrenGroup.setChildren(grandChildren);
+                mGrandChildrenGroup.setDeadSonNumber(grandChildren.isEmpty() ? -1:grandChildren.get(0).getDeadSonNumber());
+                mGrandChildrenGroup.setId(grandChildren.isEmpty() ? -1:grandChildren.get(0).getId());
+//                mGrandChildrenGroup.setNumberOfShares();
+            }
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
