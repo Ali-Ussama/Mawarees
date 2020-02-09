@@ -579,6 +579,40 @@ public class OConstants implements Parcelable {
         return sons;
     }
 
+    public static Person getDeadChild(ArrayList<Person> data, String relation, int number) {
+        Person person = null;
+        try {
+            for (Person mData : data) {
+                if (mData.getRelation().matches(relation) && !mData.isAlive() && mData.getDeadSonNumber() == number) {
+                    person = mData;
+                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return person;
+    }
+
+    public static Person getGrandChild(ArrayList<Person> data, String relation, int number) {
+        Person person = null;
+        try {
+            for (Person mData : data) {
+                if (mData.getRelation().matches(relation) && mData.getDeadSonNumber() == number) {
+                    person = mData;
+                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return person;
+    }
+
     public static int getDeadDeadDaughtersCount(ArrayList<Person> data) {
         int daughters = 0;
         try {
@@ -2790,145 +2824,175 @@ public class OConstants implements Parcelable {
 
             if ((getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS) != null && !isBlocked(getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS)))) {
 
-                if (oConstants.mPrefManager != null) {
-                    oConstants.mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP, false);
-                }
+                handleWivesAndChildren(mPeople, oConstants, newProblemOrigin, heads, numberOfSharesSum, wife, moreThanWife, wivesNumberOfShares);
 
-                Log.i(TAG, "handleWivesGroup(): handling wives with more than three daughter \"Two groups\"");
-                oConstants.isHandleChildrenGroup = true;
-
-                Person moreThanBrotherAndSister = getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS);
-
-                int savedNumberOfWives = HandleTwoGroupsUtils.getGroupSavedNumber(mPeople, moreThanWife, "", OConstants.PERSON_WIFE);
-                int savedNumberOfChildren = HandleTwoGroupsUtils.getGroupSavedNumber(mPeople, moreThanBrotherAndSister, OConstants.PERSON_SON, OConstants.PERSON_DAUGHTER);
-
-                cacheSavedNumbers(oConstants, savedNumberOfWives, savedNumberOfChildren);
-                Log.i(TAG, "handleWivesGroup(): wives saved number = " + savedNumberOfWives);
-                Log.i(TAG, "handleWivesGroup(): children saved number = " + savedNumberOfChildren);
-
-
-                // Calculating Number of shares summation
-                for (Person mPerson : mPeople) {
-                    if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_SON) && !mPerson.getRelation().matches(OConstants.PERSON_DAUGHTER) &&
-                            !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
-                        Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " Number Of Shares = " + mPerson.getNumberOfShares());
-                        numberOfSharesSum += mPerson.getNumberOfShares();
-                    }
-                }
-//                numberOfSharesSum += wivesNumberOfShares;
-                heads = HandleTwoGroupsUtils.getSimpleCommonMultiplier(savedNumberOfChildren, savedNumberOfWives);
-
-
-                newProblemOrigin = heads * numberOfSharesSum;
-
-                cacheHeads(heads, newProblemOrigin, oConstants);
-
-                Log.i(TAG, "handleWivesGroup(): number Of shares = " + numberOfSharesSum + " heads = " + heads + " newProblem Origin = " + newProblemOrigin);
-
-                for (Person mPerson : mPeople) {
-                    if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_SON) && !mPerson.getRelation().matches(OConstants.PERSON_DAUGHTER)
-                            && !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
-
-                        mPerson.setProblemOrigin(newProblemOrigin);
-                        mPerson.setNumberOfShares(heads * mPerson.getNumberOfShares());
-
-                        Fraction fraction = new Fraction(mPerson.getNumberOfShares(), newProblemOrigin);
-                        setPersonSharePercent(mPeople, fraction, mPerson.getRelation());
-
-                        Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " problem origin = " + mPerson.getProblemOrigin() + " sharePercent = " + mPerson.getSharePercent().getNumerator() +
-                                "/" + mPerson.getSharePercent().getDenominator());
-                    }
-                }
             } else if ((getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER) != null && !isBlocked(getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER)))) {
-                Log.i(TAG, "handleWivesGroup(): handling wives with brothers \"Two groups\"");
-                oConstants.mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP, false);
 
-                Person moreThanBrotherAndSister = getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER);
+                handleWivesAndBrotherSisters(mPeople, oConstants,newProblemOrigin,heads,numberOfSharesSum,wife,moreThanWife,wivesNumberOfShares);
 
-                int savedNumberOfWives = HandleTwoGroupsUtils.getGroupSavedNumber(mPeople, moreThanWife, "", OConstants.PERSON_WIFE);
-                int savedNumberOfBrothers = HandleTwoGroupsUtils.getGroupSavedNumber(mPeople, moreThanBrotherAndSister, OConstants.PERSON_BROTHER, OConstants.PERSON_SISTER);
-
-                cacheSavedNumbers(oConstants, savedNumberOfWives, savedNumberOfBrothers);
-
-                Log.i(TAG, "handleWivesGroup(): wives saved number = " + savedNumberOfWives);
-                Log.i(TAG, "handleWivesGroup(): brothers saved number = " + savedNumberOfBrothers);
-
-
-                // Calculating Number of shares summation
-                for (Person mPerson : mPeople) {
-                    if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_BROTHER) && !mPerson.getRelation().matches(OConstants.PERSON_SISTER) &&
-                            !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
-                        Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " problem origin = " + mPerson.getNumberOfShares());
-                        numberOfSharesSum += mPerson.getNumberOfShares();
-                    }
-                }
-//                numberOfSharesSum += wivesNumberOfShares;
-                heads = HandleTwoGroupsUtils.getSimpleCommonMultiplier(savedNumberOfBrothers, savedNumberOfWives);
-                newProblemOrigin = heads * numberOfSharesSum;
-
-                cacheHeads(heads, newProblemOrigin, oConstants);
-                Log.i(TAG, "handleWivesGroup(): number Of shares = " + numberOfSharesSum + " heads = " + heads + " newProblem Origin = " + newProblemOrigin);
-
-                for (Person mPerson : mPeople) {
-                    if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_BROTHER) && !mPerson.getRelation().matches(OConstants.PERSON_SISTER)
-                            && !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
-
-                        mPerson.setProblemOrigin(newProblemOrigin);
-                        mPerson.setNumberOfShares(heads * mPerson.getNumberOfShares());
-
-                        Fraction fraction = new Fraction(mPerson.getNumberOfShares(), newProblemOrigin);
-                        setPersonSharePercent(mPeople, fraction, mPerson.getRelation());
-
-                        Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " problem origin = " + mPerson.getProblemOrigin() + " sharePercent = " + mPerson.getSharePercent().getNumerator() +
-                                "/" + mPerson.getSharePercent().getDenominator());
-                    }
-                }
             } else {
-                Log.i(TAG, "handleWivesGroup(): handling just wives");
-                oConstants.mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP, true);
+                handleJustWives(mPeople,oConstants,newProblemOrigin, heads,numberOfSharesSum,wife,moreThanWife,wivesNumberOfShares);
 
-                // Calculating Number of shares summation
-                for (Person mPerson : mPeople) {
-                    if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
-                        Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " Number Of Shares = " + mPerson.getNumberOfShares());
-                        numberOfSharesSum += mPerson.getNumberOfShares();
-
-                    }
-                }
-                if (findGCD(heads, wivesNumberOfShares) == 1) {
-
-                    Log.i(TAG, "handleWivesGroup(): number of shares Sum = " + numberOfSharesSum);
-                    newProblemOrigin = heads * numberOfSharesSum;
-                } else {
-
-                    Log.i(TAG, "handleWivesGroup(): findGCD(heads, NumberOfShares) = " + findGCD(heads, wivesNumberOfShares));
-
-                    newProblemOrigin = numberOfSharesSum * (heads / findGCD(heads, wivesNumberOfShares));
-
-                    heads = (heads / findGCD(heads, wivesNumberOfShares));
-
-                    Log.i(TAG, "handleWivesGroup(): number of shares Sum = " + numberOfSharesSum + " & heads = " + heads + " & new problem Origin Sum = " + newProblemOrigin);
-
-                }
-
-                cacheHeads(heads, newProblemOrigin, oConstants);
-
-                for (Person mPerson : mPeople) {
-                    if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
-
-                        mPerson.setProblemOrigin(newProblemOrigin);
-                        mPerson.setNumberOfShares(heads * mPerson.getNumberOfShares());
-
-                        Fraction fraction = new Fraction(mPerson.getNumberOfShares(), newProblemOrigin);
-                        setPersonSharePercent(mPeople, fraction, mPerson.getRelation());
-
-                        Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " problem origin = " + mPerson.getProblemOrigin()
-                                + " sharePercent = " + mPerson.getSharePercent().getNumerator() + "/" + mPerson.getSharePercent().getDenominator());
-                    }
-                }
             }
 
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private static void handleJustWives(ArrayList<Person> mPeople, OConstants oConstants, int newProblemOrigin, int heads, int numberOfSharesSum, Person wife, Person moreThanWife, int wivesNumberOfShares) {
+        try{
+            Log.i(TAG, "handleWivesGroup(): handling just wives");
+            oConstants.mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP, true);
+
+            // Calculating Number of shares summation
+            for (Person mPerson : mPeople) {
+                if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
+                    Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " Number Of Shares = " + mPerson.getNumberOfShares());
+                    numberOfSharesSum += mPerson.getNumberOfShares();
+
+                }
+            }
+            if (findGCD(heads, wivesNumberOfShares) == 1) {
+
+                Log.i(TAG, "handleWivesGroup(): number of shares Sum = " + numberOfSharesSum);
+                newProblemOrigin = heads * numberOfSharesSum;
+            } else {
+
+                Log.i(TAG, "handleWivesGroup(): findGCD(heads, NumberOfShares) = " + findGCD(heads, wivesNumberOfShares));
+
+                newProblemOrigin = numberOfSharesSum * (heads / findGCD(heads, wivesNumberOfShares));
+
+                heads = (heads / findGCD(heads, wivesNumberOfShares));
+
+                Log.i(TAG, "handleWivesGroup(): number of shares Sum = " + numberOfSharesSum + " & heads = " + heads + " & new problem Origin Sum = " + newProblemOrigin);
+
+            }
+
+            cacheHeads(heads, newProblemOrigin, oConstants);
+
+            for (Person mPerson : mPeople) {
+                if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
+
+                    mPerson.setProblemOrigin(newProblemOrigin);
+                    mPerson.setNumberOfShares(heads * mPerson.getNumberOfShares());
+
+                    Fraction fraction = new Fraction(mPerson.getNumberOfShares(), newProblemOrigin);
+                    setPersonSharePercent(mPeople, fraction, mPerson.getRelation());
+
+                    Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " problem origin = " + mPerson.getProblemOrigin()
+                            + " sharePercent = " + mPerson.getSharePercent().getNumerator() + "/" + mPerson.getSharePercent().getDenominator());
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private static void handleWivesAndBrotherSisters(ArrayList<Person> mPeople, OConstants oConstants, int newProblemOrigin, int heads, int numberOfSharesSum, Person wife, Person moreThanWife, int wivesNumberOfShares) {
+        try{
+
+            Log.i(TAG, "handleWivesGroup(): handling wives with brothers \"Two groups\"");
+            oConstants.mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP, false);
+
+            Person moreThanBrotherAndSister = getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER);
+
+            int savedNumberOfWives = HandleTwoGroupsUtils.getGroupSavedNumber(mPeople, moreThanWife, "", OConstants.PERSON_WIFE);
+            int savedNumberOfBrothers = HandleTwoGroupsUtils.getGroupSavedNumber(mPeople, moreThanBrotherAndSister, OConstants.PERSON_BROTHER, OConstants.PERSON_SISTER);
+
+            cacheSavedNumbers(oConstants, savedNumberOfWives, savedNumberOfBrothers);
+
+            Log.i(TAG, "handleWivesGroup(): wives saved number = " + savedNumberOfWives);
+            Log.i(TAG, "handleWivesGroup(): brothers saved number = " + savedNumberOfBrothers);
+
+
+            // Calculating Number of shares summation
+            for (Person mPerson : mPeople) {
+                if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_BROTHER) && !mPerson.getRelation().matches(OConstants.PERSON_SISTER) &&
+                        !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
+                    Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " problem origin = " + mPerson.getNumberOfShares());
+                    numberOfSharesSum += mPerson.getNumberOfShares();
+                }
+            }
+//                numberOfSharesSum += wivesNumberOfShares;
+            heads = HandleTwoGroupsUtils.getSimpleCommonMultiplier(savedNumberOfBrothers, savedNumberOfWives);
+            newProblemOrigin = heads * numberOfSharesSum;
+
+            cacheHeads(heads, newProblemOrigin, oConstants);
+            Log.i(TAG, "handleWivesGroup(): number Of shares = " + numberOfSharesSum + " heads = " + heads + " newProblem Origin = " + newProblemOrigin);
+
+            for (Person mPerson : mPeople) {
+                if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_BROTHER) && !mPerson.getRelation().matches(OConstants.PERSON_SISTER)
+                        && !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
+
+                    mPerson.setProblemOrigin(newProblemOrigin);
+                    mPerson.setNumberOfShares(heads * mPerson.getNumberOfShares());
+
+                    Fraction fraction = new Fraction(mPerson.getNumberOfShares(), newProblemOrigin);
+                    setPersonSharePercent(mPeople, fraction, mPerson.getRelation());
+
+                    Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " problem origin = " + mPerson.getProblemOrigin() + " sharePercent = " + mPerson.getSharePercent().getNumerator() +
+                            "/" + mPerson.getSharePercent().getDenominator());
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private static void handleWivesAndChildren(ArrayList<Person> mPeople, OConstants oConstants, int newProblemOrigin, int heads, int numberOfSharesSum, Person wife, Person moreThanWife, int wivesNumberOfShares) {
+        try {
+
+            if (oConstants.mPrefManager != null) {
+                oConstants.mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP, false);
+            }
+
+            Log.i(TAG, "handleWivesGroup(): handling wives with more than three daughter \"Two groups\"");
+            oConstants.isHandleChildrenGroup = true;
+
+            Person moreThanBrotherAndSister = getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS);
+
+            int savedNumberOfWives = HandleTwoGroupsUtils.getGroupSavedNumber(mPeople, moreThanWife, "", OConstants.PERSON_WIFE);
+            int savedNumberOfChildren = HandleTwoGroupsUtils.getGroupSavedNumber(mPeople, moreThanBrotherAndSister, OConstants.PERSON_SON, OConstants.PERSON_DAUGHTER);
+
+            cacheSavedNumbers(oConstants, savedNumberOfWives, savedNumberOfChildren);
+            Log.i(TAG, "handleWivesGroup(): wives saved number = " + savedNumberOfWives);
+            Log.i(TAG, "handleWivesGroup(): children saved number = " + savedNumberOfChildren);
+
+
+            // Calculating Number of shares summation
+            for (Person mPerson : mPeople) {
+                if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_SON) && !mPerson.getRelation().matches(OConstants.PERSON_DAUGHTER) &&
+                        !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
+                    Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " Number Of Shares = " + mPerson.getNumberOfShares());
+                    numberOfSharesSum += mPerson.getNumberOfShares();
+                }
+            }
+//                numberOfSharesSum += wivesNumberOfShares;
+            heads = HandleTwoGroupsUtils.getSimpleCommonMultiplier(savedNumberOfChildren, savedNumberOfWives);
+
+
+            newProblemOrigin = heads * numberOfSharesSum;
+
+            cacheHeads(heads, newProblemOrigin, oConstants);
+
+            Log.i(TAG, "handleWivesGroup(): number Of shares = " + numberOfSharesSum + " heads = " + heads + " newProblem Origin = " + newProblemOrigin);
+
+            for (Person mPerson : mPeople) {
+                if (!isBlocked(mPerson) && !mPerson.getRelation().matches(OConstants.PERSON_SON) && !mPerson.getRelation().matches(OConstants.PERSON_DAUGHTER)
+                        && !mPerson.getRelation().matches(OConstants.PERSON_WIFE)) {
+
+                    mPerson.setProblemOrigin(newProblemOrigin);
+                    mPerson.setNumberOfShares(heads * mPerson.getNumberOfShares());
+
+                    Fraction fraction = new Fraction(mPerson.getNumberOfShares(), newProblemOrigin);
+                    setPersonSharePercent(mPeople, fraction, mPerson.getRelation());
+
+                    Log.i(TAG, "handleWivesGroup(): person = " + mPerson.getRelation() + " problem origin = " + mPerson.getProblemOrigin() + " sharePercent = " + mPerson.getSharePercent().getNumerator() +
+                            "/" + mPerson.getSharePercent().getDenominator());
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -3240,6 +3304,8 @@ public class OConstants implements Parcelable {
         dest.writeByte((byte) (hasFather_GrandFather ? 1 : 0));
         dest.writeByte((byte) (hasFather_GrandMother ? 1 : 0));
         dest.writeByte((byte) (hasBrothersAndSisters ? 1 : 0));
+        dest.writeInt(deadSonCount);
+        dest.writeInt(deadDaughterCount);
     }
 
     private static void showResult(ArrayList<Person> mPeople) {
