@@ -3,6 +3,8 @@ package com.company.mawarees.Model.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class Person implements Parcelable, Comparable<Person> {
 
 
@@ -46,6 +48,12 @@ public class Person implements Parcelable, Comparable<Person> {
 
     private boolean group;
 
+    private ArrayList<Person> grandChildren;
+
+    private int boysCount;
+
+    private int girlsCount;
+
     protected Person(Parcel in) {
         id = in.readInt();
         count = in.readInt();
@@ -67,6 +75,9 @@ public class Person implements Parcelable, Comparable<Person> {
         alive = in.readByte() != 0;
         blockedBy = in.readString();
         group = in.readByte() != 0;
+        grandChildren = in.createTypedArrayList(Person.CREATOR);
+        boysCount = in.readInt();
+        girlsCount = in.readInt();
     }
 
     public Person() {
@@ -96,7 +107,7 @@ public class Person implements Parcelable, Comparable<Person> {
         return deadSonNumber;
     }
 
-    public void setDeadSonNumber(int deadSonNumber) {
+    public void setDeadChildNumber(int deadSonNumber) {
         this.deadSonNumber = deadSonNumber;
     }
 
@@ -244,6 +255,30 @@ public class Person implements Parcelable, Comparable<Person> {
         this.group = group;
     }
 
+    public ArrayList<Person> getGrandChildren() {
+        return grandChildren;
+    }
+
+    public void setGrandChildren(ArrayList<Person> grandChildren) {
+        this.grandChildren = grandChildren;
+    }
+
+    public int getBoysCount() {
+        return boysCount;
+    }
+
+    public void setBoysCount(int boysCount) {
+        this.boysCount = boysCount;
+    }
+
+    public int getGirlsCount() {
+        return girlsCount;
+    }
+
+    public void setGirlsCount(int girlsCount) {
+        this.girlsCount = girlsCount;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -271,6 +306,9 @@ public class Person implements Parcelable, Comparable<Person> {
         dest.writeByte((byte) (alive ? 1 : 0));
         dest.writeString(blockedBy);
         dest.writeByte((byte) (group ? 1 : 0));
+        dest.writeTypedList(grandChildren);
+        dest.writeInt(boysCount);
+        dest.writeInt(girlsCount);
     }
 
 

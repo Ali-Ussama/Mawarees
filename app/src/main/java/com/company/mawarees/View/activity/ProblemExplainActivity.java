@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
 
@@ -455,7 +454,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
             person.setCount(size);
             person.setRelation(relation);
             person.setGender(gender);
-            person.setDeadSonNumber(-1);
+            person.setDeadChildNumber(-1);
             person.setProblemOrigin(problemOrigin);
             person.setOriginalSharePercent(originalPercent);
             person.setShareValue(shareValue);

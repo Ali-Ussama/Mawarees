@@ -661,7 +661,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                 person.setCount(size);
                 person.setRelation(relation);
                 person.setGender(gender);
-                person.setDeadSonNumber(-1);
+                person.setDeadChildNumber(-1);
                 person.setGroup(group);
                 people.add(person);
 
@@ -731,7 +731,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             Person person = new Person();
             person.setAlive(false);
             person.setCount(size);
-            person.setDeadSonNumber(number + 1);
+            person.setDeadChildNumber(number + 1);
             person.setRelation(relation);
             person.setGender(gender);
             children.add(person);
@@ -958,7 +958,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                 person.setBlocked(blocked);
                 person.setBlockedBy(blockedBy);
                 person.setCount(count);
-                person.setDeadSonNumber(deadSonNumber);
+                person.setDeadChildNumber(deadSonNumber);
                 person.setEachPersonNumberOfShares(eachPersonNumberOfShares);
                 person.setEachPersonSharePercent(eachPersonSharePercent);
                 person.setEachPersonShareValue(eachPersonShareValue);
@@ -1036,7 +1036,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
                 person.setBlocked(blocked);
                 person.setBlockedBy(blockedBy);
                 person.setCount(count);
-                person.setDeadSonNumber(deadSonNumber);
+                person.setDeadChildNumber(deadSonNumber);
                 person.setEachPersonNumberOfShares(eachPersonNumberOfShares);
                 person.setEachPersonSharePercent(eachPersonSharePercent);
                 person.setEachPersonShareValue(eachPersonShareValue);

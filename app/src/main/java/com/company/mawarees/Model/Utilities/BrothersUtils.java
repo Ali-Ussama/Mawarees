@@ -272,7 +272,7 @@ public class BrothersUtils {
             person.setCount(size);
             person.setRelation(relation);
             person.setGender(gender);
-            person.setDeadSonNumber(-1);
+            person.setDeadChildNumber(-1);
             person.setGroup(group);
             person.setId(id);
             data.add(person);

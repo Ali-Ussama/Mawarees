@@ -148,7 +148,7 @@ public class DeadSonRVAdapter extends RecyclerView.Adapter<DeadSonRVAdapter.Dead
                 Person person = new Person();
                 person.setAlive(true);
                 person.setCount(mValue);
-                person.setDeadSonNumber(childNumber);
+                person.setDeadChildNumber(childNumber);
                 person.setRelation(relation);
                 person.setGender(OConstants.GENDER_MALE);
                 person.setGroup(false);
@@ -168,7 +168,7 @@ public class DeadSonRVAdapter extends RecyclerView.Adapter<DeadSonRVAdapter.Dead
                 Person person = new Person();
                 person.setAlive(true);
                 person.setCount(mValue);
-                person.setDeadSonNumber(childNumber);
+                person.setDeadChildNumber(childNumber);
                 person.setRelation(relation);
                 person.setGender(OConstants.GENDER_FEMALE);
                 person.setGroup(false);

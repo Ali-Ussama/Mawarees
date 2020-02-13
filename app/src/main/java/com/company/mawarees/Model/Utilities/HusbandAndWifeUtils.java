@@ -2,7 +2,6 @@ package com.company.mawarees.Model.Utilities;
 
 import android.util.Log;
 
-import com.company.mawarees.Model.Models.Fraction;
 import com.company.mawarees.Model.Models.Person;
 import com.company.mawarees.Model.OConstants;
 
@@ -121,7 +120,7 @@ public class HusbandAndWifeUtils {
             person.setCount(size);
             person.setRelation(relation);
             person.setGender(gender);
-            person.setDeadSonNumber(-1);
+            person.setDeadChildNumber(-1);
             person.setGroup(true);
             data.add(person);
 

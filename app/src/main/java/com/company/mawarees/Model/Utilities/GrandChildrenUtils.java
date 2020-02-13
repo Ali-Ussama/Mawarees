@@ -34,10 +34,6 @@ public class GrandChildrenUtils {
                     Person son = OConstants.getDeadChild(people, OConstants.PERSON_SON, i);
 
                     if (son != null) {
-                        Person childBoy = OConstants.getGrandChild(people, OConstants.PERSON_SON_BOY, i);
-                        Person childGirl = OConstants.getGrandChild(people, OConstants.PERSON_SON_GIRL, i);
-                        int childBoyCount = OConstants.getDeadSonBoysCount(people, i);
-                        int childGirlCount = OConstants.getDeadSonBoysCount(people, i);
                         Person children = OConstants.getGrandChild(people, OConstants.PERSON_SON_CHILDREN, i);
 
                         if (children != null) {
@@ -81,7 +77,7 @@ public class GrandChildrenUtils {
             person.setCount(size);
             person.setRelation(relation);
             person.setGender(gender);
-            person.setDeadSonNumber(-1);
+            person.setDeadChildNumber(-1);
             person.setProblemOrigin(problemOrigin);
             person.setOriginalSharePercent(originalPercent);
             person.setSharePercent(sharePercent);

@@ -106,7 +106,7 @@
     <string name="yes">نعم</string>
     <string name="no">لا</string>
     <string name="enter_sons_number"><b>أدخل عدد الأولاد الذكور الأحياء</b></string>
-    <string name="enter_daughters_number"><b>أدخل عدد الأولاد الأناث الأحياء</b></string>
+    <string name="enter_daughters_number"><b>أدخل عدد الأولاد الإناث الأحياء</b></string>
     <string name="enter_mother_uncle_number"><b>أدخل عدد الأخوال</b></string>
     <string name="enter_mother_aunt_number"><b>أدخل عدد الخالات</b></string>
     <string name="enter_sisters_number"><b>أدخل عدد الأخوات</b></string>
@@ -114,6 +114,7 @@
     <string name="enter_father_uncle_number"><b>أدخل عدد الأعمام</b></string>
     <string name="enter_father_aunts_number"><b>أدخل عدد العمات</b></string>
     <string name="enter_dead_sons_number"><b>أدخل عدد الأولاد الذكور المتوفيين</b></string>
+    <string name="enter_dead_daughters_number" >أدخل عدد الأولاد الإناث المتوفيين</string>
     <string name="splash_libs_lbl">شرح الميراث في كتاب الله تعالى</string>
 
     <string name="video_link">https://www.youtube.com/playlist?list=PLgUV-mU7SdBPB0mnvSgFKIjQyh5qfj1BY</string>

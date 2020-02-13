@@ -15,7 +15,6 @@ import com.company.mawarees.Model.Utilities.HandleTwoGroupsUtils;
 import com.company.mawarees.PrefManager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class OConstants implements Parcelable {
 
@@ -596,12 +595,45 @@ public class OConstants implements Parcelable {
         return person;
     }
 
+    public static Person getDeadSonChildrenGroup(ArrayList<Person> data, String relation, int number) {
+        try {
+            for (Person mData : data) {
+                if (mData.getRelation().contains(relation) && mData.isAlive() && mData.getDeadSonNumber() == number) {
+                    return mData;
+                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Person getDeadDaughterChildrenGroup(ArrayList<Person> data, String relation, int number) {
+        try {
+            for (Person mData : data) {
+                if (mData.getRelation().contains(relation) && mData.isAlive() && mData.getDeadSonNumber() == number) {
+                    return mData;
+                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public static Person getGrandChild(ArrayList<Person> data, String relation, int number) {
         Person person = null;
         try {
             for (Person mData : data) {
                 if (mData.getRelation().matches(relation) && mData.getDeadSonNumber() == number) {
                     person = mData;
+                    break;
                 }
             }
 
@@ -1411,7 +1443,7 @@ public class OConstants implements Parcelable {
                 person.setBlocked(blocked);
                 person.setBlockedBy(blockedBy);
                 person.setCount(count);
-                person.setDeadSonNumber(deadSonNumber);
+                person.setDeadChildNumber(deadSonNumber);
                 person.setEachPersonNumberOfShares(eachPersonNumberOfShares);
                 person.setEachPersonSharePercent(eachPersonSharePercent);
                 person.setEachPersonShareValue(eachPersonShareValue);
@@ -1493,7 +1525,7 @@ public class OConstants implements Parcelable {
                 person.setBlocked(blocked);
                 person.setBlockedBy(blockedBy);
                 person.setCount(count);
-                person.setDeadSonNumber(deadSonNumber);
+                person.setDeadChildNumber(deadSonNumber);
                 person.setEachPersonNumberOfShares(eachPersonNumberOfShares);
                 person.setEachPersonSharePercent(eachPersonSharePercent);
                 person.setEachPersonShareValue(eachPersonShareValue);
@@ -1969,7 +2001,7 @@ public class OConstants implements Parcelable {
             person.setCount(size);
             person.setRelation(relation);
             person.setGender(gender);
-            person.setDeadSonNumber(-1);
+            person.setDeadChildNumber(-1);
             person.setProblemOrigin(problemOrigin);
             person.setOriginalSharePercent(originalPercent);
             person.setSharePercent(sharePercent);
@@ -2828,10 +2860,10 @@ public class OConstants implements Parcelable {
 
             } else if ((getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER) != null && !isBlocked(getPerson(mPeople, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER)))) {
 
-                handleWivesAndBrotherSisters(mPeople, oConstants,newProblemOrigin,heads,numberOfSharesSum,wife,moreThanWife,wivesNumberOfShares);
+                handleWivesAndBrotherSisters(mPeople, oConstants, newProblemOrigin, heads, numberOfSharesSum, wife, moreThanWife, wivesNumberOfShares);
 
             } else {
-                handleJustWives(mPeople,oConstants,newProblemOrigin, heads,numberOfSharesSum,wife,moreThanWife,wivesNumberOfShares);
+                handleJustWives(mPeople, oConstants, newProblemOrigin, heads, numberOfSharesSum, wife, moreThanWife, wivesNumberOfShares);
 
             }
 
@@ -2840,9 +2872,9 @@ public class OConstants implements Parcelable {
             e.printStackTrace();
         }
     }
-    
+
     private static void handleJustWives(ArrayList<Person> mPeople, OConstants oConstants, int newProblemOrigin, int heads, int numberOfSharesSum, Person wife, Person moreThanWife, int wivesNumberOfShares) {
-        try{
+        try {
             Log.i(TAG, "handleWivesGroup(): handling just wives");
             oConstants.mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP, true);
 
@@ -2885,13 +2917,13 @@ public class OConstants implements Parcelable {
                             + " sharePercent = " + mPerson.getSharePercent().getNumerator() + "/" + mPerson.getSharePercent().getDenominator());
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private static void handleWivesAndBrotherSisters(ArrayList<Person> mPeople, OConstants oConstants, int newProblemOrigin, int heads, int numberOfSharesSum, Person wife, Person moreThanWife, int wivesNumberOfShares) {
-        try{
+        try {
 
             Log.i(TAG, "handleWivesGroup(): handling wives with brothers \"Two groups\"");
             oConstants.mPrefManager.saveBoolean(PrefManager.KEY_ONE_GROUP, false);
@@ -2936,7 +2968,7 @@ public class OConstants implements Parcelable {
                             "/" + mPerson.getSharePercent().getDenominator());
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

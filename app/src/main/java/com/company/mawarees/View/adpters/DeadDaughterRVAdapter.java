@@ -27,7 +27,6 @@ import butterknife.ButterKnife;
 
 import static com.company.mawarees.Model.OConstants.PERSON_DAUGHTER_BOY;
 import static com.company.mawarees.Model.OConstants.PERSON_DAUGHTER_GIRL;
-import static com.company.mawarees.Model.OConstants.PERSON_SON_BOY;
 
 public class DeadDaughterRVAdapter extends RecyclerView.Adapter<DeadDaughterRVAdapter.DeadDaughterViewHolder> {
 
@@ -152,7 +151,7 @@ public class DeadDaughterRVAdapter extends RecyclerView.Adapter<DeadDaughterRVAd
                 Person person = new Person();
                 person.setAlive(true);
                 person.setCount(mValue);
-                person.setDeadSonNumber(childNumber);
+                person.setDeadChildNumber(childNumber);
                 person.setRelation(relation);
                 person.setGender(OConstants.GENDER_MALE);
                 person.setGroup(false);
@@ -173,7 +172,7 @@ public class DeadDaughterRVAdapter extends RecyclerView.Adapter<DeadDaughterRVAd
                 Person person = new Person();
                 person.setAlive(true);
                 person.setCount(mValue);
-                person.setDeadSonNumber(childNumber);
+                person.setDeadChildNumber(childNumber);
                 person.setRelation(relation);
                 person.setGender(OConstants.GENDER_FEMALE);
                 person.setGroup(false);
