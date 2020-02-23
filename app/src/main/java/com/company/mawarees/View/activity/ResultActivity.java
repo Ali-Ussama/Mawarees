@@ -21,7 +21,6 @@ import com.company.mawarees.Model.Utilities.AppUtils;
 import com.company.mawarees.PrefManager;
 import com.company.mawarees.R;
 import com.company.mawarees.View.adpters.ResultRVAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -130,7 +129,7 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
             mExplainProblemFab.setOnClickListener(this);
 
             oConstants = getIntent().getParcelableExtra(getString(R.string.constants));
-            explanation = oConstants.getmExplanation();
+            explanation = oConstants.getExplanation();
 
             setCorrectionNumber();
 
@@ -280,7 +279,7 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
 
     void displayResult(OConstants oConstants) {
         try {
-            ExplanationModel explainModel = oConstants.getmExplanation();
+            ExplanationModel explainModel = oConstants.getExplanation();
             ArrayList<Person> mPeople;
             Log.i(TAG, "displayResult(): is called");
             if (explainModel.getPhase1() != null && explainModel.getPhase1().getPeople() != null && !explainModel.getPhase1().getPeople().isEmpty()) {

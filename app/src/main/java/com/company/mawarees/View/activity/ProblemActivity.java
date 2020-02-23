@@ -975,7 +975,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             }
 
             phase4.setPeople(data);
-            oConstants.getmExplanation().setPhase4(phase4);
+            oConstants.getExplanation().setPhase4(phase4);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1052,7 +1052,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             }
 
             mExplainPhase1.setPeople(data);
-            oConstants.getmExplanation().setPhase1(mExplainPhase1);
+            oConstants.getExplanation().setPhase1(mExplainPhase1);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1277,7 +1277,7 @@ public class ProblemActivity extends AppCompatActivity implements DeadPersonList
             Intent intent = new Intent(mCurrent, ResultActivity.class);
             intent.putParcelableArrayListExtra(getString(R.string.intent_data_lbl), mPeople);
             intent.putExtra(getString(R.string.intent_total_money), oConstants.getTotalMoney());
-            intent.putExtra(getString(R.string.explain_problem_result), oConstants.getmExplanation());
+            intent.putExtra(getString(R.string.explain_problem_result), oConstants.getExplanation());
             intent.putExtra(getString(R.string.constants), oConstants);
             startActivity(intent);
         } catch (Exception e) {

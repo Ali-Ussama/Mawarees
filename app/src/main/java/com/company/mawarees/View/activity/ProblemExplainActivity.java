@@ -140,7 +140,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
 
             oConstants = getIntent().getParcelableExtra(getString(R.string.constants));
-            explanation = oConstants.getmExplanation();
+            explanation = oConstants.getExplanation();
 
             removeBlockedPeople();
             if (people.get(0) != null) {
@@ -278,7 +278,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
             if (correctionValue > 1) {
                 viewAnimator.setDisplayedChild(1);
-                ArrayList<Person> data = createFourthStepData(oConstants.getmExplanation().getPhase2().getPeople());
+                ArrayList<Person> data = createFourthStepData(oConstants.getExplanation().getPhase2().getPeople());
 
 //                data = OConstants.sort(data);
                 Collections.sort(data);
@@ -508,7 +508,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
     }
 
     void displayResult(OConstants oConstants) {
-        ExplanationModel explainModel = oConstants.getmExplanation();
+        ExplanationModel explainModel = oConstants.getExplanation();
         ArrayList<Person> mPeople;
         Log.i(TAG, "displayResult(): is called");
         if (explainModel.getPhase1() != null && explainModel.getPhase1().getPeople() != null && !explainModel.getPhase1().getPeople().isEmpty()) {

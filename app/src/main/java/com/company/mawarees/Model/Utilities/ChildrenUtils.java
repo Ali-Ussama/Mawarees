@@ -11,11 +11,9 @@ import java.util.ArrayList;
 public class ChildrenUtils {
 
 
-
     private static final String TAG = "ChildrenUtils";
 
     public static void calculateChildren(ArrayList<Person> data, OConstants oConstants) {
-
 
         //يوجد فرع وارث
         if (oConstants.isHasChildren()) {
@@ -31,6 +29,9 @@ public class ChildrenUtils {
                 OConstants.setPersonSharePercent(data, OConstants.half, OConstants.PERSON_DAUGHTER); // نصيب البنت
                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_DAUGHTER, ProofsAndExplanations.DaughterProofs.E1, ProofsAndExplanations.DaughterProofs.p1);
 
+                if (oConstants.isHasDeadChildren()) {
+                    OConstants.setPersonSharePercent(data, OConstants.half, OConstants.PERSON_DAUGHTER_CHILDREN);
+                }
             } else if (daughters == 2) {
 
                 Log.i(TAG, "calculateChildren(): has 2 daughters");
@@ -54,11 +55,10 @@ public class ChildrenUtils {
             } else if (daughters > 2) {
                 Log.i(TAG, "calculateChildren(): has >= 3 daughters");
 
-
                 // نصيب البنات = 2/3
                 // نصيب البنت = نصيب البنت / عدد البنات
                 // نصيب الولد = نصيب البنت * 2
-               OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_SON); // نصيب الولد
+                OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_SON); // نصيب الولد
                 OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_DAUGHTER); // نصيب البنت
 
                 OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_More_Than_three_DAUGHTERS); //نصيب البنات = 2/3

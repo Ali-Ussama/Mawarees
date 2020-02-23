@@ -1008,10 +1008,12 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                             validatePeople();
 
-                            ChildrenUtils.calculateChildren(mPeople, oConstants);
-//                Log.i(TAG, "validatePeople(): moreThanThreeDaughters Count = " + OConstants.getPersonCount(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS) + " sharePercent = " + OConstants.getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS).getSharePercent().getNumerator() + "/" + OConstants.getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS).getSharePercent().getDenominator());
                             validateDeadDaughterChildren();
                             validateDeadSonsChildren();
+
+                            ChildrenUtils.calculateChildren(mPeople, oConstants);
+//                Log.i(TAG, "validatePeople(): moreThanThreeDaughters Count = " + OConstants.getPersonCount(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS) + " sharePercent = " + OConstants.getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS).getSharePercent().getNumerator() + "/" + OConstants.getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS).getSharePercent().getDenominator());
+
 
                             HusbandAndWifeUtils.calculateHusbandAndWife(mPeople, oConstants);
 //                Log.i(TAG, "validatePeople(): moreThanThreeDaughters Count = " + OConstants.getPersonCount(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS) + " sharePercent = " + OConstants.getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS).getSharePercent().getNumerator() + "/" + OConstants.getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS).getSharePercent().getDenominator());
@@ -1136,7 +1138,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 //            showResult(data);
 
             phase4.setPeople(data);
-            oConstants.getmExplanation().setPhase4(phase4);
+            oConstants.getExplanation().setPhase4(phase4);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1213,7 +1215,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             }
 //            Collections.copy(data, mPeople);
             mExplainPhase1.setPeople(data);
-            oConstants.getmExplanation().setPhase1(mExplainPhase1);
+            oConstants.getExplanation().setPhase1(mExplainPhase1);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1426,21 +1428,23 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
             for (int i = 0; i < deadSonsCount; i++) {
 
-                Log.i(TAG, "validateDeadSonsChildren(): dead son number = " + i);
+                Log.i(TAG, "validateDeadSonsChildren(): dead son number = " + (i + 1));
                 for (Person person : mPeople) {
-                    if ((person.getRelation().contains(OConstants.PERSON_SON_CHILDREN)) && person.getDeadSonNumber() == i) {
-                        Log.i(TAG, "validateDeadSonsChildren(): dead son number = " + i + " has children");
+                    if ((person.getRelation().contains(OConstants.PERSON_SON_CHILDREN)) && person.getDeadSonNumber() == (i + 1)) {
+                        Log.i(TAG, "validateDeadSonsChildren(): dead son number = " + (i + 1) + " has children");
                         deadSonsMemoization[i] = 1;
                     }
                 }
 
                 if (deadSonsMemoization[i] == 1) {
                     incrementDeadSonCount();
+                    oConstants.setHasDeadChildren(true);
                 }
             }
+
             for (int i = 0; i < deadSonsMemoization.length; i++) {
                 if (deadSonsMemoization[i] == 0) {
-                    Log.i(TAG, "validateDeadSonsChildren(): dead son number = " + i + " hasn't children");
+                    Log.i(TAG, "validateDeadSonsChildren(): dead son number = " + (i + 1) + " hasn't children");
                     for (Person person : mPeople) {
                         if (person.getRelation().contains(OConstants.PERSON_SON) && person.getDeadSonNumber() == (i + 1)) {
                             sonsWhoDoNotHaveChildren.add(person);
@@ -1475,16 +1479,17 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
             for (int i = 0; i < deadDaughtersCount; i++) {
 
-                Log.i(TAG, "validateDeadDaughterChildren(): dead daughter number = " + i);
+                Log.i(TAG, "validateDeadDaughterChildren(): dead daughter number = " + (i + 1));
                 for (Person person : mPeople) {
-                    if ((person.getRelation().contains(OConstants.PERSON_DAUGHTER_CHILDREN)) && person.getDeadSonNumber() == i) {
-                        Log.i(TAG, "validateDeadDaughterChildren(): dead daughter number = " + i + " has children");
+                    if ((person.getRelation().contains(OConstants.PERSON_DAUGHTER_CHILDREN)) && person.getDeadSonNumber() == (i + 1)) {
+                        Log.i(TAG, "validateDeadDaughterChildren(): dead daughter number = " + (i + 1) + " has children");
                         deadDaughtersMemoization[i] = 1;
                     }
                 }
 
                 if (deadDaughtersMemoization[i] == 1) {
                     incrementDeadDaughterCount();
+                    oConstants.setHasDeadChildren(true);
                 }
             }
 
@@ -1492,7 +1497,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                 if (deadDaughtersMemoization[i] == 0) {
                     for (Person person : mPeople) {
                         if (person.getRelation().contains(OConstants.PERSON_DAUGHTER) && person.getDeadSonNumber() == (i + 1)) {
-                            Log.i(TAG, "validateDeadDaughterChildren(): dead daughter number = " + i + " hasn't children");
+                            Log.i(TAG, "validateDeadDaughterChildren(): dead daughter number = " + (i + 1) + " hasn't children");
                             daughtersWhoDoNotHaveChildren.add(person);
                             break;
                         }
@@ -1563,11 +1568,11 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
         try {
             Log.i(TAG, "startResultActivity(): is Called");
 
-            if (oConstants.getmExplanation() == null) {
+            if (oConstants.getExplanation() == null) {
                 Log.i(TAG, "startResultActivity(): Explanation == null");
-            } else if (oConstants.getmExplanation().getPhase2() == null) {
+            } else if (oConstants.getExplanation().getPhase2() == null) {
                 Log.i(TAG, "startResultActivity(): phase 2 == null");
-            } else if (oConstants.getmExplanation().getPhase2().getPeople() == null) {
+            } else if (oConstants.getExplanation().getPhase2().getPeople() == null) {
                 Log.i(TAG, "startResultActivity(): phase 2 people  == null");
             }
 
