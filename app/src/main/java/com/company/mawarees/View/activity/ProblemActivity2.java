@@ -1629,9 +1629,8 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             mWifeValueET.setText("");
             mAliveSonValueTV.setText("");
             mAliveDaughterValueTV.setText("");
-
-//            mDeadSonValueET.setText("");
-//            mDeadDaughterValueET.setText("");
+            mDeadSonValueET.setText("");
+            mDeadDaughterValueET.setText("");
 
             mBrothersValueTV.setText("");
             mSistersValueTV.setText("");

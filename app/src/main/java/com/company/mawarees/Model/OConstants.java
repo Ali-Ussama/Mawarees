@@ -1078,14 +1078,15 @@ public class OConstants implements Parcelable {
         if (specialCaseRemainPeople != null) {
             Log.i(TAG, "calculateShareValue(): remain people size = " + specialCaseRemainPeople.size());
         }
+        if (!grandChildren.isEmpty()) {
+            setGrandChildren(grandChildren, data, oConstants);
+        }
         if (!specialCaseRemainPeople.isEmpty())
             handleRemainPerson(data, X, oConstants);
         if (!partners.isEmpty())
             handlePartnerPeople(data, oConstants, X);
 
-        if (!grandChildren.isEmpty()) {
-            setGrandChildren(grandChildren, data, oConstants);
-        }
+
 //        setExplanationPhase4(data, oConstants);
         handleDeadSonsAndDaughters(data);
 
@@ -1349,7 +1350,8 @@ public class OConstants implements Parcelable {
             try {
                 Log.i(TAG, "handlePartnerPeople(): person = " + person.getRelation());
 
-                if (!isBlocked(person)) {
+                Log.i(TAG, "handlePartnerPeople: grandChildren size = " + (oConstants.getDeadSonCount() + oConstants.getDeadDaughterCount()));
+                if (!isBlocked(person) && !isGrandChildren(person)) {
                     Person fatherUnclesAndAunts = getPerson(data, OConstants.PERSON_FATHER_UNCLES_AND_AUNTS);
                     Person motherUnclesAndAunts = getPerson(data, OConstants.PERSON_MOTHER_UNCLES_AND_AUNTS);
                     Person moreThanBrotherAndSister = getPerson(data, OConstants.PERSON_MORE_THAN_BROTHER_OR_SISTER);
@@ -2898,7 +2900,7 @@ public class OConstants implements Parcelable {
 
     private static void handleWivesAndGrandChildrenGroup(ArrayList<Person> mPeople, OConstants oConstants, int newProblemOrigin, int heads, int numberOfSharesSum, Person wife, Person moreThanWife, int wivesNumberOfShares) {
         try {
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -3410,6 +3412,18 @@ public class OConstants implements Parcelable {
      */
 
 
+    public static ArrayList<Person> getGrandChildren(ArrayList<Person> data) {
+        ArrayList<Person> result = new ArrayList<>();
+
+        for (Person person : data) {
+            if (person.getRelation().equals(PERSON_DAUGHTER_CHILDREN) || person.getRelation().equals(PERSON_SON_CHILDREN)) {
+                result.add(person);
+            }
+        }
+        return result;
+    }
+
+
     private static boolean isGrandChildren(Person person) {
         try {
 
@@ -3435,7 +3449,7 @@ public class OConstants implements Parcelable {
                         if (deadChild != null) {
                             Log.i(TAG, "setGrandChildren(): " + deadChild.getRelation() + " - number = " + deadChild.getDeadSonNumber() + " grand boy count = " + grandChild.getBoysCount()
                                     + " - grand girls count = " + grandChild.getGirlsCount());
-                        }else{
+                        } else {
                             Log.i(TAG, "setGrandChildren(): dead son with number = " + grandChild.getDeadSonNumber() + " is null");
                         }
                     } else if (grandChild.getRelation().matches(PERSON_DAUGHTER_CHILDREN)) {
@@ -3445,7 +3459,7 @@ public class OConstants implements Parcelable {
                         if (deadChild != null) {
                             Log.i(TAG, "setGrandChildren(): " + deadChild.getRelation() + " - number = " + deadChild.getDeadSonNumber() + " grand boy count = " + grandChild.getBoysCount()
                                     + " - grand girls count = " + grandChild.getGirlsCount());
-                        }else{
+                        } else {
                             Log.i(TAG, "setGrandChildren(): dead daughter with number = " + grandChild.getDeadSonNumber() + " is null");
                         }
                     }
