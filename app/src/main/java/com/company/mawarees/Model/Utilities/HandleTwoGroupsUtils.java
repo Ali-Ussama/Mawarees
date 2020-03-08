@@ -28,10 +28,38 @@ public class HandleTwoGroupsUtils {
 
             int shares = group.getNumberOfShares();
 
-            if (OConstants.findGCD(shares, heads) == 1 || OConstants.findGCD(shares, heads) == 2) {
+            if (OConstants.findGCD(shares, heads) == 1/* || OConstants.findGCD(shares, heads) == 2*/) {
                 savedNumber = heads;
             } else {
-                savedNumber = OConstants.findGCD(heads, shares);
+                savedNumber = (heads / OConstants.findGCD(heads, shares));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return savedNumber;
+    }
+
+
+    public static int getGrandChildrenGroupSavedNumber(ArrayList<Person> data, Person group, String boysRelation, String girlsRelation) {
+
+        int savedNumber = 0;
+        int heads = 0;
+        try {
+
+            Log.i(TAG, "getGroupSavedNumber(): (2) boys = " + boysRelation + " girls = " + girlsRelation);
+            heads = group.getGirlsCount() + (group.getBoysCount() * 2);
+
+            int shares = group.getSharePercent().getNumerator();
+
+            if (OConstants.findGCD(shares, heads) == 1/* || OConstants.findGCD(shares, heads) == 2*/) {
+                savedNumber = heads;
+                Log.i(TAG, "getGrandChildrenGroupSavedNumber: OConstants.findGCD(" + shares + ", " + heads + ") = " + OConstants.findGCD(shares, heads) +
+                        "saved Number = " + savedNumber);
+            } else {
+                savedNumber = (heads / OConstants.findGCD(heads, shares));
+                Log.i(TAG, "getGrandChildrenGroupSavedNumber: OConstants.findGCD(" + shares + ", " + heads + ") = " + OConstants.findGCD(shares, heads) +
+                        "saved Number = " + savedNumber);
             }
 
         } catch (Exception e) {

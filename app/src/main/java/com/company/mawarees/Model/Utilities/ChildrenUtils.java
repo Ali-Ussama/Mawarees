@@ -31,6 +31,7 @@ public class ChildrenUtils {
 
                 if (oConstants.isHasDeadChildren()) {
                     OConstants.setPersonSharePercent(data, OConstants.half, OConstants.PERSON_DAUGHTER_CHILDREN);
+
                 }
             } else if (daughters == 2) {
 
@@ -45,12 +46,20 @@ public class ChildrenUtils {
                     OConstants.setPersonSharePercent(data, OConstants.seventh_TwentyFourth, OConstants.PERSON_DAUGHTER); // نصيب البنتين = 14/24
                     OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_DAUGHTER, ProofsAndExplanations.DaughterProofs.E1, ProofsAndExplanations.DaughterProofs.p1);
 
+                    if (oConstants.isHasDeadChildren()) {
+                        OConstants.setPersonSharePercent(data, OConstants.seventh_TwentyFourth, OConstants.PERSON_DAUGHTER_CHILDREN);
+                        OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_DAUGHTER_CHILDREN, ProofsAndExplanations.DaughterBoyOrGirlProofs.E1, ProofsAndExplanations.DaughterBoyOrGirlProofs.p1);
+                    }
                 } else if (OConstants.getSonsCount(data) == 1) {
                     Log.i(TAG, "calculateChildren(): has 1 son");
 
                     OConstants.setPersonSharePercent(data, OConstants.fourteenth_TwentyFourth, OConstants.PERSON_SON); // نصيب الولد = 14/24
                     OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_SON, ProofsAndExplanations.SonProofs.E1, ProofsAndExplanations.SonProofs.p1);
 
+                    if (oConstants.isHasDeadChildren()) {
+                        OConstants.setPersonSharePercent(data, OConstants.fourteenth_TwentyFourth, OConstants.PERSON_SON_CHILDREN);
+                        OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_SON_CHILDREN, ProofsAndExplanations.SonBoyOrGirlProofs.E1, ProofsAndExplanations.SonBoyOrGirlProofs.p1);
+                    }
                 }
             } else if (daughters > 2) {
                 Log.i(TAG, "calculateChildren(): has >= 3 daughters");
@@ -65,6 +74,13 @@ public class ChildrenUtils {
 
                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_DAUGHTER, ProofsAndExplanations.DaughterProofs.E1, ProofsAndExplanations.DaughterProofs.p1);
                 OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_SON, ProofsAndExplanations.SonProofs.E1, ProofsAndExplanations.SonProofs.p1);
+
+                if (oConstants.isHasDeadChildren()) {
+                    OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_SON_CHILDREN);
+                    OConstants.setPersonSharePercent(data, OConstants.two_Thirds, OConstants.PERSON_DAUGHTER_CHILDREN);
+                    OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_SON_CHILDREN, ProofsAndExplanations.SonBoyOrGirlProofs.E1, ProofsAndExplanations.SonBoyOrGirlProofs.p1);
+                    OConstants.setPersonProofAndExplanation(data, OConstants.PERSON_DAUGHTER_CHILDREN, ProofsAndExplanations.DaughterBoyOrGirlProofs.E1, ProofsAndExplanations.DaughterBoyOrGirlProofs.p1);
+                }
             }
         } else {
             Log.i(TAG, "calculateChildren(): has No children");

@@ -195,7 +195,12 @@ public class ProblemExplainActivity extends AppCompatActivity {
             originalValue = 0;
 
             for (int i = 0; i < mFirstStepData.size(); i++) {
-                originalValue += mFirstStepData.get(i).getOriginalSharePercent().getNumerator();
+                Log.i(TAG, "sumPeopleFractions: person " + mFirstStepData.get(i).getRelation());
+                if (!mFirstStepData.get(i).getRelation().contains("#") &&
+                        !mFirstStepData.get(i).getRelation().matches(OConstants.PERSON_DAUGHTER_CHILDREN) &&
+                        !mFirstStepData.get(i).getRelation().matches(OConstants.PERSON_SON_CHILDREN)) {
+                    originalValue += mFirstStepData.get(i).getOriginalSharePercent().getNumerator();
+                }
 //                if (mFirstStepData.get(i).getProblemOrigin() != problemOrigin) {
 //                    originalValue += mFirstStepData.get(i).getSharePercent().getNumerator();
 //                }
@@ -362,7 +367,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
             String personRelation = "";
             String[] relationSplit = people.get(i).getRelation().split(" ");
 //            if (relationSplit.length == 0) {
-                personRelation = people.get(i).getRelation();
+            personRelation = people.get(i).getRelation();
 //            } else if (relationSplit.length == 1) {
 //                personRelation = relationSplit[0];
 //            } else if (relationSplit.length > 1) {

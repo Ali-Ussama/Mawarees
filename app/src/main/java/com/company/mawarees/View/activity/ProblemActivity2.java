@@ -882,7 +882,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
         for (int number = 0; number < size; number++) {
 
             Person person = new Person();
-            person.setAlive(false);
+            person.setAlive(true); //TODO Change it to false if needed
             person.setCount(size);
             person.setDeadChildNumber(number + 1);
             person.setRelation(relation);
@@ -2134,7 +2134,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             if (girlsCount > 0) {
                 grandChildren.setGirlsCount(girlsCount);
             } else {
-                grandChildren.setGirlsCount(boysCount);
+                grandChildren.setBoysCount(boysCount);
             }
             Log.i(TAG, "updateGrandChildren(): grandChildren is updated");
             Log.i(TAG, "updateGrandChildren() people size = " + mPeople.size());
