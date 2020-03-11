@@ -283,7 +283,13 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
             if (correctionValue > 1) {
                 viewAnimator.setDisplayedChild(1);
-                ArrayList<Person> data = createFourthStepData(oConstants.getExplanation().getPhase2().getPeople());
+                ArrayList<Person> data;
+                if (oConstants.isHasDeadChildren()) {
+                    data = createFourthStepData(oConstants.getExplanation().getPhase3().getPeople());
+
+                } else {
+                    data = createFourthStepData(oConstants.getExplanation().getPhase2().getPeople());
+                }
 
 //                data = OConstants.sort(data);
                 Collections.sort(data);
@@ -306,13 +312,12 @@ public class ProblemExplainActivity extends AppCompatActivity {
         Log.i(TAG, "createFourthStepData(): is called");
         ArrayList<Person> result = new ArrayList<>();
 
-
         for (Person person : people) {
-            Log.i(TAG, "createFourthStepData(): person = " + person.getRelation() + " - problem Origin = " + person.getProblemOrigin());
-            if (person.getProblemOrigin() != problemOrigin && person.getBlockedBy() == null && person.getBlocked() == null) {
+//            Log.i(TAG, "createFourthStepData(): person = " + person.getRelation() + " - problem Origin = " + person.getProblemOrigin());
+//            if (person.getProblemOrigin() != problemOrigin && person.getBlockedBy() == null && person.getBlocked() == null) {
                 Log.i(TAG, "createFourthStepData(): person = " + person.getRelation() + " - problem Origin = " + person.getProblemOrigin() + " is Added");
                 result.add(person);
-            }
+//            }
         }
 
         return result;

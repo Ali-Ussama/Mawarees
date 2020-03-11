@@ -9,6 +9,7 @@ public class ExplainPhase2 implements Parcelable {
 
     private Fraction totalFractionsSum;
     private ArrayList<Person> people;
+    private final int contentDescriptor = 3;
 
     public ExplainPhase2() {
     }
@@ -58,7 +59,7 @@ public class ExplainPhase2 implements Parcelable {
      */
     @Override
     public int describeContents() {
-        return 0;
+        return Parcelable.CONTENTS_FILE_DESCRIPTOR;
     }
 
     /**
