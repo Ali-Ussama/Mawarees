@@ -2108,7 +2108,6 @@ public class OConstants implements Parcelable {
 
             String result = "";
 
-
             if (getAlivePersonCount(mPeople, OConstants.PERSON_SON) > 1) {
 
                 Person son = getPerson(mPeople, PERSON_SON);
@@ -2279,6 +2278,7 @@ public class OConstants implements Parcelable {
             if (moreThanThreeDaughters != null) {
                 resetPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
