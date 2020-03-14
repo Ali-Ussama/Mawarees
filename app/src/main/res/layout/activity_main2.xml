@@ -369,6 +369,7 @@
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:inputType="numberDecimal"
+                        android:textStyle="bold"
                         android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -417,7 +418,8 @@
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:inputType="numberDecimal"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold"  />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

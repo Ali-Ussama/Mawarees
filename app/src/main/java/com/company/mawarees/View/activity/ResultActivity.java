@@ -131,6 +131,12 @@ public class ResultActivity extends AppCompatActivity implements ItemSelectedLis
             oConstants = getIntent().getParcelableExtra(getString(R.string.constants));
             explanation = oConstants.getExplanation();
 
+            Log.i(TAG, "init: people size = " + mPeople.size());
+            Log.i(TAG, "init: phase 1 size = " + oConstants.getExplanation().getPhase1().getPeople().size());
+            Log.i(TAG, "init: phase 2 size = " + oConstants.getExplanation().getPhase2().getPeople().size());
+            Log.i(TAG, "init: phase 3 size = " + oConstants.getExplanation().getPhase3().getPeople().size());
+            Log.i(TAG, "init: phase 4 size = " + oConstants.getExplanation().getPhase4().getPeople().size());
+
             setCorrectionNumber();
 
         } catch (Exception e) {

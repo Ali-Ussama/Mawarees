@@ -47,7 +47,7 @@ public class HandleTwoGroupsUtils {
         int heads = 0;
         try {
 
-            Log.i(TAG, "getGroupSavedNumber(): (2) boys = " + boysRelation + " girls = " + girlsRelation);
+            Log.i(TAG, "getGrandChildrenGroupSavedNumber(): (2) boys = " + boysRelation + " girls = " + girlsRelation);
             heads = group.getGirlsCount() + (group.getBoysCount() * 2);
 
             int shares = group.getSharePercent().getNumerator();

@@ -225,7 +225,7 @@ public class GrandChildren implements Parcelable {
 
     @Override
     public int describeContents() {
-        return 0;
+        return Parcelable.CONTENTS_FILE_DESCRIPTOR;
     }
 
     @Override

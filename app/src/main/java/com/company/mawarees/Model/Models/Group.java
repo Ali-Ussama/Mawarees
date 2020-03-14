@@ -146,7 +146,7 @@ public class Group implements Parcelable {
 
     @Override
     public int describeContents() {
-        return 0;
+        return Parcelable.CONTENTS_FILE_DESCRIPTOR;
     }
 
     @Override

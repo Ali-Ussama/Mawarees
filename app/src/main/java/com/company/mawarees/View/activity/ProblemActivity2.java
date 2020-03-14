@@ -279,6 +279,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
     private void init() {
         try {
+
             ButterKnife.bind(this);
             mCurrent = ProblemActivity2.this;
 
@@ -472,7 +473,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                     try {
 
                         resetDeadSonsOrDaughter(OConstants.PERSON_SON);
-                        resetDeadSonsOrDaughterBoyAndGirl(OConstants.PERSON_SON_CHILDREN);
+                        resetGrandChildrenGroup(OConstants.PERSON_SON_CHILDREN);
 
                         int value = 0;
                         if (!charSequence.toString().trim().isEmpty())
@@ -500,6 +501,10 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+                        } else {
+                            if (mPeople.size() == 0 && mBrotherQuestionContainer.getVisibility() == View.GONE) {
+                                show(mBrotherQuestionContainer);
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -523,7 +528,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     try {
                         resetDeadSonsOrDaughter(OConstants.PERSON_DAUGHTER);
-                        resetDeadSonsOrDaughterBoyAndGirl(OConstants.PERSON_DAUGHTER_CHILDREN);
+                        resetGrandChildrenGroup(OConstants.PERSON_DAUGHTER_CHILDREN);
 
                         int value = 0;
                         if (!charSequence.toString().trim().isEmpty())
@@ -545,6 +550,10 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                                 DeadDaughterRVAdapter mDeadSonRVAdapter = new DeadDaughterRVAdapter(mDeadPersonModels, mCurrent, mCurrent);
                                 mRecyclerView.setAdapter(mDeadSonRVAdapter);
+                            }
+                        } else {
+                            if (mPeople.size() == 0 && mBrotherQuestionContainer.getVisibility() == View.GONE) {
+                                show(mBrotherQuestionContainer);
                             }
                         }
                     } catch (Exception e) {
@@ -814,6 +823,22 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             });
 
             mSolveProblemBtn.setOnClickListener(this);
+
+//            ShowcaseConfig config = new ShowcaseConfig();
+//            config.setDelay(100); // .1 second between each showcase view.
+//            MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), "ID2");
+//            sequence.setConfig(config);
+//            sequence.addSequenceItem(Question,
+//                    "This is Personality Question", "OK");
+//            sequence.addSequenceItem(Agree,
+//                    "This is Most Agree Choice", "OK");
+//            sequence.addSequenceItem(DisAgree,
+//                    "This is Most DisAgree Choice", "OK");
+//            sequence.addSequenceItem(Natural,
+//                    "Natural Choice, Please try to avoid it", "OK");
+//            sequence.addSequenceItem(fab_next,
+//                    "Next Question", "OK");
+//            sequence.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -837,7 +862,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             ArrayList<Person> index = new ArrayList<>();
 
             for (int i = 0; i < mPeople.size(); i++) {
-                if (mPeople.get(i).getRelation().matches(relation) && !mPeople.get(i).isAlive()) {
+                if (mPeople.get(i).getRelation().matches(relation) && mPeople.get(i).getDeadSonNumber() > -1) {
                     index.add(mPeople.get(i));
                 }
             }
@@ -853,7 +878,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void resetDeadSonsOrDaughterBoyAndGirl(String relation) {
+    private void resetGrandChildrenGroup(String relation) {
         try {
 
             ArrayList<Person> index = new ArrayList<>();
@@ -915,13 +940,51 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                         Log.i(TAG, "addChildListener(): Create new GrandChildren with DAUGHTER_GIRL count = " + children.size());
                         createGrandChildrenGroup(0, children.size(), OConstants.PERSON_DAUGHTER_CHILDREN, OConstants.GENDER_MALE, true, true, deadChildNumber, id, children, null);
                     }
+
+                    mBrotherQuestionRadioGroup.clearCheck();
+                    hide(mBrotherQuestionContainer);
+                    hide(mBrothersContainer);
+                    hide(mSistersContainer);
+                    hide(mFatherUnclesContainer);
+                    hide(mFatherAuntsContainer);
+                    hide(mMotherUnclesContainer);
+                    hide(mMotherAuntsContainer);
+
                 } else {
                     Log.i(TAG, "addChildListener(): PERSON_DAUGHTER_CHILDREN founded");
                     if (relation.matches(OConstants.PERSON_DAUGHTER_BOY)) {
                         Log.i(TAG, "addChildListener(): updating GrandChildren with with DAUGHTER_BOY count = " + children.size());
+
+                        if (children.size() == 0 && grandChildren.getBoysCount() == 0 && (OConstants.getGrandChildren(mPeople).size() == 1)) {
+                            show(mBrotherQuestionContainer);
+                        } else {
+                            mBrotherQuestionRadioGroup.clearCheck();
+                            hide(mBrotherQuestionContainer);
+                            hide(mBrothersContainer);
+                            hide(mSistersContainer);
+                            hide(mFatherUnclesContainer);
+                            hide(mFatherAuntsContainer);
+                            hide(mMotherUnclesContainer);
+                            hide(mMotherAuntsContainer);
+                        }
+
                         updateGrandChildren(grandChildren, children.size(), 0);
                     } else {
                         Log.i(TAG, "addChildListener(): updating GrandChildren with DAUGHTER_GIRL count = " + children.size());
+
+                        if (children.size() == 0 && grandChildren.getBoysCount() == 0 && (OConstants.getGrandChildren(mPeople).size() == 1)) {
+                            show(mBrotherQuestionContainer);
+                        } else {
+                            mBrotherQuestionRadioGroup.clearCheck();
+                            hide(mBrotherQuestionContainer);
+                            hide(mBrothersContainer);
+                            hide(mSistersContainer);
+                            hide(mFatherUnclesContainer);
+                            hide(mFatherAuntsContainer);
+                            hide(mMotherUnclesContainer);
+                            hide(mMotherAuntsContainer);
+                        }
+
                         updateGrandChildren(grandChildren, 0, children.size());
                     }
                 }
@@ -937,16 +1000,51 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                         Log.i(TAG, "addChildListener(): Create new GrandChildren with SON_GIRL count = " + children.size());
                         createGrandChildrenGroup(0, children.size(), OConstants.PERSON_SON_CHILDREN, OConstants.GENDER_MALE, true, true, deadChildNumber, id, children, null);
                     }
+
+                    mBrotherQuestionRadioGroup.clearCheck();
+                    hide(mBrotherQuestionContainer);
+                    hide(mBrothersContainer);
+                    hide(mSistersContainer);
+                    hide(mFatherUnclesContainer);
+                    hide(mFatherAuntsContainer);
+                    hide(mMotherUnclesContainer);
+                    hide(mMotherAuntsContainer);
+
                 } else {
                     Log.i(TAG, "addChildListener(): PERSON_SON_CHILDREN founded");
                     if (relation.matches(OConstants.PERSON_SON_BOY)) {
                         Log.i(TAG, "addChildListener(): updating GrandChildren with with SON_BOY count = " + children.size());
+                        if (children.size() == 0 && grandChildren.getGirlsCount() == 0 && (OConstants.getGrandChildren(mPeople).size() == 1)) {
+                            show(mBrotherQuestionContainer);
+                        } else {
+                            mBrotherQuestionRadioGroup.clearCheck();
+                            hide(mBrotherQuestionContainer);
+                            hide(mBrothersContainer);
+                            hide(mSistersContainer);
+                            hide(mFatherUnclesContainer);
+                            hide(mFatherAuntsContainer);
+                            hide(mMotherUnclesContainer);
+                            hide(mMotherAuntsContainer);
+                        }
                         updateGrandChildren(grandChildren, children.size(), 0);
                     } else {
                         Log.i(TAG, "addChildListener(): updating GrandChildren with SON_GIRL count = " + children.size());
+                        if (children.size() == 0 && grandChildren.getBoysCount() == 0 && (OConstants.getGrandChildren(mPeople).size() == 1)) {
+                            show(mBrotherQuestionContainer);
+                        } else {
+                            mBrotherQuestionRadioGroup.clearCheck();
+                            hide(mBrotherQuestionContainer);
+                            hide(mBrothersContainer);
+                            hide(mSistersContainer);
+                            hide(mFatherUnclesContainer);
+                            hide(mFatherAuntsContainer);
+                            hide(mMotherUnclesContainer);
+                            hide(mMotherAuntsContainer);
+                        }
                         updateGrandChildren(grandChildren, 0, children.size());
                     }
                 }
+
             }
 
 
@@ -1010,7 +1108,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
                             validateDeadDaughterChildren();
                             validateDeadSonsChildren();
-
+                            createDeadChildrenGroup();
                             ChildrenUtils.calculateChildren(mPeople, oConstants);
 //                Log.i(TAG, "validatePeople(): moreThanThreeDaughters Count = " + OConstants.getPersonCount(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS) + " sharePercent = " + OConstants.getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS).getSharePercent().getNumerator() + "/" + OConstants.getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS).getSharePercent().getDenominator());
 
@@ -1062,12 +1160,26 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    private void createDeadChildrenGroup() {
+        Log.i(TAG, "createDeadChildrenGroup: is called");
+        try {
+            if (OConstants.getChildrenInDaughters(mPeople) > 2) {
+                Log.i(TAG, "createDeadChildrenGroup: children in daughters count = " + OConstants.getChildrenInDaughters(mPeople));
+                if (OConstants.getPerson(mPeople, OConstants.PERSON_More_Than_three_DAUGHTERS) == null) {
+                    createAlivePerson(1, OConstants.PERSON_More_Than_three_DAUGHTERS, OConstants.GENDER_MALE, true, true, OConstants.Children_ID);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void setExplanationPhase4(ArrayList<Person> mPeople, OConstants oConstants) {
         try {
 
             ExplainPhase4 phase4 = new ExplainPhase4();
 
-            ArrayList<Person> data = new ArrayList<>(mPeople);
+            ArrayList<Person> data = new ArrayList<>();
             for (Person mPerson : mPeople) {
                 Person person = new Person();
                 int id = mPerson.getId();
@@ -1139,6 +1251,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
             phase4.setPeople(data);
             oConstants.getExplanation().setPhase4(phase4);
+            Log.i(TAG, "setExplanationPhase4: phase 4 size = " + oConstants.getExplanation().getPhase4().getPeople().size());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1148,7 +1261,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
         try {
 
             ExplainPhase1 mExplainPhase1 = new ExplainPhase1();
-            ArrayList<Person> data = new ArrayList<>(mPeople);
+            ArrayList<Person> data = new ArrayList<>();
             for (Person mPerson : mPeople) {
                 Person person = new Person();
                 int id = mPerson.getId();
@@ -1216,7 +1329,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 //            Collections.copy(data, mPeople);
             mExplainPhase1.setPeople(data);
             oConstants.getExplanation().setPhase1(mExplainPhase1);
-
+            Log.i(TAG, "setExplanationPhase1: phase 1 size = " + oConstants.getExplanation().getPhase1().getPeople().size());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1454,10 +1567,16 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                 }
             }
 
+
             for (Person sonsWhoDoNotHaveChild : sonsWhoDoNotHaveChildren) {
                 mPeople.remove(sonsWhoDoNotHaveChild);
             }
 
+            int sonsCount = OConstants.getPersonCount(mPeople, OConstants.PERSON_SON);
+            int daughtersCount = OConstants.getPersonCount(mPeople, OConstants.PERSON_DAUGHTER);
+            if (sonsCount + daughtersCount == 0) {
+                oConstants.setHasChildren(false);
+            }
             Log.i(TAG, "validateDeadSonsChildren(): people size = " + mPeople.size());
 
         } catch (Exception e) {
@@ -1584,6 +1703,12 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                 intent.putExtra(getString(R.string.intent_total_money), oConstants.getTotalMoney());
                 intent.putExtra(getString(R.string.constants), oConstants);
             }
+
+            Log.i(TAG, "init: people size = " + mPeople.size());
+            Log.i(TAG, "init: phase 1 size = " + oConstants.getExplanation().getPhase1().getPeople().size());
+            Log.i(TAG, "init: phase 2 size = " + oConstants.getExplanation().getPhase2().getPeople().size());
+            Log.i(TAG, "init: phase 3 size = " + oConstants.getExplanation().getPhase3().getPeople().size());
+            Log.i(TAG, "init: phase 4 size = " + oConstants.getExplanation().getPhase4().getPeople().size());
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1783,6 +1908,28 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
             for (int i = 0; i < mPeople.size(); i++) {
                 if (mPeople.get(i).getRelation().matches(relation) && mPeople.get(i).isAlive()) {
+                    index.add(mPeople.get(i));
+                }
+            }
+
+            if (!index.isEmpty()) {
+                for (Person person : index) {
+                    mPeople.remove(person);
+                }
+            }
+            Log.i(TAG, "resetAlivePerson() people size = " + mPeople.size());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void resetGrandChildrenGroup(String relation, int deadSonNumber) {
+        try {
+            ArrayList<Person> index = new ArrayList<>();
+
+            for (int i = 0; i < mPeople.size(); i++) {
+                if (mPeople.get(i).getRelation().matches(relation) && mPeople.get(i).getDeadSonNumber() == deadSonNumber) {
                     index.add(mPeople.get(i));
                 }
             }
@@ -2133,8 +2280,10 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             Log.i(TAG, "updateGrandChildren(): is called");
             if (girlsCount > 0) {
                 grandChildren.setGirlsCount(girlsCount);
-            } else {
+            } else if (boysCount > 0) {
                 grandChildren.setBoysCount(boysCount);
+            } else if (grandChildren.getGirlsCount() >= 0 && grandChildren.getBoysCount() >= 0 && boysCount == 0 && girlsCount == 0) {
+                resetGrandChildrenGroup(grandChildren.getRelation(), grandChildren.getDeadSonNumber());
             }
             Log.i(TAG, "updateGrandChildren(): grandChildren is updated");
             Log.i(TAG, "updateGrandChildren() people size = " + mPeople.size());

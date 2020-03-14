@@ -23,13 +23,14 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
 
     private static final String TAG = "ExplainFourthAdapter";
     private Context context;
-    private ArrayList<Person> data;
+    private ArrayList<Person> data, dataWithDeadPeople;
     private int correctionValue;
 
-    public ExplanationFourthStepAdapter(ArrayList<Person> data, int correctionValue, Context context) {
+    public ExplanationFourthStepAdapter(ArrayList<Person> data, ArrayList<Person> dataWithDeadPeople, int correctionValue, Context context) {
         this.context = context;
         this.data = data;
         this.correctionValue = correctionValue;
+        this.dataWithDeadPeople = dataWithDeadPeople;
     }
 
     @NonNull
@@ -100,8 +101,9 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
                 displayWomanValue(holder, position, "", OConstants.PERSON_WIFE);
             } else {
                 holder.mCorrectionValue.setText(String.valueOf(correctionValue));
+//                holder.mShareValue.setText(String.valueOf(person.getSharePercent().getNumerator()));
                 holder.mShareValue.setText(String.valueOf(person.getSharePercent().getNumerator()));
-                holder.mMultiply.setText(String.valueOf((correctionValue * person.getOriginalSharePercent().getNumerator())));
+                holder.mMultiply.setText(String.valueOf((correctionValue * person.getSharePercent().getNumerator())));
 
                 holder.mBrackets_1.setVisibility(View.GONE);
                 holder.mBrackets_2.setVisibility(View.GONE);
@@ -125,26 +127,28 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
 
             int count = 0;
             if ((boysRelation.matches(OConstants.PERSON_MOTHER_UNCLE) &&
-                    ((OConstants.getPersonCount(data, OConstants.PERSON_FATHER_AUNT) + OConstants.getPersonCount(data, OConstants.PERSON_FATHER_UNCLE) > 0)
-                            || (OConstants.getPersonCount(data, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(data, OConstants.PERSON_SISTER) > 0)))
+                    ((OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_FATHER_AUNT) + OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_FATHER_UNCLE) > 0)
+                            || (OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_SISTER) > 0)))
                     || (boysRelation.matches(OConstants.PERSON_FATHER_UNCLE) &&
-                    ((OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_AUNT) + OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_UNCLE) > 0)
-                            || (OConstants.getPersonCount(data, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(data, OConstants.PERSON_SISTER) > 0)))) {
+                    ((OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_MOTHER_AUNT) + OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_MOTHER_UNCLE) > 0)
+                            || (OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_SISTER) > 0)))) {
 
-                count = OConstants.getPersonCount(data, boysRelation) + OConstants.getPersonCount(data, girlsRelation);
+                count = OConstants.getPersonCount(dataWithDeadPeople, boysRelation) + OConstants.getPersonCount(dataWithDeadPeople, girlsRelation);
 
             } else {
-                count = OConstants.getPersonsInGirlsCount(data, boysRelation, girlsRelation);
+                count = OConstants.getPersonsInGirlsCount(dataWithDeadPeople, boysRelation, girlsRelation);
             }
-            double groupShare = (correctionValue * person.getSharePercent().getNumerator());
+
+            Log.i(TAG, "displayManValue: person = " + person.getRelation() + " - correctionValue = " + correctionValue + " group number of shares = " + person.getSharePercent().getNumerator());
+            double groupShare = (correctionValue * (person.getSharePercent().getNumerator() / 2)) * count;
 
             int mCorrectionValue;
             if ((boysRelation.matches(OConstants.PERSON_MOTHER_UNCLE) &&
-                    ((OConstants.getPersonCount(data, OConstants.PERSON_FATHER_AUNT) + OConstants.getPersonCount(data, OConstants.PERSON_FATHER_UNCLE) > 0)
-                            || (OConstants.getPersonCount(data, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(data, OConstants.PERSON_SISTER) > 0)))
+                    ((OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_FATHER_AUNT) + OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_FATHER_UNCLE) > 0)
+                            || (OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_SISTER) > 0)))
                     || (boysRelation.matches(OConstants.PERSON_FATHER_UNCLE) &&
-                    ((OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_AUNT) + OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_UNCLE) > 0)
-                            || (OConstants.getPersonCount(data, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(data, OConstants.PERSON_SISTER) > 0)))) {
+                    ((OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_MOTHER_AUNT) + OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_MOTHER_UNCLE) > 0)
+                            || (OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_SISTER) > 0)))) {
 
                 mCorrectionValue = 1;
             } else {
@@ -172,17 +176,23 @@ public class ExplanationFourthStepAdapter extends RecyclerView.Adapter<Explanati
             holder.mGroupShareValue.setVisibility(View.VISIBLE);
 
             int count = 0;
+
             if ((girlsRelation.matches(OConstants.PERSON_MOTHER_AUNT) &&
-                    ((OConstants.getPersonCount(data, OConstants.PERSON_FATHER_AUNT) + OConstants.getPersonCount(data, OConstants.PERSON_FATHER_UNCLE) > 0)
-                            || (OConstants.getPersonCount(data, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(data, OConstants.PERSON_SISTER) > 0)))
+                    ((OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_FATHER_AUNT) + OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_FATHER_UNCLE) > 0)
+                            || (OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_SISTER) > 0)))
                     || (girlsRelation.matches(OConstants.PERSON_FATHER_AUNT) &&
-                    ((OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_AUNT) + OConstants.getPersonCount(data, OConstants.PERSON_MOTHER_UNCLE) > 0)
-                            || (OConstants.getPersonCount(data, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(data, OConstants.PERSON_SISTER) > 0)))) {
-                count = OConstants.getPersonCount(data, boysRelation) + OConstants.getPersonCount(data, girlsRelation);
+                    ((OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_MOTHER_AUNT) + OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_MOTHER_UNCLE) > 0)
+                            || (OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(dataWithDeadPeople, OConstants.PERSON_SISTER) > 0)))) {
+
+                count = OConstants.getPersonCount(dataWithDeadPeople, boysRelation) + OConstants.getPersonCount(dataWithDeadPeople, girlsRelation);
+
             } else {
-                count = OConstants.getPersonsInGirlsCount(data, boysRelation, girlsRelation);
+                count = OConstants.getPersonsInGirlsCount(dataWithDeadPeople, boysRelation, girlsRelation);
             }
-            double groupShare = (correctionValue * person.getSharePercent().getNumerator());
+
+            double groupShare = (correctionValue * person.getSharePercent().getNumerator()) * count;
+
+            Log.i(TAG, "displayWomanValue: person = " + person.getRelation() + " - correctionValue = " + correctionValue + " group number of shares = " + person.getSharePercent().getNumerator());
 
             int mCorrectionValue = 1;
             holder.mGroupShareValue.setText(String.valueOf(groupShare));
