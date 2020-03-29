@@ -16,13 +16,16 @@ public class HandleTwoGroupsUtils {
         int savedNumber = 0;
         int heads = 0;
         try {
-            if ((boysRelation.matches(OConstants.PERSON_FATHER_UNCLE) || girlsRelation.matches(OConstants.PERSON_FATHER_AUNT)) ||
+           /* if ((boysRelation.matches(OConstants.PERSON_FATHER_UNCLE) || girlsRelation.matches(OConstants.PERSON_FATHER_AUNT)) ||
                     (boysRelation.matches(OConstants.PERSON_MOTHER_UNCLE) || girlsRelation.matches(OConstants.PERSON_MOTHER_AUNT))) {
-                Log.i(TAG, "getGroupSavedNumber(): (1) boys = " + boysRelation + " girls = " + girlsRelation);
+                Log.i(TAG, "getGroupSavedNumber(): case (1) -> boys = " + boysRelation + " girls = " + girlsRelation);
                 heads = (OConstants.getPersonCount(data, boysRelation) + OConstants.getPersonCount(data, girlsRelation));
 
+            } else */if (boysRelation.equals(OConstants.PERSON_BROTHER) && girlsRelation.matches(OConstants.PERSON_SISTER)) {
+                Log.i(TAG, "getGroupSavedNumber(): case (2) -> boys = " + boysRelation + " girls = " + girlsRelation);
+                heads = OConstants.getPersonCount(data, OConstants.PERSON_BROTHER) + OConstants.getPersonCount(data, OConstants.PERSON_SISTER);
             } else {
-                Log.i(TAG, "getGroupSavedNumber(): (2) boys = " + boysRelation + " girls = " + girlsRelation);
+                Log.i(TAG, "getGroupSavedNumber(): case (3) -> boys = " + boysRelation + " girls = " + girlsRelation);
                 heads = (OConstants.getPersonsInGirlsCount(data, boysRelation, girlsRelation));
             }
 

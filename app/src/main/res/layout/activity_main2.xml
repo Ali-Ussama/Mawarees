@@ -14,6 +14,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
+        android:id="@+id/problem_activity_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="56dp"
@@ -170,6 +171,7 @@
                 android:animateLayoutChanges="true"
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:padding="8dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
                 app:layout_constraintTop_toBottomOf="@+id/problem_activity_wife_container">
@@ -369,8 +371,8 @@
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:inputType="numberDecimal"
-                        android:textStyle="bold"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -419,7 +421,7 @@
                         android:gravity="center"
                         android:inputType="numberDecimal"
                         android:textSize="14sp"
-                        android:textStyle="bold"  />
+                        android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -495,7 +497,7 @@
                 android:animateLayoutChanges="true"
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:padding="8dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
                 app:layout_constraintTop_toBottomOf="@+id/problem_activity_mother_layout">
@@ -561,7 +563,7 @@
                 android:animateLayoutChanges="true"
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:padding="8dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
                 app:layout_constraintTop_toBottomOf="@+id/problem_activity_mother_grandma_layout">
@@ -691,6 +693,7 @@
                 android:animateLayoutChanges="true"
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:padding="8dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
                 app:layout_constraintTop_toBottomOf="@+id/problem_activity_father_layout">
@@ -756,6 +759,7 @@
                 android:animateLayoutChanges="true"
                 android:background="@drawable/custom_bg_with_white_borders"
                 android:padding="8dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
                 app:layout_constraintTop_toBottomOf="@+id/problem_activity_father_grandpa_layout">
@@ -1170,20 +1174,41 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
-                android:id="@+id/problem_activity_solve_button_2"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/custom_brow_rectangle_background"
-                android:text="@string/solve_problem"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:weightSum="2"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/gender_container"
                 app:layout_constraintStart_toStartOf="@+id/gender_container"
-                app:layout_constraintTop_toBottomOf="@+id/problem_activity_father_aunt_container" />
+                app:layout_constraintTop_toBottomOf="@+id/problem_activity_father_aunt_container">
+
+                <Button
+                    android:id="@+id/problem_activity_new_problem"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/custom_brow_rectangle_background"
+                    android:text="@string/new_problem"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/problem_activity_solve_button_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/custom_brow_rectangle_background"
+                    android:text="@string/solve_problem"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

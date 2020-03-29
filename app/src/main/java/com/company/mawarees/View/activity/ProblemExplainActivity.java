@@ -296,7 +296,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
                     dataWithoutDeadPeople = createFourthStepDataFromPhase3(oConstants.getExplanation().getPhase2().getPeople());
                     dataWithDeadPeople = oConstants.getExplanation().getPhase2().getPeople();
                 } else {
-                    dataWithoutDeadPeople = createFourthStepDataFromPhase2(oConstants.getExplanation().getPhase2().getPeople());
+                    dataWithoutDeadPeople = createFourthStepDataFromPhase2(oConstants.getExplanation().getPhase2().getPeople(), oConstants.getExplanation().getPhase1().getPeople());
                     dataWithDeadPeople = oConstants.getExplanation().getPhase2().getPeople();
                 }
 
@@ -305,7 +305,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
                 showResult(dataWithoutDeadPeople);
 
                 LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-                mFourthAdapter = new ExplanationFourthStepAdapter(dataWithoutDeadPeople, dataWithDeadPeople, correctionValue, mCurrent);
+                mFourthAdapter = new ExplanationFourthStepAdapter(dataWithoutDeadPeople, dataWithDeadPeople, correctionValue, mCurrent, oConstants, (grandChildren != null && grandChildren.size() > 0));
                 mFourthStepRV.setLayoutManager(layoutManager);
                 mFourthStepRV.setAdapter(mFourthAdapter);
             } else {
@@ -317,18 +317,18 @@ public class ProblemExplainActivity extends AppCompatActivity {
         }
     }
 
-    private ArrayList<Person> createFourthStepDataFromPhase2(ArrayList<Person> people) {
+    private ArrayList<Person> createFourthStepDataFromPhase2(ArrayList<Person> people, ArrayList<Person> phase1) {
         Log.i(TAG, "createFourthStepDataFromPhase2(): is called");
         ArrayList<Person> result = new ArrayList<>();
 
-        for (Person person : people) {
-//            Log.i(TAG, "createFourthStepData(): person = " + person.getRelation() + " - problem Origin = " + person.getProblemOrigin());
-//            if (person.getProblemOrigin() != problemOrigin && person.getBlockedBy() == null && person.getBlocked() == null) {
-            Log.i(TAG, "createFourthStepDataFromPhase2(): person = " + person.getRelation() +
-                    " - SharePercent% = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
-                    " - problem Origin = " + person.getProblemOrigin() + " is Added");
-            result.add(person);
-//            }
+        for (Person person : phase1) {
+
+            if (person.getBlocked() == null && person.getBlockedBy() == null) {
+                Log.i(TAG, "createFourthStepDataFromPhase2(): person = " + person.getRelation() +
+                        " - SharePercent% = " + person.getSharePercent().getNumerator() + "/" + person.getSharePercent().getDenominator() +
+                        " - problem Origin = " + person.getProblemOrigin() + " is Added");
+                result.add(person);
+            }
         }
 
         return result;
@@ -340,7 +340,7 @@ public class ProblemExplainActivity extends AppCompatActivity {
 
         for (Person person : people) {
 
-            if ((person.getDeadSonNumber() < 0 && person.getBlockedBy() == null && person.getBlocked() == null ) ||
+            if ((person.getDeadSonNumber() < 0 && person.getBlockedBy() == null && person.getBlocked() == null) ||
                     (person.getRelation().equals(OConstants.PERSON_SON_CHILDREN) || person.getRelation().equals(OConstants.PERSON_DAUGHTER_CHILDREN))) {
                 Log.i(TAG, "createFourthStepDataFromPhase3(): person = " + person.getRelation() +
                         "dead son number = " + person.getDeadSonNumber() +

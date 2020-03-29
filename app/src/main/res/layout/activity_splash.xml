@@ -8,15 +8,6 @@
     android:background="@drawable/background"
     tools:context=".View.activity.SplashActivity">
 
-    <!--    <ImageView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        android:contentDescription="@string/splash"-->
-    <!--        android:src="@drawable/background"/>-->
-
     <TextView
         android:id="@+id/splash_activity_lbl_tv"
         android:layout_width="wrap_content"
@@ -27,39 +18,53 @@
         android:textColor="@color/gold"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/splash_activity_videos_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/splash_activity_books_btn"
-        android:layout_width="130dp"
+        android:layout_width="110dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/splash_libs_btn_background"
         android:text="@string/readable_books"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/splash_activity_videos_btn"
-        app:layout_constraintStart_toEndOf="@+id/splash_activity_videos_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/splash_libraries_btn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/splash_libraries_btn"
         app:layout_constraintTop_toTopOf="@+id/splash_activity_videos_btn" />
 
     <Button
         android:id="@+id/splash_activity_videos_btn"
-        android:layout_width="130dp"
+        android:layout_width="110dp"
         android:layout_height="40dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/splash_libs_btn_background"
         android:text="@string/watchable_videos"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/splash_libraries_btn"
+        app:layout_constraintEnd_toStartOf="@+id/splash_libraries_btn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/splash_libraries_btn"
+        android:layout_width="110dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/splash_libs_btn_background"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:visibility="visible"
+        android:elevation="4dp"
+        android:text="@string/intro"
         app:layout_constraintBottom_toTopOf="@+id/splash_activity_new_problem_btn"
-        app:layout_constraintEnd_toStartOf="@+id/splash_activity_books_btn"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
