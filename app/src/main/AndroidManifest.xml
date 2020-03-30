@@ -15,6 +15,9 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".View.activity.webview.WebActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|locale|screenSize|screenLayout|uiMode" />
+        <activity
             android:name=".View.activity.ProblemExplainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|locale|screenSize|screenLayout|uiMode"
             android:theme="@style/AppTheme.NoActionBar"
@@ -48,10 +51,11 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".View.activity.ProblemActivity2"
+        <activity
+            android:name=".View.activity.ProblemActivity2"
             android:configChanges="orientation|keyboardHidden|keyboard|locale|screenSize|screenLayout|uiMode"
             android:theme="@style/AppTheme.NoActionBar"
-            tools:ignore="InnerclassSeparator"/>
+            tools:ignore="InnerclassSeparator" />
     </application>
 
 </manifest>

@@ -114,11 +114,36 @@
     <string name="enter_father_uncle_number"><b>أدخل عدد الأعمام</b></string>
     <string name="enter_father_aunts_number"><b>أدخل عدد العمات</b></string>
     <string name="enter_dead_sons_number"><b>أدخل عدد الأولاد الذكور المتوفيين</b></string>
-    <string name="enter_dead_daughters_number" >أدخل عدد الأولاد الإناث المتوفيين</string>
+    <string name="enter_dead_daughters_number">أدخل عدد الأولاد الإناث المتوفيين</string>
     <string name="splash_libs_lbl">شرح الميراث في كتاب الله تعالى</string>
 
-    <string name="video_link">https://www.youtube.com/playlist?list=PLgUV-mU7SdBPB0mnvSgFKIjQyh5qfj1BY</string>
-    <string name="book_link">https://drive.google.com/file/d/1P_XHJ6l9QXUsD0_07_rEPcbWjSNJUPlY/view?usp=drivesdk</string>
+    <string name="video_link" translatable="false">https://www.youtube.com/playlist?list=PLgUV-mU7SdBPB0mnvSgFKIjQyh5qfj1BY</string>
+    <string name="book_link" translatable="false">https://drive.google.com/file/d/1P_XHJ6l9QXUsD0_07_rEPcbWjSNJUPlY/view?usp=drivesdk</string>
+    <string name="intro_link" translatable="false">https://drive.google.com/file/d/1UxeSZmb5mNqoCA4pUCy7xFPkDoIOIc_U/view?usp=sharing</string>
+
     <string name="readable_books">كتب مقروءة</string>
     <string name="watchable_videos">فيديوهات مرئية</string>
+    <string name="wives_instructions">يتم ادخال عدد الزوجات بحد أقصى 4 زوجات</string>
+    <string name="gender_instructions">يتم تحديد نوع المتوفى سواء ذكر او انثى لتحديد اذا كان لديه زوج او زوجة</string>
+    <string name="money_instructions">يتم ادخال قيمة التركة في هذا الحقل و هي القيمة المالية التقديرية للتركة لم يهمه الأمر \n فقط قم بتعديل الرقم 100 للقيمة المرادة</string>
+    <string name="alive_sons_instructions">يتم ادخال عدد الأولاد الذكور الأحياء في هذا الحقل ان وجدوا \n و ان لم يوجد اولاد احياء فيترك فارغا</string>
+    <string name="alive_daughter_instructions">يتم إدخال عدد الأولاد الإناث الأحياء في هذا الحقل ان وجدوا \n و ان لم يوجد اولاد احياء فيترك فارغ</string>
+    <string name="dead_daughter_instructions">يتم إدخال عدد الأولاد الإناث المتوفيين في هذا الحقل ان وجدوا
+        \n ثم ادخال عدد أولادهم ذكور و اناث ان وجدوا</string>
+    <string name="dead_son_instructions">يتم ادخال عدد الابناء الذكور المتوفيين في هذا الحقل ان وجدوا
+        \n ثم ادخال عدد أولادهم ذكور و اناث ان وجدوا</string>
+    <string name="mother_instructions">اذا وجدت الوالدة فقم باختيار الحقل نعم
+     \n و اذا كانت الوالدة متوفاه و يوجد جدة او جد من ناحية الوالدة فقم باختيار لا ثم اختر المتواجد من الجدود</string>
+    <string name="father_instructions">اذا وجد الوالد فقم باختيار الحقل نعم
+     \n و اذا كان الوالد متوفى و يوجد جدة او جد من ناحية الوالد فقم باختيار لا ثم اختر المتواجد من الجدود</string>
+    <string name="brothers_instructions">اذا وجد أخوة فقم باختيار حقل نعم قم ادخل اعداد الأخوة
+     \n و اذا ظهرت خانات الأعمام و الاخوال فقم بادخال اعدادهم سواء أحياء او متوفيين ان وجدوا</string>
+    <string name="str_next_lbl">التالي</string>
+    <string name="solve_problem_instructions">بعد الانتهاء من ادخال اعداد الورثة قم بالضغط على زر حل المسألة لعرض شاشة تقسيم التركة</string>
+    <string name="libraries_btn_lbl">المكتبات</string>
+    <string name="url">URL</string>
+    <string name="intro">مقدمة تعريفية</string>
+    <string name="book_title">الميراث في كتاب الله</string>
+    <string name="new_problem_instructions">يمكنك الضغط على مسألة جديدة  لانشاء مسألة جديدة و تفريغ المدخلات</string>
+
 </resources>
