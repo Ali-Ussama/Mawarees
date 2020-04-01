@@ -14,9 +14,13 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
+        <activity android:name=".View.activity.GuideActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|locale|screenSize|screenLayout|uiMode"
+            tools:ignore="InnerclassSeparator"/>
         <activity
             android:name=".View.activity.webview.WebActivity"
-            android:configChanges="orientation|keyboardHidden|keyboard|locale|screenSize|screenLayout|uiMode" />
+            android:configChanges="orientation|keyboardHidden|keyboard|locale|screenSize|screenLayout|uiMode"
+            tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".View.activity.ProblemExplainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|locale|screenSize|screenLayout|uiMode"

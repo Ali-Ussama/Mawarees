@@ -1,15 +1,10 @@
 package com.company.mawarees.View.activity;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.company.mawarees.R;
 import com.company.mawarees.View.activity.webview.WebActivity;
-import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
@@ -37,6 +31,9 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
 
     @BindView(R.id.splash_activity_new_problem_btn)
     Button newProblemBtn;
+
+    @BindView(R.id.splash_activity_instructions_btn)
+    Button mInstructionBtn;
 
     @BindView(R.id.splash_libraries_btn)
     Button librariesBtn;
@@ -67,6 +64,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
             videosBtn.setOnClickListener(this);
             booksBtn.setOnClickListener(this);
             newProblemBtn.setOnClickListener(this);
+            mInstructionBtn.setOnClickListener(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -88,32 +86,23 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         if (view.equals(librariesBtn)) {
-            handleBooks(getString(R.string.intro_link));
+            handleUrls(getString(R.string.intro_link));
         } else if (view.equals(videosBtn)) {
-            handleBooks(getString(R.string.video_link));
+            handleUrls(getString(R.string.video_link));
         } else if (view.equals(booksBtn)) {
-            handleBooks(getString(R.string.book_link));
+            handleUrls(getString(R.string.book_link));
         }else if (view.equals(newProblemBtn)){
             startActivity(new Intent(SplashActivity.this, ProblemActivity2.class));
-
+        }else if (view.equals(mInstructionBtn)){
+            startActivity(new Intent(SplashActivity.this, GuideActivity.class));
         }
     }
 
-    void handleBooks(String url) {
+    void handleUrls(String url) {
         try {
             Intent intent = new Intent(SplashActivity.this, WebActivity.class);
             intent.putExtra(getString(R.string.url), url);
             startActivity(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void handleActionView(String url) {
-        try {
-            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(myIntent);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

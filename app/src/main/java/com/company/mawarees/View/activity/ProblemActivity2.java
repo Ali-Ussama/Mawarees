@@ -322,7 +322,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             ButterKnife.bind(this);
             mCurrent = ProblemActivity2.this;
 
-            showInstructions();
+//            showInstructions();
             initContinue();
 
         } catch (Exception e) {
@@ -891,6 +891,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
 
             MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(mCurrent, "ID2");
             sequence.setConfig(config);
+            sequence.singleUse("g");
 
             sequence.addSequenceItem(mTotalMoneyContainer,
                     getString(R.string.money_instructions), getString(R.string.str_next_lbl));
@@ -960,7 +961,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
                     scrollView.scrollTo((int) mBrotherQuestionContainer.getX(), (int) mBrotherQuestionContainer.getY());
                     scrollView.fullScroll(View.FOCUS_DOWN);
 
-                }else if (position == 11){
+                } else if (position == 11) {
                     scrollView.scrollTo((int) mNewProblem.getX(), (int) mNewProblem.getY());
                     scrollView.fullScroll(View.FOCUS_DOWN);
 
@@ -1192,7 +1193,7 @@ public class ProblemActivity2 extends AppCompatActivity implements View.OnClickL
             if (view.equals(mSolveProblemBtn)) {
 //                Log.i(TAG,"")
                 handleSolveProblem();
-            }else if (view.equals(mNewProblem)){
+            } else if (view.equals(mNewProblem)) {
                 resetViews();
             }
         } catch (Exception e) {
