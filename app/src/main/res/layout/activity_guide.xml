@@ -845,7 +845,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
-                    android:text="هل يوجد أخوة و أخوات ؟"
+                    android:text="هل يوجد إخوة أو أخوات ؟"
                     android:textColor="@color/dark_brown"
                     android:textSize="14sp"
                     android:textStyle="bold"

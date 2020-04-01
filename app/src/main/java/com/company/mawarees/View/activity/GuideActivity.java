@@ -279,6 +279,7 @@ public class GuideActivity extends AppCompatActivity {
 
     private void showInstructions() {
         try {
+            mTotalMoneyContainer.setFocusable(false);
 
             counter = mPrefManager.readInt("instructions");
             counter++;
